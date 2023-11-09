@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                                 LoginPage(navController = navController, context = this@MainActivity)
                             }
                             composable("register_page"){
-                                RegisterPage(navController = navController, context = this@MainActivity)
+                                SignUpPage(navController = navController, context = this@MainActivity)
                             }
                             composable("reset_page") {
                                 ResetPage(navController = navController, context = this@MainActivity)
