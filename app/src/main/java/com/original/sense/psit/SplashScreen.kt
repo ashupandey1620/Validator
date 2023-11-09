@@ -83,7 +83,7 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
 
 
             Image(
-                painter = painterResource(id = R.drawable.img) ,
+                painter = painterResource(id = R.drawable.ellipse_10) ,
                 contentDescription = null ,
                 contentScale = ContentScale.Fit ,
                 modifier = Modifier
