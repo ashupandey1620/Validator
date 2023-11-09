@@ -90,8 +90,26 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         SimpleOutlinedTextFieldEmail()
         SimpleOutlinedTextFieldPhone()
         SimpleOutlinedTextFieldRoom()
+        Terms()
+        ContinueButton()
+        AlreadyAccount()
     }
 
+}
+
+@Composable
+fun AlreadyAccount() {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun ContinueButton() {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun Terms() {
+    TODO("Not yet implemented")
 }
 
 
@@ -110,17 +128,18 @@ fun SimpleOutlinedTextFieldName() {
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
 
-        placeholder = { Text(text = "Name") },
+        placeholder = { Text(text = "Name", color = Color.White) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = Color.White,
             focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -148,17 +167,18 @@ fun SimpleOutlinedTextFieldUsername() {
         shape = RoundedCornerShape(25.dp) ,
 
 
-        placeholder = { Text(text = "Username") },
+        placeholder = { Text(text = "Username", color = Color.White) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = Color.White,
             focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -185,17 +205,18 @@ fun SimpleOutlinedTextFieldEmail() {
         shape = RoundedCornerShape(25.dp) ,
 
 
-        placeholder = { Text(text = "Email") },
+        placeholder = { Text(text = "Email", color = Color.White) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = Color.White,
             focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -222,17 +243,18 @@ fun SimpleOutlinedTextFieldPhone() {
         shape = RoundedCornerShape(25.dp) ,
 
 
-        placeholder = { Text(text = "Phone Number") },
+        placeholder = { Text(text = "Phone Number", color = Color.White) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = Color.White,
             focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -258,18 +280,18 @@ fun SimpleOutlinedTextFieldRoom() {
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
 
-
-        placeholder = { Text(text = "Room Number") },
+        placeholder = { Text(text = "Room Number", color = Color.White) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = Color.White,
             focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
