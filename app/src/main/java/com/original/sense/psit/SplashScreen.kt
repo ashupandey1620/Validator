@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -62,28 +65,43 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(if (isSystemInDarkTheme()) Color.DarkGray else Color.White),
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF383838) ,
+                        Color(0xFF222228)
+                    ) ,
+                    start = Offset(0.0979f , 0f) ,
+                    end = Offset(0.2064f , 0f)
+                )
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.img) ,
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .height(120.dp)
-                .fillMaxWidth(),
 
-            )
+
+
+
+            Image(
+                painter = painterResource(id = R.drawable.img) ,
+                contentDescription = null ,
+                contentScale = ContentScale.Fit ,
+                modifier = Modifier
+                    .height(120.dp)
+                    .fillMaxWidth() ,
+
+                )
 
 
         Spacer(modifier = Modifier.height(25.dp))
+
         Text(
-            text = "RoadSage",
+            text = "SO PSIT",
             fontFamily = FontFamily.Cursive ,
             modifier = Modifier.alpha(alpha.value),
             fontSize = 40.sp,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            color = Color.White
         )
     }
 }
