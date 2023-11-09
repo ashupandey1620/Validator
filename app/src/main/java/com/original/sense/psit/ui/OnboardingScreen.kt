@@ -176,15 +176,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 )
             }
 
-//            if (image4Visibility.value) {
-//                Image(
-//                    painter = painterResource(R.drawable.ellipse_12),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .offset { IntOffset(offsetX4, offsetY4) }
-//                        .size(width = 12.21.dp, height = 12.21.dp)
-//                )
-//            }
+
         }
 
         Spacer(modifier = Modifier.height(25.dp))
