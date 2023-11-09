@@ -48,13 +48,13 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
 
     LaunchedEffect(key1 = true) {
         alpha.animateTo(1f,
-            animationSpec = tween(1300)
+            animationSpec = tween(300)
         )
-        delay(1700)
+        delay(1000)
 
         if (onBoardingIsFinished(context = context)) {
             navController.popBackStack()
-            navController.navigate("login_page")
+            navController.navigate("signup_page")
         } else {
             navController.popBackStack()
             navController.navigate("Onboarding")

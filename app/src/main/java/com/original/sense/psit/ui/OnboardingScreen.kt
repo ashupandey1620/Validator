@@ -189,7 +189,11 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             color = Color.White,
         )
 
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            onBoardingIsFinished(context = context)
+            navController.popBackStack()
+            navController.navigate("signup_page")
+        }) {
 
             Text(text = ">")
 
@@ -208,3 +212,10 @@ fun pxToDp(px: Double , context: Context): Int {
     return (px * (dpi / 160)).toInt()
 }
 
+private fun onBoardingIsFinished(context: MainActivity) {
+    val sharedPreferences = context.getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putBoolean("isFinished", true)
+    editor.apply()
+
+}
