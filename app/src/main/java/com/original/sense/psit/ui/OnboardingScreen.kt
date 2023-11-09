@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.estimateAnimationDurationMillis
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -49,7 +50,7 @@ import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.*
+
 
 
 @Composable
@@ -62,16 +63,14 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
         mutableStateOf(false)
     }
 
-    val coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
 
     LaunchedEffect(key1 = 0) {
-        delay(250)
         image1Visibility.value = true
-        delay(300)
+        delay(500)
         image2Visibility.value = true
-        delay(350)
+        delay(500)
         image3Visibility.value = true
-        delay(400)
+        delay(500)
         image4Visibility.value = true
     }
 
@@ -82,14 +81,13 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             .background(
                 Brush.linearGradient(
                     colors = listOf(
-                        Color(0xFF383838) ,
+                        Color(0xFF383838),
                         Color(0xFF222228)
-                    ) ,
-                    start = Offset(0.0979f , 0f) ,
-                    end = Offset(0.2064f , 0f)
+                    ),
+                    start = Offset(0.0979f, 0f),
+                    end = Offset(0.2064f, 0f)
                 )
             ),
-
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -103,82 +101,111 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             val offsetX = with(density) { 225.1.dp.roundToPx() }
             val offsetY = with(density) { -23.05.dp.roundToPx() }
 
-            if (image1Visibility.value) {
+//            if (image1Visibility.value) {
+//                Image(
+//                    painter = painterResource(R.drawable.ellipse_10),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .offset { IntOffset(offsetX, offsetY) }
+//                        .size(width = 254.65.dp, height = 257.49.dp)
+//                )
+//            }
+
+            this@Column.AnimatedVisibility(
+                visible = image1Visibility.value,
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)),
+                modifier = Modifier
+                    .offset { IntOffset(offsetX, offsetY) }
+                    .size(width = 254.65.dp, height = 257.49.dp)
+            ) {
                 Image(
-                    painter = painterResource(R.drawable.img_2) ,
-                    contentDescription = null ,
-                    modifier = Modifier
-                        .offset { IntOffset(offsetX , offsetY) }
-                        .size(width = 254.65.dp , height = 257.49.dp)
+                    painter = painterResource(R.drawable.ellipse_10),
+                    contentDescription = null
                 )
             }
+
 
 
             val offsetX2 = with(density) { 115.02.dp.roundToPx() }
             val offsetY2 = with(density) { 143.5.dp.roundToPx() }
 
-            if (image2Visibility.value) {
-                this@Column.AnimatedVisibility(
-                    visible = image1Visibility.value,
-                    enter = fadeIn(),
-
-                    ) {
-                    Image(
-                        painter = painterResource(R.drawable.img_3) ,
-                        contentDescription = null ,
-                        modifier = Modifier
-                            .offset { IntOffset(offsetX2 , offsetY2) }
-                            .size(width = 93.8.dp , height = 93.8.dp)
-                    )
-                }
+            this@Column.AnimatedVisibility(
+                visible = image2Visibility.value,
+                enter = fadeIn(animationSpec = tween(durationMillis = 7500)),
+                modifier = Modifier
+                    .offset { IntOffset(offsetX2, offsetY2) }
+                    .size(width = 93.8.dp, height = 93.8.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ellipse_11),
+                    contentDescription = null
+                )
             }
 
             val offsetX3 = with(density) { 161.92.dp.roundToPx() }
             val offsetY3 = with(density) { 84.4.dp.roundToPx() }
 
-            if (image3Visibility.value) {
+            this@Column.AnimatedVisibility(
+                visible = image3Visibility.value,
+                enter = fadeIn(animationSpec = tween(durationMillis = 10500)),
+                modifier = Modifier
+                    .offset { IntOffset(offsetX3, offsetY3) }
+                    .size(width = 27.18.dp, height = 27.18.dp)
+            ) {
                 Image(
-                    painter = painterResource(R.drawable.img) ,
-                    contentDescription = null ,
-                    modifier = Modifier
-                        .offset { IntOffset(offsetX3 , offsetY3) }
-                        .size(width = 27.18.dp , height = 27.18.dp)
+                    painter = painterResource(R.drawable.ellipse_11),
+                    contentDescription = null
                 )
             }
+
 
 
             val offsetX4 = with(density) { 196.61.dp.roundToPx() }
             val offsetY4 = with(density) { 55.12.dp.roundToPx() }
 
-            if (image4Visibility.value) {
+            this@Column.AnimatedVisibility(
+                visible = image1Visibility.value,
+                enter = fadeIn(animationSpec = tween(durationMillis = 13000)),
+                modifier = Modifier
+                    .offset { IntOffset(offsetX4, offsetY4) }
+                    .size(width = 12.21.dp, height = 12.21.dp)
+            ) {
                 Image(
-                    painter = painterResource(R.drawable.img_1) ,
-                    contentDescription = null ,
-                    modifier = Modifier
-                        .offset { IntOffset(offsetX4 , offsetY4) }
-                        .size(width = 12.21.dp , height = 12.21.dp)
+                    painter = painterResource(R.drawable.ellipse_10),
+                    contentDescription = null
                 )
             }
+
+//            if (image4Visibility.value) {
+//                Image(
+//                    painter = painterResource(R.drawable.ellipse_12),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .offset { IntOffset(offsetX4, offsetY4) }
+//                        .size(width = 12.21.dp, height = 12.21.dp)
+//                )
+//            }
         }
 
         Spacer(modifier = Modifier.height(25.dp))
 
         Text(
             text = "SO | PSIT",
-            fontFamily = FontFamily.Cursive ,
+            fontFamily = FontFamily.Cursive,
             fontSize = 40.sp,
             fontWeight = FontWeight.Medium,
             color = Color.White,
         )
-        
+
         Button(onClick = { /*TODO*/ }) {
-            
+
             Text(text = ">")
-            
+
         }
     }
-
 }
+
+
 
 fun pxToDp(px: Double , context: Context): Int {
     val resources: Resources = context.resources
