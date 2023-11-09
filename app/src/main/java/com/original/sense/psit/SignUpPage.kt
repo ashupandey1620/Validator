@@ -2,6 +2,7 @@ package com.original.sense.psit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,10 @@ import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
+import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -58,15 +62,17 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                     start = Offset(0.0979f , 0f) ,
                     end = Offset(0.2064f , 0f)
                 )
-            ).padding(20.dp),
+            )
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 
         Text(text = "Sign Up",
-            modifier = Modifier.fillMaxWidth()
-                .wrapContentHeight().
-            padding(start = 5.dp, top = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(start = 5.dp , top = 10.dp),
             fontSize = 46.sp,
             color = Color.White,
             fontFamily = FontFamily.Serif,
@@ -74,9 +80,10 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             )
 
         Text(text = "Create an Account to start getting Permission Today",
-            modifier = Modifier.fillMaxWidth()
-                .wrapContentHeight().
-                padding(top = 5.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(top = 5.dp)
                 .align(CenterHorizontally),
             fontSize = 17.sp,
             color = Color.White,
@@ -99,17 +106,26 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 @Composable
 fun AlreadyAccount() {
-    TODO("Not yet implemented")
+    Row (modifier = Modifier.fillMaxWidth()
+        .wrapContentHeight()){
+
+    }
 }
 
 @Composable
 fun ContinueButton() {
-    TODO("Not yet implemented")
+    Row (modifier = Modifier.fillMaxWidth()
+        .wrapContentHeight()){
+
+    }
 }
 
 @Composable
 fun Terms() {
-    TODO("Not yet implemented")
+    Row (modifier = Modifier.fillMaxWidth()
+        .wrapContentHeight()){
+
+    }
 }
 
 
@@ -123,7 +139,7 @@ fun SimpleOutlinedTextFieldName() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Filled.Person, contentDescription = "Search", tint = Color(0xFF222228))
+            Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
@@ -139,7 +155,9 @@ fun SimpleOutlinedTextFieldName() {
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -161,7 +179,7 @@ fun SimpleOutlinedTextFieldUsername() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Filled.Person, contentDescription = "Username", tint = Color(0xFF222228))
+            Icon(Icons.Outlined.Person, contentDescription = "Username", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
@@ -178,7 +196,9 @@ fun SimpleOutlinedTextFieldUsername() {
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -199,7 +219,7 @@ fun SimpleOutlinedTextFieldEmail() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Filled.Email, contentDescription = "Email", tint = Color(0xFF222228))
+            Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
@@ -216,7 +236,9 @@ fun SimpleOutlinedTextFieldEmail() {
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -237,7 +259,7 @@ fun SimpleOutlinedTextFieldPhone() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFF222228))
+            Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
@@ -254,7 +276,9 @@ fun SimpleOutlinedTextFieldPhone() {
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -275,7 +299,7 @@ fun SimpleOutlinedTextFieldRoom() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Filled.Person, contentDescription = "Room", tint = Color(0xFF222228))
+            Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(25.dp) ,
@@ -291,7 +315,9 @@ fun SimpleOutlinedTextFieldRoom() {
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
-        modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
