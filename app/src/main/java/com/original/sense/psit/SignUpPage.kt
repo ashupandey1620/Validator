@@ -101,7 +101,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
         )
 
-        Spacer(modifier = Modifier.fillMaxWidth().height(20.dp))
+        Spacer(modifier = Modifier.fillMaxWidth().height(15.dp))
         SimpleOutlinedTextFieldName()
         SimpleOutlinedTextFieldUsername()
         SimpleOutlinedTextFieldEmail()
