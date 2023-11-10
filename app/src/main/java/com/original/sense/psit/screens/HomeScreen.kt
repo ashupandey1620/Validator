@@ -90,7 +90,9 @@ fun HomeScreen(navController: NavController) {
         }
 
 
-       ReadyToTap()
+
+
+
 
     }
 
