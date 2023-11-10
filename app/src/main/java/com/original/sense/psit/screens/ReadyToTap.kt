@@ -41,10 +41,10 @@ fun ReadyToTap() {
                 .fillMaxWidth()
                 .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
             fontFamily = poppins ,
-            text = "Ready To Tap" ,
+            text = "Ready To Tap ?" ,
             color = Color.White ,
             textAlign = TextAlign.Center ,
-            fontSize = 23.sp
+            fontSize = 30.sp
         )
 
         Box(
