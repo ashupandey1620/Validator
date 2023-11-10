@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
@@ -86,7 +87,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(start = 5.dp , top = 10.dp),
+                .padding(start = 5.dp , top = 20.dp),
             fontSize = 46.sp,
             color = Color.White,
             fontFamily = FontFamily.Serif,
@@ -190,9 +191,9 @@ fun SimpleOutlinedTextFieldName() {
             Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
-        shape = RoundedCornerShape(25.dp) ,
+        shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Name", color = Color.White) },
+        placeholder = { Text(text = "Name", color = Color.White, fontSize = 20.sp)},
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -205,6 +206,7 @@ fun SimpleOutlinedTextFieldName() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .height(85.dp)
             .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
@@ -230,10 +232,10 @@ fun SimpleOutlinedTextFieldUsername() {
             Icon(Icons.Outlined.Person, contentDescription = "Username", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
-        shape = RoundedCornerShape(25.dp) ,
+        shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Username", color = Color.White) },
+        placeholder = { Text(text = "Username", color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -246,6 +248,7 @@ fun SimpleOutlinedTextFieldUsername() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .height(85.dp)
             .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
@@ -270,10 +273,10 @@ fun SimpleOutlinedTextFieldEmail() {
             Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
-        shape = RoundedCornerShape(25.dp) ,
+        shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Email", color = Color.White) },
+        placeholder = { Text(text = "Email", color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -286,6 +289,7 @@ fun SimpleOutlinedTextFieldEmail() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .height(85.dp)
             .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
@@ -310,10 +314,10 @@ fun SimpleOutlinedTextFieldPhone() {
             Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
-        shape = RoundedCornerShape(25.dp) ,
+        shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Phone Number", color = Color.White) },
+        placeholder = { Text(text = "Phone Number", color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -326,6 +330,7 @@ fun SimpleOutlinedTextFieldPhone() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .height(85.dp)
             .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
@@ -350,9 +355,9 @@ fun SimpleOutlinedTextFieldRoom() {
             Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFffffff))
         },
         onValueChange = { text = it },
-        shape = RoundedCornerShape(25.dp) ,
+        shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Room Number", color = Color.White) },
+        placeholder = { Text(text = "Room Number", color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -365,6 +370,7 @@ fun SimpleOutlinedTextFieldRoom() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
+            .height(85.dp)
             .padding(top = 20.dp),
         keyboardActions = KeyboardActions(
             onDone = {
