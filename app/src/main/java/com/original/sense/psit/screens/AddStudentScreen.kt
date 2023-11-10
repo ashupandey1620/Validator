@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -56,17 +57,18 @@ fun AddStudentScreen() {
 
         Box(
             modifier = Modifier
-                .size(250.dp)
-                .padding(top = 20.dp) ,
+                .size(250.dp) ,
             contentAlignment = Alignment.Center
         ) {
 
-            Image(painter = painterResource(id = R.drawable.tapellipse) , contentDescription = "")
+            Image(modifier = Modifier.fillMaxSize()
+                ,painter = painterResource(id = R.drawable.dustbingirl),
+                contentDescription = "")
 
-            Text(
-                text = "TAP" , color = Color.White ,
-                fontFamily = poppins
-            )
+//            Text(
+//                text = "TAP" , color = Color.White ,
+//                fontFamily = poppins
+//            )
 
         }
 
@@ -87,10 +89,10 @@ fun AddStudentScreen() {
 
 
                 } ,
-                shape = RectangleShape ,
+                shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
             ) {
-                Text(text = "No" , color = Color.Black)
+                Text(text = "No" , color = Color.Black, fontSize = 25.sp)
 
             }
 
@@ -103,10 +105,10 @@ fun AddStudentScreen() {
 
 
                 } ,
-                shape = RectangleShape ,
+                shape = RoundedCornerShape(10.dp) ,
                 colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
             ) {
-                Text(text = "Yes" , color = Color.White)
+                Text(text = "Yes" , color = Color.White, fontSize = 25.sp)
 
             }
 
