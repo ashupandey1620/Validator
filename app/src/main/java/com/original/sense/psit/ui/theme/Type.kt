@@ -2,10 +2,15 @@ package com.original.sense.psit.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.original.sense.psit.R
 
+val poppins = FontFamily(
+   Font(R.font.poppinsregular, weight = FontWeight.Medium)
+)
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

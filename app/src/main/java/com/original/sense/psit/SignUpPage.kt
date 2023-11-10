@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.screens.GradientBackground
+import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
@@ -83,7 +84,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                 .padding(start = 5.dp , top = 20.dp),
             fontSize = 46.sp,
             color = Color.White,
-            fontFamily = FontFamily.Serif,
+            fontFamily = poppins,
             fontWeight = FontWeight.ExtraBold
             )
 
@@ -91,11 +92,11 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(top = 15.dp)
+                .padding(top = 15.dp,start = 5.dp)
                 .align(CenterHorizontally),
             fontSize = 17.sp,
             color = Color.White,
-            fontFamily = FontFamily.Serif,
+            fontFamily = poppins,
             fontWeight = FontWeight.Light,
 
         )
@@ -140,15 +141,17 @@ fun AlreadyAccount() {
        horizontalArrangement = Arrangement.Center){
         Text(text = "Already have an account?",
             color = Color.White,
-            modifier = Modifier.padding(start = 10.dp),
+            modifier = Modifier.padding(start = 15.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Light,
+            fontFamily = poppins,
             )
         Text(text = "Log In",
             color = Color.White,
             modifier = Modifier.padding(start = 10.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Light,
+            fontFamily = poppins,
         )
     }
 }
@@ -172,6 +175,7 @@ fun Terms() {
             color = Color.White,
             modifier = Modifier.padding(start = 10.dp),
             fontSize = 15.sp,
+            fontFamily = poppins,
             fontWeight = FontWeight.Light)
         
         
@@ -236,7 +240,7 @@ fun SimpleOutlinedTextFieldUsername() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Username", color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Username", color = Color.White,   fontFamily = poppins,fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -277,7 +281,7 @@ fun SimpleOutlinedTextFieldEmail() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Email", color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Email",   fontFamily = poppins,color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -318,7 +322,7 @@ fun SimpleOutlinedTextFieldPhone() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Phone Number", color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Phone Number",  fontFamily = poppins, color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -358,7 +362,7 @@ fun SimpleOutlinedTextFieldRoom() {
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Room Number", color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Room Number",  fontFamily = poppins, color = Color.White, fontSize = 20.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
