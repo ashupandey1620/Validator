@@ -90,6 +90,7 @@ fun HomeScreen(navController: NavController) {
         }
 
 
+        AddStudentScreen()
 
 
 
