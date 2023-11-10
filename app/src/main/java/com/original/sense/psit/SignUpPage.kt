@@ -113,7 +113,24 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         SimpleOutlinedTextFieldPhone()
         SimpleOutlinedTextFieldRoom()
         Terms()
-        ContinueButton()
+
+
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()){
+
+            Button(onClick = {
+                navController.popBackStack()
+                navController.navigate("HomeGraph")
+            },
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 10.dp)){
+                Text(text = "Continue" , color = Color.White,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(8.dp))
+            }
+        }
+
         AlreadyAccount()
     }
 
@@ -143,20 +160,7 @@ fun AlreadyAccount() {
 
 @Composable
 fun ContinueButton() {
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()){
 
-        Button(onClick = {
-
-        },
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 10.dp)){
-            Text(text = "Continue" , color = Color.White,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(8.dp))
-        }
-    }
 }
 
 @Composable
