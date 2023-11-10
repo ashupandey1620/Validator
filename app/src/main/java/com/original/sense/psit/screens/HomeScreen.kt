@@ -92,11 +92,7 @@ fun HomeScreen(navController: NavController) {
 
        RemoveStudentScreen()
 
-
-
     }
-
-
 
 }
 
