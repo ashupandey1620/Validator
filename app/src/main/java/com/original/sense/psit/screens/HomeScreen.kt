@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
@@ -39,11 +40,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.original.sense.psit.R
+import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -64,17 +67,31 @@ fun HomeScreen(navController: NavController) {
             Arrangement.SpaceBetween) {
 
             SearchView(state = textState , placeHolder = "Search" , modifier = Modifier)
-
-
+            
             Row {
 
                 CircularTapButton()
                 Spacer(modifier = Modifier.padding(6.dp))
                 CircularNotificationButton()
-
             }
+        }
+        
+        
+        Row (  modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp),
+        Arrangement.SpaceBetween){
+            
+            Text(text = "Student List:",
+                color = Color.White,
+                fontSize = 27.sp,
+                fontFamily = poppins
+                )
+
+        Icon(modifier = Modifier.size(35.dp),painter = painterResource(id = R.drawable.delete) , contentDescription ="delete Icon" )
 
 
+            
         }
 
     }
@@ -82,6 +99,8 @@ fun HomeScreen(navController: NavController) {
 
 
 }
+
+
 
 @Composable
 fun CircularNotificationButton() {
@@ -144,6 +163,7 @@ fun SearchView(
 
 
         TextField(
+
             value = state.value ,
             onValueChange = { value ->
                 state.value = value
@@ -152,7 +172,7 @@ fun SearchView(
                 .fillMaxWidth(0.6f)
                 .height(50.dp)
                 .clip(RoundedCornerShape(15.dp))
-                .border(2.dp , Color.DarkGray , RoundedCornerShape(15.dp)) ,
+                ,
             placeholder = {
                 Text(text = placeHolder,fontSize = 15.sp, color =  Color(0xFF222228))
             } ,
@@ -166,7 +186,11 @@ fun SearchView(
             singleLine = true ,
             textStyle = TextStyle(
                 color =  Color(0xFF222228) , fontSize = 15.sp
-            )
+            ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number
+            ) ,
+
         )
 
 }
