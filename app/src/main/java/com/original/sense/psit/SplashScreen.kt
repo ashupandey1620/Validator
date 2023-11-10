@@ -79,16 +79,13 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
-
-
             Image(
                 painter = painterResource(id = R.drawable.ellipse_10) ,
                 contentDescription = null ,
                 contentScale = ContentScale.Fit ,
                 modifier = Modifier
                     .height(120.dp)
-                    .fillMaxWidth() ,
+                    .fillMaxWidth(),
 
                 )
 
