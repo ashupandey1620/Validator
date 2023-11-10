@@ -147,7 +147,9 @@ fun ContinueButton() {
         .fillMaxWidth()
         .wrapContentHeight()){
 
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = {
+
+        },
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 10.dp)){
             Text(text = "Continue" , color = Color.White,
