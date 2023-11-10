@@ -1,9 +1,7 @@
 package com.original.sense.psit.screens
 
-import android.widget.SearchView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,14 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -66,7 +61,9 @@ fun HomeScreen(navController: NavController) {
             .padding(20.dp),
             Arrangement.SpaceBetween) {
 
-            SearchView(state = textState , placeHolder = "Search" , modifier = Modifier)
+            SearchView(state = textState ,
+                placeHolder = "Search" ,
+                modifier = Modifier)
             
             Row {
 
@@ -75,12 +72,11 @@ fun HomeScreen(navController: NavController) {
                 CircularNotificationButton()
             }
         }
-        
-        
+
         Row (  modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp),
-        Arrangement.SpaceBetween){
+            .padding(start = 20.dp , end = 20.dp),
+            Arrangement.SpaceBetween){
             
             Text(text = "Student List:",
                 color = Color.White,
@@ -88,11 +84,14 @@ fun HomeScreen(navController: NavController) {
                 fontFamily = poppins
                 )
 
-        Icon(modifier = Modifier.size(35.dp),painter = painterResource(id = R.drawable.delete) , contentDescription ="delete Icon" )
-
-
-            
+            Icon(modifier = Modifier.size(35.dp),
+            painter = painterResource(id = R.drawable.delete)
+            , contentDescription ="delete Icon" )
         }
+
+
+
+
 
     }
 
@@ -109,7 +108,8 @@ fun CircularNotificationButton() {
             Image(modifier = Modifier
                 .clip(CircleShape)
                 .fillMaxSize(),
-                painter = painterResource(id = R.drawable.notifybutton) , contentDescription = "" )
+                painter = painterResource(id = R.drawable.notifybutton) ,
+                contentDescription = "" )
 
     }
 }
@@ -123,7 +123,8 @@ fun CircularTapButton() {
         Image(modifier = Modifier
             .clip(CircleShape)
             .fillMaxSize(),
-            painter = painterResource(id = R.drawable.tap) , contentDescription = "" )
+            painter = painterResource(id = R.drawable.tap) ,
+            contentDescription = "" )
 
     }
 }
@@ -141,14 +142,16 @@ fun GradientBackground(): Brush {
     return Brush.linearGradient(
         colors = colors,
         start = Offset.Zero,
-        end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
+        end = Offset(Float.POSITIVE_INFINITY,
+            Float.POSITIVE_INFINITY)
     )
 }
 
 @Composable
 fun ColumnItem(item: String) {
     Column(modifier = Modifier.padding(10.dp)) {
-        Text(text = item, modifier = Modifier.padding(vertical = 10.dp), fontSize = 22.sp)
+        Text(text = item, modifier = Modifier.padding(vertical = 10.dp),
+            fontSize = 22.sp)
         Divider()
     }
 }
