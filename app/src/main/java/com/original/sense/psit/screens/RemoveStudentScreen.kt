@@ -41,7 +41,7 @@ fun RemoveStudentScreen() {
                 .fillMaxWidth()
                 .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
             fontFamily = poppins ,
-            text = "Ready to Add Another Student ?" ,
+            text = "Do You want to remove these students from the list ?" ,
             color = Color.White ,
             textAlign = TextAlign.Center ,
             fontSize = 23.sp
@@ -98,7 +98,7 @@ fun RemoveStudentScreen() {
 
                 } ,
                 shape = RoundedCornerShape(10.dp) ,
-                colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+                colors = ButtonDefaults.buttonColors(Color(0xFFf03d5f))
             ) {
                 Text(text = "Yes" , color = Color.White, fontSize = 25.sp)
 

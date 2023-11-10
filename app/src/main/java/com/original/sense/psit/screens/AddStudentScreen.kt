@@ -62,7 +62,7 @@ fun AddStudentScreen() {
         ) {
 
             Image(modifier = Modifier.fillMaxSize()
-                ,painter = painterResource(id = R.drawable.dustbingirl),
+                ,painter = painterResource(id = R.drawable.mobileman),
                 contentDescription = "")
 
 //            Text(
