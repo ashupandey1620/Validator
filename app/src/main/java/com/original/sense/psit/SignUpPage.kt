@@ -62,22 +62,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.original.sense.psit.screens.GradientBackground
 
 @Composable
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFF383838) ,
-                        Color(0xFF222228)
-                    ) ,
-                    start = Offset(0.0979f , 0f) ,
-                    end = Offset(0.2064f , 0f)
-                )
-            )
+            .background(brush = GradientBackground())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -123,7 +115,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                 navController.popBackStack()
                 navController.navigate("HomeGraph")
             },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 10.dp)){
                 Text(text = "Continue" , color = Color.White,
                     fontSize = 20.sp,

@@ -2,19 +2,12 @@ package com.original.sense.psit.ui
 
 import android.content.Context
 import android.content.res.Resources
-import android.text.Layout
-
 import android.util.DisplayMetrics
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.estimateAnimationDurationMillis
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,13 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -49,8 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
+import com.original.sense.psit.screens.GradientBackground
 import kotlinx.coroutines.delay
-
 
 
 @Composable
@@ -78,16 +64,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFF383838),
-                        Color(0xFF222228)
-                    ),
-                    start = Offset(0.0979f, 0f),
-                    end = Offset(0.2064f, 0f)
-                )
-            ),
+            .background(brush = GradientBackground()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -115,8 +92,8 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 visible = image1Visibility.value,
                 enter = fadeIn(animationSpec = tween(durationMillis = 5000)),
                 modifier = Modifier
-                    .offset { IntOffset(offsetX, offsetY) }
-                    .size(width = 254.65.dp, height = 257.49.dp)
+                    .offset { IntOffset(offsetX , offsetY) }
+                    .size(width = 254.65.dp , height = 257.49.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ellipse_10),
@@ -133,8 +110,8 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 visible = image2Visibility.value,
                 enter = fadeIn(animationSpec = tween(durationMillis = 7500)),
                 modifier = Modifier
-                    .offset { IntOffset(offsetX2, offsetY2) }
-                    .size(width = 93.8.dp, height = 93.8.dp)
+                    .offset { IntOffset(offsetX2 , offsetY2) }
+                    .size(width = 93.8.dp , height = 93.8.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ellipse_11),
@@ -149,8 +126,8 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 visible = image3Visibility.value,
                 enter = fadeIn(animationSpec = tween(durationMillis = 10500)),
                 modifier = Modifier
-                    .offset { IntOffset(offsetX3, offsetY3) }
-                    .size(width = 27.18.dp, height = 27.18.dp)
+                    .offset { IntOffset(offsetX3 , offsetY3) }
+                    .size(width = 27.18.dp , height = 27.18.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ellipse_11),
@@ -167,8 +144,8 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 visible = image1Visibility.value,
                 enter = fadeIn(animationSpec = tween(durationMillis = 13000)),
                 modifier = Modifier
-                    .offset { IntOffset(offsetX4, offsetY4) }
-                    .size(width = 12.21.dp, height = 12.21.dp)
+                    .offset { IntOffset(offsetX4 , offsetY4) }
+                    .size(width = 12.21.dp , height = 12.21.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ellipse_10),
