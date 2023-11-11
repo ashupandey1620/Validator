@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.ui.OnboardingScreen
 import com.original.sense.psit.ui.theme.SoPsitTheme
 
@@ -62,6 +63,7 @@ class MainActivity : ComponentActivity() {
                         composable("HomeGraph") {
                             HomePage()
                         }
+
                     }
                 }
             }

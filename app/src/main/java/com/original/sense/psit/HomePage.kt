@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.screens.AddScreen
 import com.original.sense.psit.screens.HomeScreen
@@ -101,7 +102,11 @@ fun BottomNavigationBar(navController: NavHostController) {
                             alwaysShowLabel = false,
                             onClick = {
                                 selectedItemIndex = index
-                                navController.navigate(item.route)
+                                navController.navigate(item.route){
+                                    popUpTo(item.route)
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             },
                             label = { Text(text = item.title) },
                             icon = {
@@ -140,19 +145,44 @@ fun MainPageNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = "HomeGraph",
-        startDestination = "home"
+        startDestination = "home_graph"
     ) {
-        composable(route ="home") {
-            HomeScreen(navController)
+
+        navigation(
+            route = "home_graph",
+            startDestination = "home"
+        ) {
+
+
+            composable(route = "home") {
+                HomeScreen(navController)
+            }
         }
-        composable(route = "add") {
-            AddScreen(navController)
+
+
+        navigation(
+            route = "add_graph",
+            startDestination = "add"
+        ) {
+
+            composable(route = "add") {
+                AddScreen(navController)
+            }
         }
-        composable(route = "profile") {
-            ProfileScreen(navController)
+
+
+
+        navigation(
+            route = "profile_graph",
+            startDestination = "profile"
+        ) {
+            composable(route = "profile") {
+                ProfileScreen(navController)
+            }
+            composable(route = "notificationPage"){
+                NotificationScreen(navController)
+            }
         }
-        composable(route = "notificationPage"){
-            NotificationScreen(navController)
-        }
+
     }
 }
