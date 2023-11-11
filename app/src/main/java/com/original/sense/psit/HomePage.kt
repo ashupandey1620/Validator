@@ -61,14 +61,14 @@ fun HomePage(navController: NavHostController = rememberNavController()) {
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         BottomNavigationItem(
-            route = "homeMain",
+            route = "home",
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             hasNews = false,
         ),
         BottomNavigationItem(
-            route = "addMain",
+            route = "add",
             title = "Add",
             selectedIcon = Icons.Filled.Add,
             unselectedIcon = Icons.Outlined.Add,
@@ -77,7 +77,7 @@ fun BottomNavigationBar(navController: NavHostController) {
 
 
         BottomNavigationItem(
-            route = "profileMain",
+            route = "profile",
             title = "Profile",
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person,
@@ -139,15 +139,15 @@ fun MainPageNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = "HomeGraph",
-        startDestination = "homeMain"
+        startDestination = "home"
     ) {
-        composable(route ="homeMain") {
+        composable(route ="home") {
             HomeScreen(navController)
         }
-        composable(route = "addMain") {
+        composable(route = "add") {
             AddScreen(navController)
         }
-        composable(route = "profileMain") {
+        composable(route = "profile") {
             ProfileScreen(navController)
         }
     }

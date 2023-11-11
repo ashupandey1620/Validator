@@ -269,30 +269,6 @@ fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
 }
 
 
-//
-//@Composable
-//fun MainPageNavigation(navController: NavHostController) {
-//
-//    NavHost(
-//        navController = navController,
-//        route = "profileGraph",
-//        startDestination = "home"
-//    ) {
-//        composable(route ="home") {
-//            HomeScreen(navController)
-//        }
-//        composable(route = "track") {
-//
-//        }
-//        composable(route = "service") {
-//            ServiceScreen(navController)
-//        }
-//        composable(route = "activity") {
-//            ActivityScreen(navController)
-//        }
-//        composable(route = "account") {
-//            AccountScreen(navController)
-//        }
-//
-//    }
-//}
+
+
+
