@@ -30,9 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
@@ -88,7 +85,7 @@ fun ProfileScreen(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 30.dp, start = 30.dp))
 
-            ProfileCard()
+            ProfileCard(navController)
 
 
             Text(text = "Log Out",
@@ -112,7 +109,7 @@ fun ProfileScreen(navController: NavController) {
 
 
 @Composable
-fun ProfileCard() {
+fun ProfileCard(navController: NavController) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -130,7 +127,9 @@ fun ProfileCard() {
                 Column {
 
                     SupportAccountItem(mainText = "Notifications",
-                        onClick = {} )
+                        onClick = {
+                            navController.navigate("notificationPage")
+                        } )
 
                     SupportAccountItem(mainText = "Edit Profile",
                         onClick = {} )
@@ -180,7 +179,7 @@ fun logOutCard() {
 @Composable
 fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 
-    Card(onClick = {},
+    Card(onClick = onClick,
         colors = CardDefaults.cardColors(Color(0xFF383841)),
         modifier = Modifier
             .fillMaxWidth()

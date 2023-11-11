@@ -39,6 +39,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.screens.AddScreen
 import com.original.sense.psit.screens.HomeScreen
+import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
 
 
@@ -149,6 +150,9 @@ fun MainPageNavigation(navController: NavHostController) {
         }
         composable(route = "profile") {
             ProfileScreen(navController)
+        }
+        composable(route = "notificationPage"){
+            NotificationScreen(navController)
         }
     }
 }
