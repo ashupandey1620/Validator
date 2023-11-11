@@ -13,5 +13,7 @@ fun ProfileScreen(navController: NavController) {
         .fillMaxSize()
         .background(brush = GradientBackground())){
 
+
+
     }
 }
