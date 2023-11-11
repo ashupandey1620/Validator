@@ -30,6 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
@@ -264,3 +267,32 @@ fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
         }
     }
 }
+
+
+//
+//@Composable
+//fun MainPageNavigation(navController: NavHostController) {
+//
+//    NavHost(
+//        navController = navController,
+//        route = "profileGraph",
+//        startDestination = "home"
+//    ) {
+//        composable(route ="home") {
+//            HomeScreen(navController)
+//        }
+//        composable(route = "track") {
+//
+//        }
+//        composable(route = "service") {
+//            ServiceScreen(navController)
+//        }
+//        composable(route = "activity") {
+//            ActivityScreen(navController)
+//        }
+//        composable(route = "account") {
+//            AccountScreen(navController)
+//        }
+//
+//    }
+//}

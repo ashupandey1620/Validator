@@ -31,26 +31,34 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
 
                     NavHost(navController = navController , startDestination = "Splash") {
+
                         composable("Splash") {
                             SplashScreen(navController = navController, context = this@MainActivity)
                         }
+
                         composable("Onboarding") {
                             OnboardingScreen(navController = navController, context = this@MainActivity)
                         }
+
                         navigation(
                             route = "Auth_Graph",
                             startDestination = "login_page"
                         ){
+
                             composable("login_page"){
                                 LoginPage(navController = navController, context = this@MainActivity)
                             }
+
                             composable("signup_page"){
                                 SignUpPage(navController = navController, context = this@MainActivity)
                             }
+
                             composable("reset_page") {
                                 ResetPage(navController = navController, context = this@MainActivity)
                             }
+
                         }
+
                         composable("HomeGraph") {
                             HomePage()
                         }
