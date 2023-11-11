@@ -89,10 +89,18 @@ fun ProfileScreen(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 30.dp, start = 30.dp))
 
-
             ProfileCard()
 
 
+            Text(text = "Log Out",
+                color = Color.White,
+                fontSize = 20.sp,
+                fontFamily = poppins,
+                modifier = Modifier
+                    .padding(top = 45.dp, start = 30.dp))
+
+
+            logOutCard()
         }
 
 
@@ -137,6 +145,38 @@ fun ProfileCard() {
     }
 }
 
+
+
+@Composable
+fun logOutCard() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+    ){
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(15.dp),
+            shape = RoundedCornerShape(20.dp) ,
+            colors = CardDefaults.cardColors(Color(0xFF383841)),
+            elevation = CardDefaults.cardElevation(2.dp)
+
+        ) {
+
+            Column {
+
+                SupportAccountItem(mainText = "Sign Out",
+                    onClick = {} )
+
+
+            }
+
+
+
+
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
