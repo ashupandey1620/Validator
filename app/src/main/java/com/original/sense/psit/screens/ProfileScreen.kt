@@ -87,8 +87,7 @@ fun ProfileScreen(navController: NavController) {
                 fontSize = 20.sp,
                 fontFamily = poppins,
                 modifier = Modifier
-                    .padding(20.dp)
-                    .padding(top = 20.dp))
+                    .padding(top = 30.dp, start = 30.dp))
 
 
             ProfileCard()
