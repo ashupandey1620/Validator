@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -114,6 +115,7 @@ fun ProfileCard() {
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(15.dp),
+            shape = RoundedCornerShape(20.dp) ,
             colors = CardDefaults.cardColors(Color(0xFF383841)),
             elevation = CardDefaults.cardElevation(2.dp)
 
@@ -142,11 +144,10 @@ fun ProfileCard() {
 fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 
     Card(onClick = {},
-        elevation = CardDefaults.cardElevation(2.dp),
-        colors = CardDefaults.cardColors(Color.White),
+        colors = CardDefaults.cardColors(Color(0xFF383841)),
         modifier = Modifier
-            .padding(bottom = 8.dp)
             .fillMaxWidth()
+
 
     ) {
         Row(
@@ -167,7 +168,8 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
                         text = mainText,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 2.dp)
+                        color = Color(0xFFfffffe),
+                        fontFamily = poppins
                     )
                 }
             }
