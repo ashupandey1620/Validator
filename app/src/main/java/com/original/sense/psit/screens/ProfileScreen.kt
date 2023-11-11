@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -158,11 +159,10 @@ fun logOutCard() {
 
         ) {
 
-            Column {
+            Column(modifier = Modifier.height(65.dp),
+                verticalArrangement = Arrangement.Center) {
 
-                SupportAccountItem(mainText = "Sign Out",
-                    onClick = {} )
-
+              logoutAccountItem(mainText = "Sign Out", onClick = {})
 
             }
 
@@ -187,7 +187,7 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp , horizontal = 14.dp),
+                .padding(vertical = 17.dp , horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -213,6 +213,52 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
                 contentDescription = "",
                 modifier = Modifier.size(20.dp),
                 painter = painterResource(id = R.drawable.ic_right_arrow)
+            )
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
+
+    Card(onClick = {},
+        colors = CardDefaults.cardColors(Color(0xFF383841)),
+        modifier = Modifier
+            .fillMaxWidth()
+
+
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 17.dp , horizontal = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+
+
+                Spacer(modifier = Modifier.width(14.dp))
+                Column(
+                    modifier = Modifier
+                ) {
+                    Text(
+                        text = mainText,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFfffffe),
+                        fontFamily = poppins
+                    )
+                }
+            }
+
+
+            Icon(tint = Color.Gray,
+                contentDescription = "",
+                modifier = Modifier.size(20.dp),
+                painter = painterResource(id = R.drawable.logout)
             )
 
         }
