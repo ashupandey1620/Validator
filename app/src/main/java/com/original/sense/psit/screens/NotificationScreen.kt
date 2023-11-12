@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 @Composable
-fun NotificationScreen(navController: NavController) {
+fun NotificationScreen() {
 
     Column(modifier = Modifier.fillMaxSize().background(Color.Blue)) {
 

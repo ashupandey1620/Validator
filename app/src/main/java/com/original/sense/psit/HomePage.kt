@@ -91,9 +91,9 @@ fun BottomNavigationBar(navController: NavHostController) {
         mutableStateOf(0)
     }
 
-    // A surface container using the 'background' color from the theme
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+
         Scaffold(
+            
             bottomBar = {
                 NavigationBar {
                     items.forEachIndexed { index, item ->
@@ -133,11 +133,11 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 }
             }
-        ){ paddingValues ->
-            MainPageNavigation(navController = navController)
+        ){paddingValues -> 
+        MainPageNavigation(navController = navController)
         }
     }
-}
+
 
 
 @Composable
@@ -145,44 +145,28 @@ fun MainPageNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = "HomeGraph",
-        startDestination = "home_graph"
+        startDestination = "home"
     ) {
-
-        navigation(
-            route = "home_graph",
-            startDestination = "home"
-        ) {
 
 
             composable(route = "home") {
                 HomeScreen(navController)
             }
-        }
-
-
-        navigation(
-            route = "add_graph",
-            startDestination = "add"
-        ) {
-
             composable(route = "add") {
                 AddScreen(navController)
             }
-        }
-
-
-
-        navigation(
-            route = "profile_graph",
-            startDestination = "profile"
-        ) {
             composable(route = "profile") {
                 ProfileScreen(navController)
             }
-            composable(route = "notificationPage"){
-                NotificationScreen(navController)
-            }
+
+
+        composable(route = "notificationPage") {
+            NotificationScreen()
         }
+
+
+
+
 
     }
 }
