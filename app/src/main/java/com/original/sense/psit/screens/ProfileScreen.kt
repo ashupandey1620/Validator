@@ -132,7 +132,9 @@ fun ProfileCard(navController: NavController) {
                         } )
 
                     SupportAccountItem(mainText = "Edit Profile",
-                        onClick = {} )
+                        onClick = {
+                            navController.navigate("editProfile")
+                        } )
 
                 }
 

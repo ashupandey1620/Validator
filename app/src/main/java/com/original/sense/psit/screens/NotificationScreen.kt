@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 @Composable
 fun NotificationScreen() {
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.Blue)) {
+    Column(modifier = Modifier.fillMaxSize().background(brush = GradientBackground())) {
 
     }
 }

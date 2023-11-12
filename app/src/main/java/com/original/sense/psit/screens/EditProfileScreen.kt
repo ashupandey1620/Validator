@@ -1,8 +1,10 @@
 package com.original.sense.psit.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,22 +24,22 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun EditProfileScreen() {
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()) {
+    Column(modifier = Modifier.fillMaxSize()
+        .background(brush = GradientBackground())) {
 
         Row (modifier = Modifier
             .fillMaxWidth()
             .height(40.dp)){
 
-            Icon(painter = painterResource(id = R.drawable.logout) , contentDescription = null)
+            Icon(painter = painterResource(id = R.drawable.logout) , contentDescription = null,
+                tint = Color.White)
             
             Spacer(modifier = Modifier.padding(20.dp))
             
             Text(text = "Edit Profile",
                 color = Color.White,
                 fontSize = 20.sp,
-                fontFamily = poppins
+                fontFamily = poppins,
                 )
 
         }
