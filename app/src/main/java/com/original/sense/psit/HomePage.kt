@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.screens.AddScreen
@@ -93,50 +94,60 @@ fun BottomNavigationBar(navController: NavHostController) {
 
 
         Scaffold(
-            
             bottomBar = {
-                NavigationBar {
-                    items.forEachIndexed { index, item ->
-                        NavigationBarItem(
-                            selected = selectedItemIndex == index,
-                            alwaysShowLabel = false,
-                            onClick = {
-                                selectedItemIndex = index
-                                navController.navigate(item.route){
-                                    popUpTo(item.route)
-                                    launchSingleTop = true
-                                    restoreState = true
+
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination  = navBackStackEntry?.destination
+
+    val bottomDestination = ((currentDestination?.route == "home") 
+            || (currentDestination?.route == "add")
+            || (currentDestination?.route == "profile"))
+    
+    if (bottomDestination) {
+        NavigationBar {
+            items.forEachIndexed { index , item ->
+                NavigationBarItem(
+                    selected = selectedItemIndex == index ,
+                    alwaysShowLabel = false ,
+                    onClick = {
+                        selectedItemIndex = index
+                        navController.navigate(item.route) {
+                            popUpTo(item.route)
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    } ,
+                    label = { Text(text = item.title) } ,
+                    icon = {
+                        BadgedBox(badge = {
+                            if (item.badgeCount != null) {
+                                Badge {
+                                    Text(text = item.badgeCount.toString())
                                 }
-                            },
-                            label = { Text(text = item.title) },
-                            icon = {
-                                BadgedBox(badge = {
-                                    if (item.badgeCount != null) {
-                                        Badge {
-                                            Text(text = item.badgeCount.toString())
-                                        }
-                                    } else if (item.hasNews) {
-                                        Badge()
-                                    }
-                                }) {
-                                    Icon(
-                                        imageVector = if (index == selectedItemIndex) {
-                                            item.selectedIcon
-                                        } else {
-                                            item.unselectedIcon
-                                        },
-                                        contentDescription = item.title
-                                    )
-                                }
+                            } else if (item.hasNews) {
+                                Badge()
                             }
-                        )
+                        }) {
+                            Icon(
+                                imageVector = if (index == selectedItemIndex) {
+                                    item.selectedIcon
+                                } else {
+                                    item.unselectedIcon
+                                } ,
+                                contentDescription = item.title
+                            )
+                        }
                     }
-                }
+                )
             }
-        ){paddingValues -> 
+        }
+    } 
+
+}
+        ){paddingValues ->
         MainPageNavigation(navController = navController)
         }
-    }
+}
 
 
 
