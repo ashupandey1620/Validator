@@ -128,16 +128,13 @@ fun ProfileCard(navController: NavController) {
 
                     SupportAccountItem(mainText = "Notifications",
                         onClick = {
-                            navController.navigate("notificationPage")
+                            navController.navigate("notification")
                         } )
 
                     SupportAccountItem(mainText = "Edit Profile",
                         onClick = {} )
 
                 }
-
-
-
 
         }
     }

@@ -40,6 +40,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.screens.AddScreen
+import com.original.sense.psit.screens.EditProfileScreen
 import com.original.sense.psit.screens.HomeScreen
 import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
@@ -171,9 +172,15 @@ fun MainPageNavigation(navController: NavHostController) {
             }
 
 
-        composable(route = "notificationPage") {
+        composable(route = "notification") {
             NotificationScreen()
         }
+
+        composable(route = "editProfile") {
+            EditProfileScreen()
+        }
+
+
 
 
 

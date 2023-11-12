@@ -20,7 +20,7 @@ import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
 @Composable
-fun EditProfileScreen(navController: NavController) {
+fun EditProfileScreen() {
 
     Column(modifier = Modifier
         .fillMaxWidth()
