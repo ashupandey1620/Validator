@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -84,10 +85,14 @@ fun HomeScreen(navController: NavController) {
                 fontFamily = poppins
                 )
 
-            Icon(modifier = Modifier.size(35.dp),
-            painter = painterResource(id = R.drawable.delete)
-            , contentDescription ="delete Icon" )
+            IconButton(modifier = Modifier.size(35.dp), onClick = { }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.delete)
+                    , contentDescription ="delete Icon",
+                    tint = Color.White)
+            }
         }
+
 
 
 
