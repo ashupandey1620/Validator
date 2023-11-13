@@ -2,6 +2,7 @@ package com.original.sense.psit.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
+import java.util.Locale
 
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
@@ -79,6 +82,44 @@ fun EditProfileScreen(navController: NavHostController) {
 @Composable
 fun CircularImage() {
 
+    var name  = "Ashutosh Pandey"
+    name = generateAbbreviation(name)
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .height(100.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Card(modifier = Modifier.size(100.dp) ,
+                shape = CircleShape,
+                colors = CardDefaults.cardColors(Color(0xFF383841))) {
+
+                Column(modifier = Modifier.fillMaxSize(),
+                    Arrangement.Center,
+                    Alignment.CenterHorizontally) {
+                    Text(text = name,
+                        color = Color.White,
+                        fontSize = 40.sp,
+                        fontFamily = poppins,
+                    )
+                }
+
+
+            }
+
+        }
+
+}
+
+fun generateAbbreviation(name: String): String {
+    val words = name.split(" ")
+
+    if (words.size == 1) {
+        return words[0].substring(0, 2).uppercase(Locale.getDefault())
+    } else {
+        return words[0].substring(0, 1).uppercase(Locale.getDefault()) + words[1].substring(0, 1)
+            .uppercase(Locale.getDefault())
+    }
 }
 
 @Composable
