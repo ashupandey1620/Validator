@@ -169,7 +169,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
         Button(onClick = {
             onBoardingIsFinished(context = context)
             navController.popBackStack()
-            navController.navigate("signup_page")
+            navController.navigate("Auth_Graph")
         }) {
 
             Text(text = ">")

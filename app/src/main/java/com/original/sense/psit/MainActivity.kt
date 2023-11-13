@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
                         navigation(
                             route = "Auth_Graph",
-                            startDestination = "signIn_page"
+                            startDestination = "signup_page"
                         ){
 
                             composable("signIn_page"){
