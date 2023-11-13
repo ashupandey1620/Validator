@@ -43,21 +43,24 @@ class MainActivity : ComponentActivity() {
 
                         navigation(
                             route = "Auth_Graph",
-                            startDestination = "login_page"
+                            startDestination = "signIn_page"
                         ){
 
-                            composable("login_page"){
-                                LoginPage(navController = navController, context = this@MainActivity)
+                            composable("signIn_page"){
+                                SignInScreen(navController = navController, context = this@MainActivity)
                             }
 
                             composable("signup_page"){
                                 SignUpPage(navController = navController, context = this@MainActivity)
                             }
 
-                            composable("reset_page") {
-                                ResetPage(navController = navController, context = this@MainActivity)
+                            composable("forget_page") {
+                                ForgetPasswordScreen(navController = navController, context = this@MainActivity)
                             }
 
+                            composable("resend_password_page") {
+                                ResendPasswordScreen(navController = navController, context = this@MainActivity)
+                            }
                         }
 
                         composable("HomeGraph") {
