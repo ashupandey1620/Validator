@@ -62,6 +62,8 @@ fun EditProfileScreen(navController: NavHostController) {
 
         }
 
+        CircularImage()
+
         NameColumn()
 
         EmailColumn()
@@ -75,13 +77,103 @@ fun EditProfileScreen(navController: NavHostController) {
 }
 
 @Composable
+fun CircularImage() {
+
+}
+
+@Composable
 fun RoomColumn() {
-    TODO("Not yet implemented")
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
+
+        Text(text = "Room Number :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemEditScreen(mainText = "D-31")
+        {
+
+        }
+    }
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(Color(0xFF46464b)),
+        modifier = Modifier
+            .fillMaxWidth()
+
+
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp , horizontal = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+
+
+                Spacer(modifier = Modifier.width(14.dp))
+                Column(
+                    modifier = Modifier
+                ) {
+                    Text(
+                        text = mainText,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFfffffe),
+                        fontFamily = poppins
+                    )
+                }
+            }
+
+            IconButton(onClick = {},modifier = Modifier.size(20.dp)) {
+                Icon(tint = Color.White,
+                    contentDescription = "",
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.pencil)
+                )
+            }
+
+
+
+
+        }
+    }
 }
 
 @Composable
 fun PhoneColumn() {
-    TODO("Not yet implemented")
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
+
+        Text(text = "Phone Number :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemEditScreen(mainText = "8963784152")
+        {
+
+        }
+    }
+
 }
 
 
@@ -91,7 +183,7 @@ fun NameColumn() {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .padding(top= 20.dp, start = 20.dp, end = 20.dp)
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
         Text(text = "Name :",
@@ -155,7 +247,7 @@ fun EmailColumn() {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .padding(top= 20.dp, start = 20.dp, end = 20.dp)
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
         Text(text = "Email :",
