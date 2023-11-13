@@ -64,8 +64,24 @@ fun EditProfileScreen(navController: NavHostController) {
 
         NameColumn()
 
+        EmailColumn()
+
+        PhoneColumn()
+
+        RoomColumn()
+
     }
 
+}
+
+@Composable
+fun RoomColumn() {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun PhoneColumn() {
+    TODO("Not yet implemented")
 }
 
 
@@ -75,27 +91,21 @@ fun NameColumn() {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .padding(20.dp)
+        .padding(top= 20.dp, start = 20.dp, end = 20.dp)
     ) {
 
-        Text(text = "Name",
+        Text(text = "Name :",
             color = Color.White,
             fontSize = 20.sp,
             fontFamily = poppins,
         )
+//        Spacer(modifier = Modifier.padding(5.dp))
 
 
+        EditProfileItemMainScreen(mainText = "Ashutosh Pandey")
+        {
 
-EditProfileItemMainScreen(mainText = "Ashutosh Pandey") {
-
-}
-
-        
-
-
-
-
-
+        }
     }
 
 }
@@ -114,7 +124,7 @@ fun EditProfileItemMainScreen(mainText: String, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 17.dp , horizontal = 14.dp),
+                .padding(vertical = 10.dp , horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -134,14 +144,32 @@ fun EditProfileItemMainScreen(mainText: String, onClick: () -> Unit) {
                     )
                 }
             }
+        }
+    }
+}
 
 
-            Icon(tint = Color.Gray,
-                contentDescription = "",
-                modifier = Modifier.size(20.dp),
-                painter = painterResource(id = R.drawable.logout)
-            )
+@Composable
+fun EmailColumn() {
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top= 20.dp, start = 20.dp, end = 20.dp)
+    ) {
+
+        Text(text = "Email :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+
+        EditProfileItemMainScreen(mainText = "ashupandey1620@gmail.com")
+        {
 
         }
     }
+
 }
