@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -257,7 +258,19 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
         }
 
 
-        Button(onClick = {
+Spacer(modifier = Modifier.padding(100.dp))
+
+        val width = animateDpAsState(targetValue = if(clickCount==0) 50.dp
+        else if (clickCount==1) 150.dp
+        else if (clickCount==2) 300.dp
+        else 400.dp
+            , label = "Animating the width of the button",
+            animationSpec = tween(2000))
+
+        Button(modifier = Modifier
+            .height(50.dp)
+            .width(width.value),onClick = {
+
             isVisible = !isVisible
             clickCount2+=1
             if (clickCount2<=3) {
@@ -265,14 +278,18 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             }
 
 
+
             if(clickCount2==4){
             onBoardingIsFinished(context = context)
             navController.popBackStack()
             navController.navigate("Auth_Graph")
             }
-        }) {
-
-            Text(text = buttonText[clickCount])
+        },
+           ) {
+            
+            Text(text = buttonText[clickCount],
+                fontFamily = poppins,
+                fontSize = 25.sp)
 
         }
     }
