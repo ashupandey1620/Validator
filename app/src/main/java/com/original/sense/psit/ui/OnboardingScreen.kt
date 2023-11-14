@@ -175,12 +175,38 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             mutableStateOf(true)
         }
 
+        var clickCount by remember {
+            mutableStateOf(0)
+        }
+
+        var clickCount2 by remember {
+            mutableStateOf(0)
+        }
+
+
         Spacer(modifier = Modifier.height(10.dp))
+
+        var arr = arrayOf(
+            "Stay Organised\n" +
+                    "\n" +
+                    "with\n" +
+                    "\n" +
+                    "Delegations.",
+            "Track the\n" +
+                    "\n" +
+                    "delegations\n" +
+                    "\n" +
+                    "assigned to you.",
+            "Sync your\n" +
+                    "\n" +
+                    "schedule\n" +
+                    "\n" +
+                    "rightly.")
 
         Box {
 
 
-            this@Column.AnimatedVisibility(visible = isVisible,
+            this@Column.AnimatedVisibility(visible = clickCount==0 ,
                 modifier = Modifier
                     .fillMaxWidth(),
 //                enter =  fadeIn(),
@@ -198,40 +224,50 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 }
             }
 
-            this@Column.AnimatedVisibility(visible = !isVisible,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                enter =  fadeIn(),
-                exit  =  fadeOut()
-            ) {
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
+                        .height(200.dp)
                         .padding(horizontal = 25.dp)
                 ) {
 
+                    AnimatedVisibility(visible = clickCount>0,
+                        enter =  fadeIn(),
+                        exit  =  fadeOut()
+                    ) {
                     Text(
-                        text = "Stay Organised\n\nwith\n\nDelegations." ,
+                        text = arr[clickCount-1] ,
                         fontFamily = poppins ,
                         fontSize = 28.sp ,
                         fontWeight = FontWeight.Bold ,
                         color = Color.White ,
                     )
-                    PageIndicator(pageCount = 3 , currentPage = 0)
 
                 }
+                    AnimatedVisibility(visible = clickCount>0,
+                        enter =  fadeIn(),
+                        exit  =  fadeOut()
+                    ) {
+                        PageIndicator(pageCount = 3 , currentPage = clickCount-1)
+                    }
             }
         }
 
 
         Button(onClick = {
             isVisible = !isVisible
+            clickCount2+=1
+            if (clickCount2<=3) {
+                clickCount += 1
+            }
 
 
-//            onBoardingIsFinished(context = context)
-//            navController.popBackStack()
-//            navController.navigate("Auth_Graph")
+            if(clickCount2==4){
+            onBoardingIsFinished(context = context)
+            navController.popBackStack()
+            navController.navigate("Auth_Graph")
+            }
         }) {
 
             Text(text = ">")
