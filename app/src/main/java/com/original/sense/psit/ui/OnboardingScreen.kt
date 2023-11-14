@@ -77,11 +77,15 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
     }
 
 
+    var alignment by remember {
+        mutableStateOf(Alignment.CenterHorizontally)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = GradientBackground()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = alignment
     ) {
 
         Box(
@@ -271,6 +275,7 @@ Spacer(modifier = Modifier.padding(100.dp))
             .height(60.dp)
             .width(width.value),onClick = {
 
+            alignment = Alignment.Start
             isVisible = !isVisible
             clickCount2+=1
             if (clickCount2<=3) {
