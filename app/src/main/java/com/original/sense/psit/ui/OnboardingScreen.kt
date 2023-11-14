@@ -203,6 +203,8 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                     "\n" +
                     "rightly.")
 
+        val buttonText  = arrayOf(">","Next","Next","SignUp")
+
         Box {
 
 
@@ -270,7 +272,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             }
         }) {
 
-            Text(text = ">")
+            Text(text = buttonText[clickCount])
 
         }
     }
