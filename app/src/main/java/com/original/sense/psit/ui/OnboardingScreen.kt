@@ -4,18 +4,25 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.DisplayMetrics
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +31,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -36,6 +45,7 @@ import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.screens.GradientBackground
+import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 
@@ -156,15 +166,38 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
 
         }
 
-        Spacer(modifier = Modifier.height(25.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        Text(
-            text = "SO | PSIT",
-            fontFamily = FontFamily.Cursive,
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White,
-        )
+        Box {
+
+
+//            Text(
+//                text = "SO|PSIT" ,
+//                fontFamily = poppins ,
+//                fontSize = 40.sp ,
+//                fontWeight = FontWeight.Medium ,
+//                color = Color.White ,
+//            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 25.dp)
+            ) {
+
+                Text(
+                    text = "Stay Organised\n\nwith\n\nDelegations." ,
+                    fontFamily = poppins ,
+                    fontSize = 28.sp ,
+                    fontWeight = FontWeight.Bold ,
+                    color = Color.White ,
+                )
+                PageIndicator(pageCount = 3 , currentPage = 0)
+
+            }
+        }
+
 
         Button(onClick = {
             onBoardingIsFinished(context = context)
@@ -195,4 +228,33 @@ private fun onBoardingIsFinished(context: MainActivity) {
     editor.putBoolean("isFinished", true)
     editor.apply()
 
+}
+
+
+
+@Composable
+fun PageIndicator(pageCount: Int, currentPage: Int) {
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        repeat(pageCount){
+            IndicatorSingleDot(isSelected = it == currentPage )
+        }
+
+
+    }
+}
+
+@Composable
+fun IndicatorSingleDot(isSelected: Boolean) {
+
+    val width = animateDpAsState(targetValue = 14.dp, label = "")
+    Box(modifier = Modifier
+        .padding(4.dp)
+        .height(14.dp)
+        .width(width.value)
+        .clip(CircleShape)
+        .background(if (isSelected) Color(0xFF3068de) else Color(0xFF48494e))
+    )
 }
