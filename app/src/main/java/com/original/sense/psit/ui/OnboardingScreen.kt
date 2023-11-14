@@ -124,7 +124,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
 
             this@Column.AnimatedVisibility(
                 visible = image2Visibility.value,
-                enter = fadeIn(animationSpec = tween(durationMillis = 7500)),
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)),
                 modifier = Modifier
                     .offset { IntOffset(offsetX2 , offsetY2) }
                     .size(width = 93.8.dp , height = 93.8.dp)
@@ -140,7 +140,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
 
             this@Column.AnimatedVisibility(
                 visible = image3Visibility.value,
-                enter = fadeIn(animationSpec = tween(durationMillis = 10500)),
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)),
                 modifier = Modifier
                     .offset { IntOffset(offsetX3 , offsetY3) }
                     .size(width = 27.18.dp , height = 27.18.dp)
@@ -158,7 +158,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
 
             this@Column.AnimatedVisibility(
                 visible = image1Visibility.value,
-                enter = fadeIn(animationSpec = tween(durationMillis = 13000)),
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)),
                 modifier = Modifier
                     .offset { IntOffset(offsetX4 , offsetY4) }
                     .size(width = 12.21.dp , height = 12.21.dp)
@@ -260,7 +260,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
 
 Spacer(modifier = Modifier.padding(100.dp))
 
-        val width = animateDpAsState(targetValue = if(clickCount==0) 50.dp
+        val width = animateDpAsState(targetValue = if(clickCount==0) 60.dp
         else if (clickCount==1) 150.dp
         else if (clickCount==2) 300.dp
         else 400.dp
@@ -268,7 +268,7 @@ Spacer(modifier = Modifier.padding(100.dp))
             animationSpec = tween(2000))
 
         Button(modifier = Modifier
-            .height(50.dp)
+            .height(60.dp)
             .width(width.value),onClick = {
 
             isVisible = !isVisible
@@ -289,7 +289,7 @@ Spacer(modifier = Modifier.padding(100.dp))
             
             Text(text = buttonText[clickCount],
                 fontFamily = poppins,
-                fontSize = 25.sp)
+                fontSize = 20.sp)
 
         }
     }
