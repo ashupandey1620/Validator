@@ -48,6 +48,10 @@ import com.original.sense.psit.ui.theme.poppins
 fun HomeScreen(navController: NavController) {
 
 
+
+    val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
+
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())){
@@ -100,7 +104,6 @@ fun HomeScreen(navController: NavController) {
 
 
 
-
     }
 
 }
@@ -134,23 +137,6 @@ fun CircularTapButton() {
     }
 }
 
-@Composable
-fun GradientBackground(): Brush {
-
-    val colors = listOf(
-        Color(0xFF383838),
-        Color(0xFF222228),
-        Color(0xFF222228),
-        Color(0xFF222228),
-        Color(0xFF222228))
-
-    return Brush.linearGradient(
-        colors = colors,
-        start = Offset.Zero,
-        end = Offset(Float.POSITIVE_INFINITY,
-            Float.POSITIVE_INFINITY)
-    )
-}
 
 @Composable
 fun ColumnItem(item: String) {
