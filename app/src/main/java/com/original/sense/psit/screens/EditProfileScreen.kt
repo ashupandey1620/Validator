@@ -2,7 +2,6 @@ package com.original.sense.psit.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,9 +38,12 @@ import java.util.Locale
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
 
+    val name = stringResource(R.string.ashutosh_pandey)
+
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(brush = GradientBackground())) {
+        .background(brush = GradientBackground())
+        .verticalScroll(rememberScrollState())) {
 
         Row (modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +70,7 @@ fun EditProfileScreen(navController: NavHostController) {
 
         }
 
-        CircularImage()
+        CircularImage(name)
 
         NameColumn()
 
@@ -80,10 +85,10 @@ fun EditProfileScreen(navController: NavHostController) {
 }
 
 @Composable
-fun CircularImage() {
+fun CircularImage(namee: String) {
 
-    var name  = "Ashutosh Pandey"
-    name = generateAbbreviation(name)
+
+     val name = generateAbbreviation(namee)
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -130,10 +135,11 @@ fun RoomColumn() {
         .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
-        Text(text = "Room Number :",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontFamily = poppins,
+        Text(
+            text = stringResource(R.string.room_number) ,
+            color = Color.White ,
+            fontSize = 20.sp ,
+            fontFamily = poppins ,
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
@@ -201,10 +207,11 @@ fun PhoneColumn() {
         .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
-        Text(text = "Phone Number :",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontFamily = poppins,
+        Text(
+            text = stringResource(R.string.phone_number) ,
+            color = Color.White ,
+            fontSize = 20.sp ,
+            fontFamily = poppins ,
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
@@ -226,10 +233,11 @@ fun NameColumn() {
         .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
-        Text(text = "Name :",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontFamily = poppins,
+        Text(
+            text = stringResource(R.string.name) ,
+            color = Color.White ,
+            fontSize = 20.sp ,
+            fontFamily = poppins ,
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
@@ -290,10 +298,11 @@ fun EmailColumn() {
         .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
-        Text(text = "Email :",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontFamily = poppins,
+        Text(
+            text = stringResource(R.string.email) ,
+            color = Color.White ,
+            fontSize = 20.sp ,
+            fontFamily = poppins ,
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 

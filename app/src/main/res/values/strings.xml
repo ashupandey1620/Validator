@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">So Psit</string>
+    <string name="ashutosh_pandey">Ashutosh Pandey</string>
+    <string name="room_number">Room Number :</string>
+    <string name="phone_number">Phone Number :</string>
+    <string name="name">Name :</string>
+    <string name="email">Email :</string>
 </resources>

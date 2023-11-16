@@ -1,6 +1,7 @@
 package com.original.sense.psit.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +28,7 @@ import com.original.sense.psit.ui.theme.poppins
 fun StudentProfile(navController: NavHostController) {
 
 
-    val name = "Ashutosh Pandey "
+    val name = "Ayush Agnihotri"
     Box (modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())){
@@ -42,21 +43,23 @@ fun StudentProfile(navController: NavHostController) {
                 .wrapContentHeight()
                 .padding(top = 30.dp)
                 .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically){
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween){
 
+                Row( verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { navController.popBackStack()
+                    } ){
+                        Icon(painter = painterResource(id = R.drawable.arrowleft) , contentDescription = null,
+                            tint = Color.White)
+                    }
 
-
-                IconButton(onClick = { navController.popBackStack()
-                } ){
-                    Icon(painter = painterResource(id = R.drawable.arrowleft) , contentDescription = null,
-                        tint = Color.White)
+                    Text(text = "Student Profile",
+                        color = Color.White,
+                        fontSize = 22.sp,
+                        fontFamily = poppins ,
+                    )
                 }
 
-                Text(text = "Student Profile",
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontFamily = poppins ,
-                )
 
                 Row {
 
@@ -67,7 +70,7 @@ fun StudentProfile(navController: NavHostController) {
 
             }
 
-            CircularImage()
+            CircularImage(name)
 
             NameColumn()
 
@@ -119,7 +122,7 @@ fun Branch() {
         .padding(top = 20.dp , start = 20.dp , end = 20.dp)
     ) {
 
-        Text(text = "College Roll Number :",
+        Text(text = "Branch :",
             color = Color.White,
             fontSize = 20.sp,
             fontFamily = poppins,
