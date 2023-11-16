@@ -41,7 +41,7 @@ fun StudentProfile(navController: NavHostController) {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(top = 30.dp)
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 10.dp),
                 verticalAlignment = Alignment.CenterVertically){
 
 
@@ -52,13 +52,18 @@ fun StudentProfile(navController: NavHostController) {
                         tint = Color.White)
                 }
 
-                Spacer(modifier = Modifier.padding(7.dp))
-
-                Text(text = "Edit Profile",
+                Text(text = "Student Profile",
                     color = Color.White,
-                    fontSize = 25.sp,
+                    fontSize = 22.sp,
                     fontFamily = poppins ,
                 )
+
+                Row {
+
+                    CircularTapButton()
+                    Spacer(modifier = Modifier.padding(6.dp))
+                    CircularNotificationButton()
+                }
 
             }
 
@@ -76,11 +81,6 @@ fun StudentProfile(navController: NavHostController) {
 
             TypeStudent()
 
-            EmailColumn()
-
-            PhoneColumn()
-
-            RoomColumn()
 
         }
     }
@@ -90,26 +90,111 @@ fun StudentProfile(navController: NavHostController) {
 
 @Composable
 fun TypeStudent() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
 
+        Text(text = "Type :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemMainScreen(mainText = "Day Scholar")
+        {
+
+        }
+    }
 }
 
 
 @Composable
 fun Branch() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
 
+        Text(text = "College Roll Number :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemMainScreen(mainText = "Computer Science and Engineering: Core")
+        {
+
+        }
+    }
 }
 
 @Composable
 fun ClassStudent() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
 
+        Text(text = "Class :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemMainScreen(mainText = "CS-3A Elite")
+        {
+
+        }
+    }
 }
 
 @Composable
 fun AktuRollNumber() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
 
+        Text(text = "Aktu Roll Number :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemMainScreen(mainText = "2101641530046")
+        {
+
+        }
+    }
 }
 
 @Composable
 fun CollegeRollNumber() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(top = 20.dp , start = 20.dp , end = 20.dp)
+    ) {
 
+        Text(text = "College Roll Number :",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+        )
+//        Spacer(modifier = Modifier.padding(5.dp))
+
+        EditProfileItemMainScreen(mainText = "31560")
+        {
+
+        }
+    }
 }
