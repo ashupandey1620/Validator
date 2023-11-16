@@ -1,6 +1,8 @@
 package com.original.sense.psit.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -25,14 +30,19 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun NotificationScreen(navController: NavHostController) {
 
-    Column(modifier = Modifier.fillMaxSize().background(brush = GradientBackground())) {
+    val text = "Delegation removed for Lectures " +
+            "5th & 6th  for 7th December 2023 from Rishabh Didwania."
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(brush = GradientBackground())) {
 
 
         Row (modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(top = 30.dp)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically){
 
 
@@ -43,7 +53,7 @@ fun NotificationScreen(navController: NavHostController) {
                     tint = Color.White)
             }
 
-            Spacer(modifier = Modifier.padding(7.dp))
+            Spacer(modifier = Modifier.padding(2.dp))
 
             Text(text = "Notifications",
                 color = Color.White,
@@ -51,6 +61,50 @@ fun NotificationScreen(navController: NavHostController) {
                 fontFamily = poppins ,
             )
 
+
+
+        }
+
+        NotificationBox(text = text)
+        NotificationBox(text = text)
+    }
+}
+
+@Composable
+fun NotificationBox(text: String) {
+
+    Column(modifier = Modifier.padding(10.dp)){
+
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight() , shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(Color(0xFF4d4d52)),
+            border = BorderStroke(1.dp, Color.White)
+        )
+
+        {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(10.dp)
+            ) {
+
+
+                Text(
+                    text = text ,
+                    color = Color.White ,
+                    fontSize = 13.sp ,
+                    fontFamily = poppins ,
+                )
+
+
+            }
         }
     }
 }
+
+

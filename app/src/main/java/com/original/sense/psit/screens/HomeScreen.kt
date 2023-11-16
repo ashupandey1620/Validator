@@ -47,10 +47,7 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun HomeScreen(navController: NavController) {
 
-
-
     val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
-
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -98,14 +95,7 @@ fun HomeScreen(navController: NavController) {
                     tint = Color.White)
             }
         }
-
-
-
-
-
-
     }
-
 }
 
 
