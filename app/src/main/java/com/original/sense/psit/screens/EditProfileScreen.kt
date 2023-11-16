@@ -145,7 +145,6 @@ fun RoomColumn() {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit) {
     Card(
