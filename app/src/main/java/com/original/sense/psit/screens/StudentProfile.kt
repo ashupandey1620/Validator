@@ -38,13 +38,10 @@ fun StudentProfile(navController: NavHostController) {
             .fillMaxSize()
             .background(brush = GradientBackground())) {
 
-            Row (modifier = Modifier
+            Row(modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 30.dp)
-                .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween){
+                .padding(20.dp),
+                Arrangement.SpaceBetween){
 
                 Row( verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { navController.popBackStack()
