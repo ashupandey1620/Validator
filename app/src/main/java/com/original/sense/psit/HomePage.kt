@@ -35,7 +35,8 @@ import com.original.sense.psit.screens.EditProfileScreen
 import com.original.sense.psit.screens.HomeScreen
 import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
-
+import com.original.sense.psit.screens.RemoveStudentScreen
+import com.original.sense.psit.screens.StudentProfile
 
 
 data class BottomNavigationItem(
@@ -184,6 +185,10 @@ fun MainPageNavigation(navController: NavHostController) {
             EditProfileScreen(navController)
         }
 
+
+        composable(route = "studentProfileInfo") {
+            StudentProfile(navController)
+        }
 
 
 

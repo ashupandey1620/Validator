@@ -85,7 +85,9 @@ fun HomeScreen(navController: NavController) {
                 fontFamily = poppins
                 )
 
-            IconButton(modifier = Modifier.size(35.dp), onClick = { }) {
+            IconButton(modifier = Modifier.size(35.dp), onClick = {
+                navController.navigate("studentProfileInfo")
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete)
                     , contentDescription ="delete Icon",
