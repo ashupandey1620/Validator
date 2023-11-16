@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Divider
@@ -47,11 +49,12 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
+    //val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(brush = GradientBackground())){
+        .background(brush = GradientBackground())
+        ){
 
 
         val textState = remember {
@@ -95,6 +98,8 @@ fun HomeScreen(navController: NavController) {
                     tint = Color.White)
             }
         }
+
+        ListDemo()
     }
 }
 
