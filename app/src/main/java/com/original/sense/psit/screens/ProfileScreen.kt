@@ -224,7 +224,10 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 @Composable
 fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
 
-    Card(onClick = {},
+    Card(onClick = {
+
+                   //logOut from the App
+    },
         colors = CardDefaults.cardColors(Color(0xFF383841)),
         modifier = Modifier
             .fillMaxWidth()

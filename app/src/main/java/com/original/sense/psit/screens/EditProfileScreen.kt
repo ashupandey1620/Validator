@@ -117,7 +117,7 @@ fun generateAbbreviation(name: String): String {
     if (words.size == 1) {
         return words[0].substring(0, 2).uppercase(Locale.getDefault())
     } else {
-        return words[0].substring(0, 1).uppercase(Locale.getDefault()) + words[1].substring(0, 1)
+        return words[0].substring(0, 1).uppercase(Locale.getDefault()) + words[words.size-1].substring(0, 1)
             .uppercase(Locale.getDefault())
     }
 }
