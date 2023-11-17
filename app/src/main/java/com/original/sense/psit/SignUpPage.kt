@@ -48,9 +48,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -167,7 +170,43 @@ fun Terms() {
 
         MyCheckedState()
 
-        Text(text = "I agree to the Terms of Service and Privacy Policy",
+        val annotatedString = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = Color.White ,
+                    fontSize = 13.sp
+                )
+            ) {
+                append("I agree to the")
+            }
+            withStyle(
+                style = SpanStyle(
+                    color = Color(0xFF3068de) ,
+                    fontSize = 13.sp
+                )
+            ) {
+                append(" Terms of Service ")
+            }
+            withStyle(
+                style = SpanStyle(
+                    color = Color.White ,
+                    fontSize = 13.sp
+                )
+            ) {
+                append("and")
+            }
+            withStyle(
+                style = SpanStyle(
+                    color = Color(0xFF3068de) ,
+                    fontSize = 13.sp
+                )
+            ) {
+                append(" Privacy Policy")
+            }
+
+        }
+
+        Text(text = annotatedString,
             color = Color.White,
             modifier = Modifier.padding(start = 10.dp),
             fontSize = 15.sp,
