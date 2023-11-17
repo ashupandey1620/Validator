@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -29,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -136,11 +138,12 @@ fun DelegationAndSuspension() {
     Row(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight() ,
-        horizontalArrangement = Arrangement.SpaceBetween) {
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically) {
 
         Text(text = "Delegat",
             fontFamily = poppins,
-            fontSize = 28.sp,
+            fontSize = 32.sp,
             color = Color.White,
             fontWeight = FontWeight.ExtraBold)
 
@@ -149,7 +152,6 @@ fun DelegationAndSuspension() {
             onClick = {  },
             colors = FilterChipDefaults.filterChipColors(
                 containerColor = Color(0xFF1d1e23),
-                iconColor = Color.White,
                 labelColor = Color.White,
                 selectedContainerColor = Color.Cyan,
                 selectedLabelColor = Color.Black,
@@ -160,6 +162,29 @@ fun DelegationAndSuspension() {
             shape = RoundedCornerShape(25.dp)
         )
 
+    }
+}
+
+
+@Composable
+fun DelegationAndSuspensionButton() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 10.dp)
+            .wrapContentHeight() ,
+        horizontalArrangement = Arrangement.SpaceBetween ,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .background(Color.Green)
+        ) {
+
+        }
     }
 }
 
@@ -186,15 +211,6 @@ fun SubjectOfDelegation() {
     Column(modifier = Modifier
         .size(200.dp)
         .background(Color.Cyan)) {
-
-    }
-}
-
-@Composable
-fun DelegationAndSuspensionButton() {
-    Column(modifier = Modifier
-        .size(200.dp)
-        .background(Color.Magenta)) {
 
     }
 }
