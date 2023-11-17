@@ -2,6 +2,7 @@ package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,10 +11,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -96,7 +100,24 @@ fun ListDemo() {
 fun AddScreen(navController: NavController) {
     Box (modifier = Modifier
         .fillMaxSize()
-        .background(brush = GradientBackground())){
+        .background(brush = GradientBackground())
+        ){
+
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .verticalScroll(rememberScrollState())) {
+
+            DelegationAndSuspension()
+            DelegationAndSuspensionButton()
+
+            SubjectOfDelegation()
+
+            AllottedLectures()
+            DescriptionDelegation()
+
+            CreateButton()
+        }
 
     }
 }
@@ -148,5 +169,55 @@ fun ListItem(model: PersonModel) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CreateButton() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Red)) {
+
+    }
+}
+
+@Composable
+fun DescriptionDelegation() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Green)) {
+
+    }
+}
+
+@Composable
+fun AllottedLectures() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Blue)) {
+
+    }
+}
+
+@Composable
+fun SubjectOfDelegation() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Cyan)) {
+
+    }
+}
+
+@Composable
+fun DelegationAndSuspensionButton() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Magenta)) {
+
+    }
+}
+
+@Composable
+fun DelegationAndSuspension() {
+    Column(modifier = Modifier.size(200.dp)
+        .background(Color.Gray)) {
+
+
+
     }
 }
