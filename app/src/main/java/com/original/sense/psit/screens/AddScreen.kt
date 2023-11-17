@@ -126,7 +126,7 @@ fun ListItem(model: PersonModel) {
             ) {
                 Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState },
                     colors = CheckboxDefaults.colors(checkmarkColor = Color.White,
-                       checkedColor = Color.Green,
+                       checkedColor = Color.Red,
                         uncheckedColor = Color.White) )
 
                 Column (modifier = Modifier  .padding(vertical = 10.dp)){

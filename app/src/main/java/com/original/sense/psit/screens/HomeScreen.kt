@@ -150,7 +150,6 @@ fun SearchView(
     modifier: Modifier
 ) {
 
-
         TextField(
 
             value = state.value ,

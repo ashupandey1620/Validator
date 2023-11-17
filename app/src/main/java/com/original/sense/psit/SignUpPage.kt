@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -20,6 +21,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
@@ -31,6 +34,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -57,6 +62,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.android.gms.maps.model.Circle
 import com.original.sense.psit.screens.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
@@ -66,7 +72,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         modifier = Modifier
             .fillMaxSize()
             .background(brush = GradientBackground())
-            .padding(20.dp)
+            .padding(18.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -77,8 +83,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(start = 5.dp , top = 20.dp),
-            fontSize = 46.sp,
-            color = Color.White,
+            fontSize = 48.sp,
+            color = Color(0xFFF6F6F6),
             fontFamily = poppins,
             fontWeight = FontWeight.ExtraBold
             )
@@ -89,16 +95,17 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                 .wrapContentHeight()
                 .padding(top = 15.dp , start = 5.dp)
                 .align(CenterHorizontally),
-            fontSize = 17.sp,
-            color = Color.White,
+            fontSize = 18.sp,
+            color =  Color(0xFFA7A7A7),
             fontFamily = poppins,
             fontWeight = FontWeight.Light,
+            softWrap = true
 
         )
 
         Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(15.dp))
+            .height(10.dp))
         SimpleOutlinedTextFieldName()
         SimpleOutlinedTextFieldUsername()
         SimpleOutlinedTextFieldEmail()
@@ -139,17 +146,17 @@ fun AlreadyAccount(navController: NavHostController) {
        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically){
         Text(text = "Already have an account?",
-            color = Color.White,
+            color = Color(0xFF5C5D63),
             modifier = Modifier.padding(start = 15.dp),
-            fontSize = 15.sp,
+            fontSize = 13.sp,
             fontWeight = FontWeight.Light,
             fontFamily = poppins,
             )
 
-        TextButton(onClick = { navController.navigate("signIn_page") }, modifier = Modifier.padding(start = 10.dp)) {
+        TextButton(onClick = { navController.navigate("signIn_page") }, modifier = Modifier.padding(start = 3.dp)) {
             Text(text = "Log In",
-                color = Color(0xFF3068de),
-                fontSize = 15.sp,
+                color = Color(0xFF757575),
+                fontSize = 13.sp,
                 fontWeight = FontWeight.Light,
                 fontFamily = poppins,
             )
@@ -173,7 +180,7 @@ fun Terms() {
         val annotatedString = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    color = Color.White ,
+                    color = Color(0xFF5C5D63) ,
                     fontSize = 13.sp
                 )
             ) {
@@ -181,7 +188,7 @@ fun Terms() {
             }
             withStyle(
                 style = SpanStyle(
-                    color = Color(0xFF3068de) ,
+                    color = Color(0xFF888888) ,
                     fontSize = 13.sp
                 )
             ) {
@@ -189,7 +196,7 @@ fun Terms() {
             }
             withStyle(
                 style = SpanStyle(
-                    color = Color.White ,
+                    color = Color(0xFF5C5D63),
                     fontSize = 13.sp
                 )
             ) {
@@ -197,7 +204,7 @@ fun Terms() {
             }
             withStyle(
                 style = SpanStyle(
-                    color = Color(0xFF3068de) ,
+                    color = Color(0xFF888888),
                     fontSize = 13.sp
                 )
             ) {
@@ -208,7 +215,6 @@ fun Terms() {
 
         Text(text = annotatedString,
             color = Color.White,
-            modifier = Modifier.padding(start = 10.dp),
             fontSize = 15.sp,
             fontFamily = poppins,
             fontWeight = FontWeight.Light)
@@ -225,18 +231,17 @@ fun SimpleOutlinedTextFieldName() {
     var text by rememberSaveable { mutableStateOf("") }
 
     OutlinedTextField(
-
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFffffff))
+            Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Name", color = Color.White, fontSize = 17.sp)},
+        placeholder = { Text(text = "Name", color =Color(0xFFA7A7A7), fontSize = 16.sp)},
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email
+            keyboardType = KeyboardType.Text
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.White,
@@ -246,12 +251,14 @@ fun SimpleOutlinedTextFieldName() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .height(85.dp)
-            .padding(top = 20.dp),
+            .height(80.dp)
+            .padding(top = 16.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-                // do something here
+                //
+
+
             }
         )
 
@@ -265,24 +272,33 @@ fun SimpleOutlinedTextFieldUsername() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
+
     OutlinedTextField(
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Person, contentDescription = "Username", tint = Color(0xFFffffff))
+            Icon(Icons.Outlined.Person, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Username", color = Color.White,   fontFamily = poppins,fontSize = 17.sp) },
+        placeholder = { Text(text = "Username", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email
+            keyboardType = KeyboardType.Text
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.White,
-            focusedBorderColor = Color.White,
+            focusedBorderColor = if(text.isEmpty()) Color.White
+            else if(user.contains(text))
+                Color.Red
+            else
+                Color.Green,
+            //Color(0xFF64bf75),
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
@@ -293,10 +309,12 @@ fun SimpleOutlinedTextFieldUsername() {
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-                // do something here
+                //
+
+
+
             }
         )
-
     )
 }
 
@@ -310,13 +328,14 @@ fun SimpleOutlinedTextFieldEmail() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFffffff))
+            Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Email",   fontFamily = poppins,color = Color.White, fontSize = 17.sp) },
+        placeholder = { Text(text = "Email",   fontFamily = poppins,
+            color = Color(0xFFA7A7A7), fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -334,7 +353,9 @@ fun SimpleOutlinedTextFieldEmail() {
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-                // do something here
+              //
+
+
             }
         )
 
@@ -351,20 +372,21 @@ fun SimpleOutlinedTextFieldPhone() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFffffff))
+            Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Phone Number",  fontFamily = poppins, color = Color.White, fontSize = 17.sp) },
+        placeholder = { Text(text = "Phone Number",  fontFamily = poppins,
+            color = Color(0xFFA7A7A7), fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email
+            keyboardType = KeyboardType.Number
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.White,
-            focusedBorderColor = Color.White,
+            focusedBorderColor =if (text.length<10) Color.White else Color(0xFFe10012),
             unfocusedBorderColor = Color(0xFF383838),
             containerColor = Color(0xFF383838)),
         singleLine = true,
@@ -378,7 +400,6 @@ fun SimpleOutlinedTextFieldPhone() {
                 // do something here
             }
         )
-
     )
 }
 
@@ -392,15 +413,16 @@ fun SimpleOutlinedTextFieldRoom() {
 
         value = text,
         leadingIcon = {
-            Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFffffff))
+            Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Room Number",  fontFamily = poppins, color = Color.White, fontSize = 17.sp) },
+        placeholder = { Text(text = "Room Number",  fontFamily = poppins,
+            color = Color(0xFFA7A7A7), fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Text
         ) ,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.White,
@@ -445,5 +467,24 @@ fun CircularCheckBox(
             contentDescription = "Checkbox",
             tint = Color.White
         )
+    }
+}
+
+
+@Composable
+fun CircleCheckbox(selected: Boolean, enabled: Boolean = true, onChecked: () -> Unit) {
+
+    val color = MaterialTheme.colorScheme
+    val imageVector = if (selected) Icons.Filled.CheckCircle else Icons.Outlined.AccountCircle
+    val tint = if (selected) color.primary.copy(alpha = 0.8f) else Color.White
+    val background = if (selected) Color.White else Color.Transparent
+
+    IconButton(onClick = { onChecked() },
+        modifier = Modifier.offset(x = 4.dp, y = 4.dp),
+        enabled = enabled) {
+
+        Icon(imageVector = imageVector, tint = tint,
+            modifier = Modifier.background(background, shape = CircleShape),
+            contentDescription = "checkbox")
     }
 }
