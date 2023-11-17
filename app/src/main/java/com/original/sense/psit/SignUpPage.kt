@@ -249,8 +249,8 @@ fun SimpleOutlinedTextFieldUsername() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .height(85.dp)
-            .padding(top = 20.dp),
+            .height(80.dp)
+            .padding(top = 16.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -290,8 +290,8 @@ fun SimpleOutlinedTextFieldEmail() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .height(85.dp)
-            .padding(top = 20.dp),
+            .height(80.dp)
+            .padding(top = 16.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -331,8 +331,8 @@ fun SimpleOutlinedTextFieldPhone() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .height(85.dp)
-            .padding(top = 20.dp),
+            .height(80.dp)
+            .padding(top = 16.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -371,8 +371,8 @@ fun SimpleOutlinedTextFieldRoom() {
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .height(85.dp)
-            .padding(top = 20.dp),
+            .height(80.dp)
+            .padding(top = 16.dp),
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
@@ -386,11 +386,6 @@ fun SimpleOutlinedTextFieldRoom() {
 @Composable
 fun MyCheckedState() {
     var checkedState by remember { mutableStateOf(false) }
-//    CircularCheckBox(
-//        checked = checkedState,
-//        onCheckedChange = { checkedState = !checkedState }
-//    )
-//
     Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState })
 }
 
