@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -250,6 +251,9 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected1 = !selected1 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
@@ -258,12 +262,30 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 1") },
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = "Lecture 1" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
                 selected = selected1,
                 shape = RoundedCornerShape(25.dp)
             )
 
             FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected2 = !selected2 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
@@ -272,7 +294,22 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 2") },
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = "Lecture 2" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
                 selected = selected2,
                 shape = RoundedCornerShape(25.dp)
             )
@@ -290,7 +327,10 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
-                onClick = { selected3 = !selected3  },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
+                onClick = { selected3 = !selected3 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -298,13 +338,31 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 3") },
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = "Lecture 3" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
                 selected = selected3,
                 shape = RoundedCornerShape(25.dp)
             )
 
             FilterChip(
-                onClick = {  selected4 = !selected4  },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
+                onClick = { selected4 = !selected4 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -312,7 +370,22 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 4") },
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = "Lecture 4" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
                 selected = selected4,
                 shape = RoundedCornerShape(25.dp)
             )
@@ -323,13 +396,16 @@ fun AllottedLectures() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp)
+                .padding(top = 10.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
             FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected5 = !selected5 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
@@ -338,12 +414,30 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 5") },
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            text = "Lecture 5" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
                 selected = selected5,
                 shape = RoundedCornerShape(25.dp)
             )
 
             FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected6 = !selected6 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
@@ -352,7 +446,17 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 6") },
+                label = {
+
+                    Column(modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center) {
+                        Text(
+                            "Lecture 6" ,
+                            fontSize = 20.sp ,
+                            fontFamily = poppins
+                        )
+                    }},
                 selected = selected6,
                 shape = RoundedCornerShape(25.dp)
             )
@@ -363,13 +467,16 @@ fun AllottedLectures() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp)
+                .padding(top=10.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
             FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected7 = !selected7 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
@@ -378,22 +485,43 @@ fun AllottedLectures() {
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 7") },
+                label = {
+
+                    Column(modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center) {
+                        Text(
+                            "Lecture 7" ,
+                            fontSize = 20.sp ,
+                            fontFamily = poppins
+                        )
+                    }},
                 selected = selected7,
                 shape = RoundedCornerShape(25.dp)
             )
-
             FilterChip(
-
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp),
                 onClick = { selected8 = !selected8 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
-                    selectedLeadingIconColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
                 ),
-                label = { Text("Lecture 8") },
+                label = {
+
+                    Column(modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center) {
+                        Text(
+                            "Lecture 8" ,
+                            fontSize = 20.sp ,
+                            fontFamily = poppins
+                        )
+                    }},
                 selected = selected8,
                 shape = RoundedCornerShape(25.dp)
             )
