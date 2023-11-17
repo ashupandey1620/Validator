@@ -194,7 +194,7 @@ fun SimpleOutlinedTextFieldName() {
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Name", color = Color.White, fontSize = 20.sp)},
+        placeholder = { Text(text = "Name", color = Color.White, fontSize = 17.sp)},
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -236,7 +236,7 @@ fun SimpleOutlinedTextFieldUsername() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Username", color = Color.White,   fontFamily = poppins,fontSize = 20.sp) },
+        placeholder = { Text(text = "Username", color = Color.White,   fontFamily = poppins,fontSize = 17.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -277,7 +277,7 @@ fun SimpleOutlinedTextFieldEmail() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Email",   fontFamily = poppins,color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Email",   fontFamily = poppins,color = Color.White, fontSize = 17.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -318,7 +318,7 @@ fun SimpleOutlinedTextFieldPhone() {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Phone Number",  fontFamily = poppins, color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Phone Number",  fontFamily = poppins, color = Color.White, fontSize = 17.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
@@ -358,7 +358,7 @@ fun SimpleOutlinedTextFieldRoom() {
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
-        placeholder = { Text(text = "Room Number",  fontFamily = poppins, color = Color.White, fontSize = 20.sp) },
+        placeholder = { Text(text = "Room Number",  fontFamily = poppins, color = Color.White, fontSize = 17.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
