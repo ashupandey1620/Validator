@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -124,9 +125,9 @@ fun AddScreen(navController: NavController) {
 
             Text(text = "Allot Lectures",
                 fontFamily = poppins,
-                fontSize = 32.sp,
+                fontSize = 20.sp,
                 color = Color.White,
-                fontWeight = FontWeight.ExtraBold)
+                fontWeight = FontWeight.Medium)
             AllottedLectures()
             DescriptionDelegation()
 
@@ -203,19 +204,202 @@ fun DescriptionDelegation() {
         horizontalArrangement = Arrangement.SpaceBetween ,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
+//        FilterChip(
+//            onClick = {  },
+//            colors = FilterChipDefaults.filterChipColors(
+//                containerColor = Color(0xFF1d1e23),
+//                labelColor = Color.White,
+//                selectedContainerColor = Color.Cyan,
+//                selectedLabelColor = Color.Black,
+//                selectedLeadingIconColor = Color.Black
+//            ),
+//            label = { Text("DESN162606") },
+//            selected = selected,
+//            shape = RoundedCornerShape(25.dp)
+        //)
 
 
     }
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AllottedLectures() {
+
+    var selected1 by remember { mutableStateOf(false) }
+    var selected2 by remember { mutableStateOf(false) }
+    var selected3 by remember { mutableStateOf(false) }
+    var selected4 by remember { mutableStateOf(false) }
+    var selected5 by remember { mutableStateOf(false) }
+    var selected6 by remember { mutableStateOf(false) }
+    var selected7 by remember { mutableStateOf(false) }
+    var selected8 by remember { mutableStateOf(false) }
+
+
     Column(modifier = Modifier
-        .size(200.dp)
         .background(Color.Blue)) {
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+                .wrapContentHeight() ,
+            horizontalArrangement = Arrangement.SpaceBetween ,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 1") },
+                selected = selected1,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 2") },
+                selected = selected2,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+                .wrapContentHeight() ,
+            horizontalArrangement = Arrangement.SpaceBetween ,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 3") },
+                selected = selected3,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 4") },
+                selected = selected4,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+                .wrapContentHeight() ,
+            horizontalArrangement = Arrangement.SpaceBetween ,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 5") },
+                selected = selected5,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 6") },
+                selected = selected6,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+                .wrapContentHeight() ,
+            horizontalArrangement = Arrangement.SpaceBetween ,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            FilterChip(
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 7") },
+                selected = selected7,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+            FilterChip(
+
+                onClick = {  },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF1d1e23),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.Cyan,
+                    selectedLabelColor = Color.Black,
+                    selectedLeadingIconColor = Color.Black
+                ),
+                label = { Text("Lecture 8") },
+                selected = selected8,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+
+        }
     }
 }
 
