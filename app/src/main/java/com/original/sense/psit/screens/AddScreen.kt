@@ -122,6 +122,11 @@ fun AddScreen(navController: NavController) {
 
             SubjectOfDelegation()
 
+            Text(text = "Allot Lectures",
+                fontFamily = poppins,
+                fontSize = 32.sp,
+                color = Color.White,
+                fontWeight = FontWeight.ExtraBold)
             AllottedLectures()
             DescriptionDelegation()
 
@@ -190,11 +195,19 @@ fun DelegationAndSuspensionButton() {
 
 @Composable
 fun DescriptionDelegation() {
-    Column(modifier = Modifier
-        .size(200.dp)
-        .background(Color.Green)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 10.dp)
+            .wrapContentHeight() ,
+        horizontalArrangement = Arrangement.SpaceBetween ,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+
 
     }
+
 }
 
 @Composable
