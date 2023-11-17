@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.original.sense.psit.PersonModel
+import com.original.sense.psit.ui.theme.poppins
 
 
 private val studentList = mutableListOf<PersonModel>()
@@ -58,6 +60,9 @@ fun ListDemo() {
     studentList.add(PersonModel("James Malhotra",2101641530078))
     studentList.add(PersonModel("Chadwick Khan",2101640100076))
 
+    studentList.sortWith(Comparator { a, b -> a.name.compareTo(b.name) })
+
+
 
     Column(
         modifier = Modifier
@@ -76,6 +81,8 @@ fun ListDemo() {
                 ListItem(model = model)
             }
         }
+        
+        Spacer(modifier = Modifier.padding(horizontal = 50.dp))
     }
 }
 
@@ -107,30 +114,35 @@ fun ListItem(model: PersonModel) {
         var checkedState by remember { mutableStateOf(false) }
         val paddingModifier = Modifier.padding(10.dp)
         Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(24.dp),
             colors = CardDefaults.cardColors(Color(0xFF383841))
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
+                  ,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState },
                     colors = CheckboxDefaults.colors(checkmarkColor = Color.White,
-//                        checkedColor = Color.White,
+                       checkedColor = Color.Green,
                         uncheckedColor = Color.White) )
 
-                Column (modifier = Modifier.padding(5.dp)){
+                Column (modifier = Modifier  .padding(vertical = 10.dp)){
                     Text(
                         text = model.name ,
                         fontSize = 18.sp ,
                         fontWeight = FontWeight.SemiBold ,
                         color = Color.White ,
+                        fontFamily = poppins
                     )
                     Text(
                         text = model.rollNum.toString(),
                         fontSize = 14.sp ,
-                        fontWeight = FontWeight.SemiBold ,
+                        fontWeight = FontWeight.Light ,
                         color = Color.White ,
+                        fontFamily = poppins
                     )
 
                 }
