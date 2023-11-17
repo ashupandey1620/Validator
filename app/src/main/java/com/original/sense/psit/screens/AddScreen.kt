@@ -148,7 +148,7 @@ fun DelegationAndSuspension() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
 
-        Text(text = "Delegat",
+        Text(text = "Delegation",
             fontFamily = poppins,
             fontSize = 32.sp,
             color = Color.White,
@@ -238,13 +238,12 @@ fun AllottedLectures() {
     var selected8 by remember { mutableStateOf(false) }
 
 
-    Column(modifier = Modifier
-        .background(Color.Blue)) {
+    Column(modifier = Modifier) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp)
+                .padding(vertical = 4.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
@@ -322,7 +321,7 @@ fun AllottedLectures() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp)
+                .padding(vertical = 4.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
@@ -400,7 +399,7 @@ fun AllottedLectures() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp)
+                .padding(top = 4.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
@@ -473,7 +472,7 @@ fun AllottedLectures() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top=10.dp)
+                .padding(top=4.dp)
                 .wrapContentHeight() ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
