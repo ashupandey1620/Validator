@@ -250,11 +250,11 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected1 = !selected1 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -264,11 +264,11 @@ fun AllottedLectures() {
             )
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected2 = !selected2 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -290,11 +290,11 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected3 = !selected3  },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -304,11 +304,11 @@ fun AllottedLectures() {
             )
 
             FilterChip(
-                onClick = {  },
+                onClick = {  selected4 = !selected4  },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -330,11 +330,11 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected5 = !selected5 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -344,11 +344,11 @@ fun AllottedLectures() {
             )
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected6 = !selected6 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -370,11 +370,11 @@ fun AllottedLectures() {
         ) {
 
             FilterChip(
-                onClick = {  },
+                onClick = { selected7 = !selected7 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
                     selectedLeadingIconColor = Color.Black
                 ),
@@ -385,13 +385,13 @@ fun AllottedLectures() {
 
             FilterChip(
 
-                onClick = {  },
+                onClick = { selected8 = !selected8 },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
-                    selectedContainerColor = Color.Cyan,
+                    selectedContainerColor = Color.Green,
                     selectedLabelColor = Color.Black,
-                    selectedLeadingIconColor = Color.Black
+                    selectedLeadingIconColor = Color.Black,
                 ),
                 label = { Text("Lecture 8") },
                 selected = selected8,
