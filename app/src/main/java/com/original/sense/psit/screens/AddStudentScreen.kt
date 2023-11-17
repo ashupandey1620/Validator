@@ -65,10 +65,6 @@ fun AddStudentScreen() {
                 ,painter = painterResource(id = R.drawable.mobileman),
                 contentDescription = "")
 
-//            Text(
-//                text = "TAP" , color = Color.White ,
-//                fontFamily = poppins
-//            )
 
         }
 

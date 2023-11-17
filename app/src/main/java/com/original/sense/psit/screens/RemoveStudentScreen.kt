@@ -57,11 +57,6 @@ fun RemoveStudentScreen() {
                 ,painter = painterResource(id = R.drawable.dustbingirl) ,
                 contentDescription = "")
 
-//            Text(
-//                text = "TAP" , color = Color.White ,
-//                fontFamily = poppins
-//            )
-
         }
 
         Row(
