@@ -259,7 +259,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
 
@@ -272,6 +272,7 @@ fun AllottedLectures() {
                     ) {
 
                         Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
                             text = "Lecture 1" ,
                             fontSize = 20.sp , fontFamily = poppins
                         )
@@ -291,7 +292,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
 
@@ -304,6 +305,7 @@ fun AllottedLectures() {
                     ) {
 
                         Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
                             text = "Lecture 2" ,
                             fontSize = 20.sp , fontFamily = poppins
                         )
@@ -335,7 +337,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
 
@@ -348,6 +350,7 @@ fun AllottedLectures() {
                     ) {
 
                         Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
                             text = "Lecture 3" ,
                             fontSize = 20.sp , fontFamily = poppins
                         )
@@ -367,7 +370,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
 
@@ -380,6 +383,7 @@ fun AllottedLectures() {
                     ) {
 
                         Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
                             text = "Lecture 4" ,
                             fontSize = 20.sp , fontFamily = poppins
                         )
@@ -411,7 +415,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
 
@@ -424,6 +428,7 @@ fun AllottedLectures() {
                     ) {
 
                         Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
                             text = "Lecture 5" ,
                             fontSize = 20.sp , fontFamily = poppins
                         )
@@ -443,7 +448,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
                 label = {
@@ -451,8 +456,9 @@ fun AllottedLectures() {
                     Column(modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center) {
-                        Text(
-                            "Lecture 6" ,
+                        Text(  modifier = Modifier.padding(vertical = 4.dp),
+
+                            text="Lecture 6" ,
                             fontSize = 20.sp ,
                             fontFamily = poppins
                         )
@@ -482,7 +488,7 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
                 label = {
@@ -490,8 +496,8 @@ fun AllottedLectures() {
                     Column(modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center) {
-                        Text(
-                            "Lecture 7" ,
+                        Text(  modifier = Modifier.padding(vertical = 4.dp),
+                            text="Lecture 7" ,
                             fontSize = 20.sp ,
                             fontFamily = poppins
                         )
@@ -508,20 +514,20 @@ fun AllottedLectures() {
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
                     selectedContainerColor = Color.Green,
-                    selectedLabelColor = Color.Black,
+                    selectedLabelColor = Color.White,
                     selectedLeadingIconColor = Color.Black
                 ),
                 label = {
-
-                    Column(modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center) {
-                        Text(
-                            "Lecture 8" ,
-                            fontSize = 20.sp ,
-                            fontFamily = poppins
-                        )
-                    }},
+                                    Column(modifier = Modifier.fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center) {
+                                    Text(  modifier = Modifier.padding(vertical = 4.dp),
+                                        text="Lecture 8" ,
+                                        fontSize = 20.sp ,
+                                        fontFamily = poppins
+                                    )
+                            }
+                        },
                 selected = selected8,
                 shape = RoundedCornerShape(25.dp)
             )
