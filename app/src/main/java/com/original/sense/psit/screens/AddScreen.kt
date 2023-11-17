@@ -18,12 +18,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -106,9 +111,11 @@ fun AddScreen(navController: NavController) {
         Column(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .padding(20.dp)
             .verticalScroll(rememberScrollState())) {
 
             DelegationAndSuspension()
+
             DelegationAndSuspensionButton()
 
             SubjectOfDelegation()
@@ -121,6 +128,88 @@ fun AddScreen(navController: NavController) {
 
     }
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DelegationAndSuspension() {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight() ,
+        horizontalArrangement = Arrangement.SpaceBetween) {
+
+        Text(text = "Delegat",
+            fontFamily = poppins,
+            fontSize = 28.sp,
+            color = Color.White,
+            fontWeight = FontWeight.ExtraBold)
+
+        var selected by remember { mutableStateOf(false) }
+        FilterChip(
+            onClick = {  },
+            colors = FilterChipDefaults.filterChipColors(
+                containerColor = Color(0xFF1d1e23),
+                iconColor = Color.White,
+                labelColor = Color.White,
+                selectedContainerColor = Color.Cyan,
+                selectedLabelColor = Color.Black,
+                selectedLeadingIconColor = Color.Black
+            ),
+            label = { Text("DESN162606") },
+            selected = selected,
+            shape = RoundedCornerShape(25.dp)
+        )
+
+    }
+}
+
+@Composable
+fun DescriptionDelegation() {
+    Column(modifier = Modifier
+        .size(200.dp)
+        .background(Color.Green)) {
+
+    }
+}
+
+@Composable
+fun AllottedLectures() {
+    Column(modifier = Modifier
+        .size(200.dp)
+        .background(Color.Blue)) {
+
+    }
+}
+
+@Composable
+fun SubjectOfDelegation() {
+    Column(modifier = Modifier
+        .size(200.dp)
+        .background(Color.Cyan)) {
+
+    }
+}
+
+@Composable
+fun DelegationAndSuspensionButton() {
+    Column(modifier = Modifier
+        .size(200.dp)
+        .background(Color.Magenta)) {
+
+    }
+}
+
+@Composable
+fun CreateButton() {
+    Column(modifier = Modifier
+        .size(200.dp)
+        .background(Color.Gray)) {
+
+
+
+    }
+}
+
 
 
 
@@ -172,52 +261,3 @@ fun ListItem(model: PersonModel) {
     }
 }
 
-@Composable
-fun CreateButton() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Red)) {
-
-    }
-}
-
-@Composable
-fun DescriptionDelegation() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Green)) {
-
-    }
-}
-
-@Composable
-fun AllottedLectures() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Blue)) {
-
-    }
-}
-
-@Composable
-fun SubjectOfDelegation() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Cyan)) {
-
-    }
-}
-
-@Composable
-fun DelegationAndSuspensionButton() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Magenta)) {
-
-    }
-}
-
-@Composable
-fun DelegationAndSuspension() {
-    Column(modifier = Modifier.size(200.dp)
-        .background(Color.Gray)) {
-
-
-
-    }
-}
