@@ -123,9 +123,7 @@ fun ProfileCard(navController: NavController) {
             elevation = CardDefaults.cardElevation(2.dp)
 
         ) {
-
                 Column {
-
                     SupportAccountItem(mainText = "Notifications",
                         onClick = {
                             navController.navigate("notification")
