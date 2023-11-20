@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -39,7 +40,8 @@ fun AddStudentScreen() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .wrapContentHeight()
             .background(Color(0xFF3068de)) ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -70,9 +72,10 @@ fun AddStudentScreen() {
 
         Row(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 20.dp, bottom = 40.dp)
                 .fillMaxWidth()
-                .height(50.dp) ,
+                .height(50.dp)
+                ,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
 
