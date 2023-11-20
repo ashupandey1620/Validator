@@ -69,6 +69,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    implementation ("com.holix.android:bottomsheetdialog-compose:1.4.0")
+
 
     //Retrofit support
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")

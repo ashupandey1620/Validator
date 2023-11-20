@@ -37,6 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -230,6 +231,7 @@ fun SimpleOutlinedTextFieldName() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val containerColor = Color(0xFF383838)
     OutlinedTextField(
         value = text,
         leadingIcon = {
@@ -243,11 +245,14 @@ fun SimpleOutlinedTextFieldName() {
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Text
         ) ,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color(0xFF383838),
-            containerColor = Color(0xFF383838)),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = Color.White ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
@@ -265,6 +270,12 @@ fun SimpleOutlinedTextFieldName() {
     )
 }
 
+//
+//colors = TextFieldDefaults.outlinedTextFieldColors(
+//focusedTextColor = Color.White,
+//focusedBorderColor = Color.White,
+//unfocusedBorderColor = Color(0xFF383838),
+//containerColor = Color(0xFF383838)),
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
@@ -274,6 +285,7 @@ fun SimpleOutlinedTextFieldUsername() {
 
     val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
 
+    val containerColor = Color(0xFF383838)
     OutlinedTextField(
 
         value = text,
@@ -291,16 +303,19 @@ fun SimpleOutlinedTextFieldUsername() {
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Text
         ) ,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
             focusedBorderColor = if(text.isEmpty()) Color.White
             else if(user.contains(text))
                 Color.Red
             else
-                Color.Green,
+                Color.Green ,
             //Color(0xFF64bf75),
-            unfocusedBorderColor = Color(0xFF383838),
-            containerColor = Color(0xFF383838)),
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
@@ -324,6 +339,7 @@ fun SimpleOutlinedTextFieldEmail() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val containerColor = Color(0xFF383838)
     OutlinedTextField(
 
         value = text,
@@ -340,11 +356,14 @@ fun SimpleOutlinedTextFieldEmail() {
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email
         ) ,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color(0xFF383838),
-            containerColor = Color(0xFF383838)),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = Color.White ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
@@ -368,6 +387,7 @@ fun SimpleOutlinedTextFieldPhone() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val containerColor = Color(0xFF383838)
     OutlinedTextField(
 
         value = text,
@@ -384,11 +404,14 @@ fun SimpleOutlinedTextFieldPhone() {
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Number
         ) ,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
-            focusedBorderColor =if (text.length<10) Color.White else Color(0xFFe10012),
-            unfocusedBorderColor = Color(0xFF383838),
-            containerColor = Color(0xFF383838)),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = if (text.length<10) Color.White else Color(0xFFe10012) ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
@@ -409,6 +432,7 @@ fun SimpleOutlinedTextFieldRoom() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val containerColor = Color(0xFF383838)
     OutlinedTextField(
 
         value = text,
@@ -424,11 +448,14 @@ fun SimpleOutlinedTextFieldRoom() {
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text
         ) ,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color(0xFF383838),
-            containerColor = Color(0xFF383838)),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = Color.White ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()

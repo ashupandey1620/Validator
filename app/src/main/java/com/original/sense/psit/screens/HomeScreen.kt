@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,17 +23,24 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -46,66 +54,110 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
 
     val context = LocalContext.current.applicationContext
-    //val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(brush = GradientBackground())
-        ){
+    var show by remember {
+        mutableStateOf(false)
+    }
 
 
-        val textState = remember {
-            mutableStateOf(TextFieldValue(""))
-        }
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp),
-            Arrangement.SpaceBetween) {
-
-            SearchView(state = textState ,
-                placeHolder = "Search" ,
-                modifier = Modifier)
-            
-            Row {
-
-                CircularTapButton()
-                Spacer(modifier = Modifier.padding(6.dp))
-                CircularNotificationButton()
+    if (show) {
+        BottomSheetDialog(
+            onDismissRequest = {
+                show = false
+            },
+            properties = BottomSheetDialogProperties()) {
+            Surface {
+                AddStudentScreen()
             }
         }
+    }
 
-        Row (  modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp , end = 20.dp),
-            Arrangement.SpaceBetween){
-            
-            Text(text = "Student List:",
-                color = Color.White,
-                fontSize = 27.sp,
-                fontFamily = poppins
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(brush = GradientBackground())
+        ) {
+
+
+            val textState = remember {
+                mutableStateOf(TextFieldValue(""))
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp) ,
+                Arrangement.SpaceBetween
+            ) {
+
+                SearchView(
+                    state = textState ,
+                    placeHolder = "Search" ,
+                    modifier = Modifier
                 )
 
-            IconButton(modifier = Modifier.size(35.dp), onClick = {
-                navController.navigate("studentProfileInfo")
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.delete)
-                    , contentDescription ="delete Icon",
-                    tint = Color.White)
-            }
-        }
+                Row {
 
-        ListDemo()
+                    Box (modifier = Modifier.size(50.dp)){
+
+                        Image(modifier = Modifier
+                            .clip(CircleShape)
+                            .fillMaxSize()
+                            .clickable {
+                                Toast.makeText(context , "Image Clicked" , Toast.LENGTH_SHORT).show()
+                                show = true
+                            },
+                            painter = painterResource(id = R.drawable.tap) ,
+                            contentDescription = "" )
+
+                    }
+
+                    Spacer(modifier = Modifier.padding(6.dp))
+                    CircularNotificationButton()
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp , end = 20.dp) ,
+                Arrangement.SpaceBetween
+            ) {
+
+                Text(
+                    text = "Student List:" ,
+                    color = Color.White ,
+                    fontSize = 27.sp ,
+                    fontFamily = poppins
+                )
+
+                IconButton(modifier = Modifier.size(35.dp) , onClick = {
+                    navController.navigate("studentProfileInfo")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete) ,
+                        contentDescription = "delete Icon" ,
+                        tint = Color.White
+                    )
+                }
+            }
+
+            ListDemo()
+        }
     }
-}
 
 
 @Composable
@@ -116,7 +168,9 @@ fun CircularNotificationButton() {
                 .clip(CircleShape)
                 .fillMaxSize()
                 .clickable {
-                    Toast.makeText(context,"Notification Clicked",Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(context , "Notification Clicked" , Toast.LENGTH_SHORT)
+                        .show()
                 },
                 painter = painterResource(id = R.drawable.notifybutton) ,
                 contentDescription = "" )
@@ -134,11 +188,11 @@ fun CircularTapButton() {
             .clip(CircleShape)
             .fillMaxSize()
             .clickable {
-                       Toast.makeText(context,"Image Clicked",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , "Image Clicked" , Toast.LENGTH_SHORT).show()
+
             },
             painter = painterResource(id = R.drawable.tap) ,
             contentDescription = "" )
-
     }
 }
 
