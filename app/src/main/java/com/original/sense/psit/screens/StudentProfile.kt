@@ -68,19 +68,12 @@ fun StudentProfile(navController: NavHostController) {
             }
 
             CircularImage(name)
-
             NameColumn()
-
             CollegeRollNumber()
-
             AktuRollNumber()
-
             ClassStudent()
-
             Branch()
-
             TypeStudent()
-
 
         }
     }

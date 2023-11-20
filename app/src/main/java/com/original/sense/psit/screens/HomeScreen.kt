@@ -1,7 +1,9 @@
 package com.original.sense.psit.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,6 +52,7 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun HomeScreen(navController: NavController) {
 
+    val context = LocalContext.current.applicationContext
     //val arr = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049","2101641530050")
 
     Column(modifier = Modifier
@@ -106,11 +110,14 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
 fun CircularNotificationButton() {
-
+    val context = LocalContext.current.applicationContext
     Box (modifier = Modifier.size(50.dp)){
             Image(modifier = Modifier
                 .clip(CircleShape)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .clickable {
+                    Toast.makeText(context,"Notification Clicked",Toast.LENGTH_SHORT).show()
+                },
                 painter = painterResource(id = R.drawable.notifybutton) ,
                 contentDescription = "" )
 
@@ -120,12 +127,15 @@ fun CircularNotificationButton() {
 
 @Composable
 fun CircularTapButton() {
-
+    val context = LocalContext.current.applicationContext
     Box (modifier = Modifier.size(50.dp)){
 
         Image(modifier = Modifier
             .clip(CircleShape)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable {
+                       Toast.makeText(context,"Image Clicked",Toast.LENGTH_SHORT).show()
+            },
             painter = painterResource(id = R.drawable.tap) ,
             contentDescription = "" )
 
@@ -150,8 +160,8 @@ fun SearchView(
     modifier: Modifier
 ) {
 
+    val context = LocalContext.current.applicationContext
         TextField(
-
             value = state.value ,
             onValueChange = { value ->
                 state.value = value
@@ -160,6 +170,7 @@ fun SearchView(
                 .fillMaxWidth(0.6f)
                 .height(50.dp)
                 .clip(RoundedCornerShape(15.dp))
+
                 ,
             placeholder = {
                 Text(text = placeHolder,fontSize = 15.sp, color =  Color(0xFF222228))

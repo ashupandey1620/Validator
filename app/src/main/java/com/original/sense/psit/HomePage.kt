@@ -1,5 +1,6 @@
 package com.original.sense.psit
 
+import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
@@ -55,6 +56,7 @@ fun HomePage(navController: NavHostController = rememberNavController()) {
 
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -147,7 +149,7 @@ fun BottomNavigationBar(navController: NavHostController) {
     } 
 
 }
-        ){paddingValues ->
+        ){
         MainPageNavigation(navController = navController)
         }
 }
@@ -162,7 +164,6 @@ fun MainPageNavigation(navController: NavHostController) {
         startDestination = "home"
     ) {
 
-
             composable(route = "home") {
                 HomeScreen(navController)
             }
@@ -173,7 +174,6 @@ fun MainPageNavigation(navController: NavHostController) {
                 ProfileScreen(navController)
             }
 
-
         composable(route = "notification") {
             NotificationScreen(navController)
         }
@@ -182,16 +182,9 @@ fun MainPageNavigation(navController: NavHostController) {
             EditProfileScreen(navController)
         }
 
-
         composable(route = "studentProfileInfo") {
             StudentProfile(navController)
         }
-
-
-
-
-
-
 
     }
 }
