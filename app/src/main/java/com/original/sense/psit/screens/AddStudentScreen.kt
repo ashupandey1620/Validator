@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +38,8 @@ import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun AddStudentScreen() {
+
+    Card (shape = RoundedCornerShape(25.dp)){
 
     Column(
         modifier = Modifier
@@ -72,7 +75,7 @@ fun AddStudentScreen() {
 
         Row(
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 40.dp)
+                .padding(top = 20.dp , bottom = 40.dp)
                 .fillMaxWidth()
                 .height(50.dp)
                 ,
@@ -116,4 +119,5 @@ fun AddStudentScreen() {
 
     }
 
+}
 }

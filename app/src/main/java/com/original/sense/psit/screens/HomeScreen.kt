@@ -83,8 +83,6 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -117,7 +115,6 @@ fun HomeScreen(navController: NavController) {
                             .clip(CircleShape)
                             .fillMaxSize()
                             .clickable {
-                                Toast.makeText(context , "Image Clicked" , Toast.LENGTH_SHORT).show()
                                 show = true
                             },
                             painter = painterResource(id = R.drawable.tap) ,
@@ -126,7 +123,7 @@ fun HomeScreen(navController: NavController) {
                     }
 
                     Spacer(modifier = Modifier.padding(6.dp))
-                    CircularNotificationButton()
+                    CircularNotificationButton(navController)
                 }
             }
 
@@ -161,16 +158,14 @@ fun HomeScreen(navController: NavController) {
 
 
 @Composable
-fun CircularNotificationButton() {
+fun CircularNotificationButton(navController: NavController) {
     val context = LocalContext.current.applicationContext
     Box (modifier = Modifier.size(50.dp)){
             Image(modifier = Modifier
                 .clip(CircleShape)
                 .fillMaxSize()
                 .clickable {
-                    Toast
-                        .makeText(context , "Notification Clicked" , Toast.LENGTH_SHORT)
-                        .show()
+                    navController.navigate("notification")
                 },
                 painter = painterResource(id = R.drawable.notifybutton) ,
                 contentDescription = "" )

@@ -62,7 +62,7 @@ fun StudentProfile(navController: NavHostController) {
 
                     CircularTapButton()
                     Spacer(modifier = Modifier.padding(6.dp))
-                    CircularNotificationButton()
+                    CircularNotificationButton(navController)
                 }
 
             }
