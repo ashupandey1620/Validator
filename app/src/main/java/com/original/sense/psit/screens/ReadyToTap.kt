@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,83 +31,91 @@ import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun ReadyToTap() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF3068de)) ,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
 
-        Text(
+
+    Card (shape = RoundedCornerShape(25.dp)){
+
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
-            fontFamily = poppins ,
-            text = "Ready To Tap ?" ,
-            color = Color.White ,
-            textAlign = TextAlign.Center ,
-            fontSize = 30.sp
-        )
-
-        Box(
-            modifier = Modifier
-                .size(250.dp) ,
-            contentAlignment = Alignment.Center
+                .wrapContentHeight()
+                .background(Color(0xFF3068de)) ,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(modifier = Modifier.fillMaxSize()
-                ,painter = painterResource(id = R.drawable.mobileman) ,
-                contentDescription = "")
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
+                fontFamily = poppins ,
+                text = "Ready To Tap ?" ,
+                color = Color.White ,
+                textAlign = TextAlign.Center ,
+                fontSize = 30.sp
+            )
+
+            Box(
+                modifier = Modifier
+                    .size(250.dp) ,
+                contentAlignment = Alignment.Center
+            ) {
+
+                Image(
+                    modifier = Modifier.fillMaxSize() ,
+                    painter = painterResource(id = R.drawable.mobileman) ,
+                    contentDescription = ""
+                )
 
 //            Text(
 //                text = "TAP" , color = Color.White ,
 //                fontFamily = poppins
 //            )
 
-        }
+            }
 
-        Row(
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .fillMaxWidth()
-                .height(50.dp) ,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-
-            Button(
+            Row(
                 modifier = Modifier
-                    .height(50.dp)
-                    .width(125.dp) ,
-                elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                onClick = {
-
-
-                } ,
-                shape = RoundedCornerShape(10.dp) ,
-                colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+                    .padding(top = 20.dp , bottom = 40.dp)
+                    .fillMaxWidth()
+                    .height(50.dp) ,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
-                Text(text = "No" , color = Color.Black, fontSize = 25.sp)
+
+                Button(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(125.dp) ,
+                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
+                    onClick = {
+
+
+                    } ,
+                    shape = RoundedCornerShape(10.dp) ,
+                    colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+                ) {
+                    Text(text = "No" , color = Color.Black , fontSize = 25.sp)
+
+                }
+
+                Button(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(125.dp) ,
+                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
+                    onClick = {
+
+
+                    } ,
+                    shape = RoundedCornerShape(10.dp) ,
+                    colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+                ) {
+                    Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
+
+                }
+
 
             }
 
-            Button(
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(125.dp) ,
-                elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                onClick = {
-
-
-                } ,
-                shape = RoundedCornerShape(10.dp) ,
-                colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
-            ) {
-                Text(text = "Yes" , color = Color.White, fontSize = 25.sp)
-
-            }
-
-
         }
-
     }
 }

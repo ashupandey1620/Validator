@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -41,6 +42,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -51,6 +53,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -75,86 +78,109 @@ fun HomeScreen(navController: NavController) {
         BottomSheetDialog(
             onDismissRequest = {
                 show = false
-            },
-            properties = BottomSheetDialogProperties()) {
+            } ,
+            properties = BottomSheetDialogProperties()
+        ) {
             Surface {
-                AddStudentScreen()
+                ReadyToTap()
             }
         }
     }
 
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush = GradientBackground())
+    ) {
+
+
+        val textState = remember {
+            mutableStateOf(TextFieldValue(""))
+        }
+
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(brush = GradientBackground())
+                .fillMaxWidth()
+                .padding(20.dp) ,
+            Arrangement.SpaceBetween
         ) {
 
-
-            val textState = remember {
-                mutableStateOf(TextFieldValue(""))
-            }
-
-            Row(
+            SearchView(
+                state = textState ,
+                placeHolder = "Search" ,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp) ,
-                Arrangement.SpaceBetween
-            ) {
+            )
 
-                SearchView(
-                    state = textState ,
-                    placeHolder = "Search" ,
-                    modifier = Modifier
-                )
+            Row {
 
-                Row {
+                Box(modifier = Modifier.size(50.dp)) {
 
-                    Box (modifier = Modifier.size(50.dp)){
-
-                        Image(modifier = Modifier
+                    Image(
+                        modifier = Modifier
                             .clip(CircleShape)
                             .fillMaxSize()
                             .clickable {
                                 show = true
-                            },
-                            painter = painterResource(id = R.drawable.tap) ,
-                            contentDescription = "" )
-
-                    }
-
-                    Spacer(modifier = Modifier.padding(6.dp))
-                    CircularNotificationButton(navController)
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp , end = 20.dp) ,
-                Arrangement.SpaceBetween
-            ) {
-
-                Text(
-                    text = "Student List:" ,
-                    color = Color.White ,
-                    fontSize = 27.sp ,
-                    fontFamily = poppins
-                )
-
-                IconButton(modifier = Modifier.size(35.dp) , onClick = {
-                    navController.navigate("studentProfileInfo")
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.delete) ,
-                        contentDescription = "delete Icon" ,
-                        tint = Color.White
+                            } ,
+                        painter = painterResource(id = R.drawable.tap) ,
+                        contentDescription = ""
                     )
-                }
-            }
 
-            ListDemo()
+                }
+
+                Spacer(modifier = Modifier.padding(6.dp))
+                CircularNotificationButton(navController)
+            }
         }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp , end = 20.dp) ,
+            Arrangement.SpaceBetween
+        ) {
+
+            Text(
+                text = "Student List:" ,
+                color = Color.White ,
+                fontSize = 27.sp ,
+                fontFamily = poppins
+            )
+
+            IconButton(modifier = Modifier.size(35.dp) , onClick = {
+                navController.navigate("studentProfileInfo")
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.delete) ,
+                    contentDescription = "delete Icon" ,
+                    tint = Color.White
+                )
+            }
+        }
+
+        StudentAddingList()
     }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Click on \n\n" +
+                    "“Tap Button” to\n\n Add a Student." ,
+            fontFamily = poppins ,
+            fontSize = 27.sp ,
+            color = Color.White,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun StudentAddingList() {
+
+}
 
 
 @Composable
@@ -183,7 +209,9 @@ fun CircularTapButton() {
             .clip(CircleShape)
             .fillMaxSize()
             .clickable {
-                Toast.makeText(context , "Image Clicked" , Toast.LENGTH_SHORT).show()
+                Toast
+                    .makeText(context , "Image Clicked" , Toast.LENGTH_SHORT)
+                    .show()
 
             },
             painter = painterResource(id = R.drawable.tap) ,
