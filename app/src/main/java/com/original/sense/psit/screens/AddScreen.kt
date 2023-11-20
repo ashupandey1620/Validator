@@ -1,7 +1,9 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +29,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
@@ -40,6 +45,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -131,12 +137,12 @@ fun AddScreen(navController: NavController) {
             .verticalScroll(rememberScrollState())) {
 
             DelegationAndSuspension()
-
+            Spacer(modifier = Modifier.padding(5.dp))
             DelegationAndSuspensionButton()
-
+            Spacer(modifier = Modifier.padding(5.dp))
             SubjectOfDelegation()
 
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
 
             Text(text = "Allot Lectures",
                 fontFamily = poppins,
@@ -146,7 +152,24 @@ fun AddScreen(navController: NavController) {
             AllottedLectures()
             DescriptionDelegation()
 
-            CreateButton()
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()){
+
+                Button(onClick = {
+
+                },
+                    colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)){
+                    Text(text = "Create" , color = Color.White,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(8.dp))
+                }
+            }
         }
 
     }
@@ -168,44 +191,102 @@ fun DelegationAndSuspension() {
             color = Color.White,
             fontWeight = FontWeight.ExtraBold)
 
-
-
-        var selected by remember { mutableStateOf(false) }
-        FilterChip(
-            onClick = {  },
-            colors = FilterChipDefaults.filterChipColors(
-                containerColor = Color(0xFF1d1e23),
-                labelColor = Color.White,
-                selectedContainerColor = Color.Cyan,
-                selectedLabelColor = Color.Black,
-                selectedLeadingIconColor = Color.Black
-            ),
-            label = { Text("DESN162606") },
-            selected = selected,
-            shape = RoundedCornerShape(25.dp)
-        )
-
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelegationAndSuspensionButton() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 10.dp)
-            .wrapContentHeight() ,
-        horizontalArrangement = Arrangement.SpaceBetween ,
-        verticalAlignment = Alignment.CenterVertically
+
+    var selectedDelegation by remember { mutableStateOf(true) }
+    var selectedSuspension by remember { mutableStateOf(false) }
+
+    Card(shape = RoundedCornerShape(25.dp),
+        colors = CardDefaults.cardColors(Color(0xFFffffff)),
+        border = BorderStroke(1.dp, Color.White)
     ) {
 
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp)
-                .background(Color.Green)
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.SpaceEvenly ,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+
+
+            FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 4.dp) ,
+
+                onClick = { selectedDelegation = !selectedDelegation
+                          selectedSuspension = !selectedSuspension},
+
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF2d2e34),
+                    disabledContainerColor = Color(0xFF2d2e34),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.White,
+                    selectedLabelColor = Color.Black
+                ),
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            text = "Delegation" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
+                selected = selectedDelegation,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+            FilterChip(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 4.dp),
+                onClick = { selectedSuspension = !selectedSuspension
+                          selectedDelegation =! selectedDelegation},
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color(0xFF2d2e34),
+                    disabledContainerColor = Color(0xFF2d2e34),
+                    labelColor = Color.White,
+                    selectedContainerColor = Color.White,
+                    selectedLabelColor = Color.Black,
+                ),
+
+                label = {
+
+                    Column(
+                        modifier = Modifier.fillMaxSize() ,
+                        horizontalAlignment = Alignment.CenterHorizontally ,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        Text(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            text = "Suspension" ,
+                            fontSize = 20.sp , fontFamily = poppins
+                        )
+                    }
+                },
+
+                selected = selectedSuspension,
+                shape = RoundedCornerShape(25.dp)
+            )
+
+
 
         }
     }
@@ -213,17 +294,63 @@ fun DelegationAndSuspensionButton() {
 
 @Composable
 fun DescriptionDelegation() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 10.dp)
-            .wrapContentHeight() ,
-        horizontalArrangement = Arrangement.SpaceBetween ,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()) {
 
 
 
+        Text(text = "Description",
+            fontFamily = poppins,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color.White
+        )
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        val keyboardController = LocalSoftwareKeyboardController.current
+        var text by rememberSaveable { mutableStateOf("") }
+
+        val containerColor = Color(0xFF383838)
+        OutlinedTextField(
+            value = text ,
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.desc) ,
+                    contentDescription = "description" ,
+                    tint = Color(0xFFA7A7A7)
+                )
+            } ,
+            onValueChange = { text = it } ,
+            shape = RoundedCornerShape(30.dp) ,
+
+            placeholder = { Text(text = "Description" , color = Color(0xFFA7A7A7) , fontSize = 16.sp) } ,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next ,
+                keyboardType = KeyboardType.Text
+            ) ,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White ,
+                focusedContainerColor = containerColor ,
+                unfocusedContainerColor = containerColor ,
+                disabledContainerColor = containerColor ,
+                focusedBorderColor = Color.White ,
+                unfocusedBorderColor = Color(0xFF383838) ,
+            ) ,
+            singleLine = true ,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+                .padding(top = 5.dp) ,
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+
+                }
+            )
+
+        )
     }
 
 }
@@ -555,6 +682,8 @@ fun SubjectOfDelegation() {
             fontWeight = FontWeight.Medium,
             color = Color.White
             )
+
+        Spacer(modifier = Modifier.padding(4.dp))
 
         val keyboardController = LocalSoftwareKeyboardController.current
         var text by rememberSaveable { mutableStateOf("") }
