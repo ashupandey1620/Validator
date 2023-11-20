@@ -87,13 +87,10 @@ fun BottomNavigationBar(navController: NavHostController) {
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
-
-
-
-        Scaffold(
+    Scaffold(
             bottomBar = {
 
-  val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination  = navBackStackEntry?.destination
 
     val bottomDestination = ((currentDestination?.route == "home") 
