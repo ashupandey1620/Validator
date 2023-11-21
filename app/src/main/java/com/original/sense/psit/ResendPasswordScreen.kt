@@ -90,7 +90,7 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
             properties = BottomSheetDialogProperties()
         ) {
             Surface {
-                ResendSheet()
+                ResendSheet(navController)
             }
         }
     }
@@ -193,7 +193,7 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
 }
 
 @Composable
-fun ResendSheet() {
+fun ResendSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
@@ -285,6 +285,8 @@ fun ResendSheet() {
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
                             Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+                            navController.popBackStack()
+                            navController.navigate("signIn_page")
                         })
                 }
             }
