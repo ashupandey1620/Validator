@@ -227,38 +227,46 @@ fun AddScreen(navController: NavController) {
                 }
             }
 
-            Spacer(modifier = Modifier.padding(5.dp))
+//            Spacer(modifier = Modifier.padding(5.dp))
+//
+//            SubjectOfDelegation()
+//
+//            Spacer(modifier = Modifier.padding(8.dp))
+//
+//            Text(text = "Allot Lectures",
+//                fontFamily = poppins,
+//                fontSize = 22.sp,
+//                color = Color.White,
+//                fontWeight = FontWeight.Medium)
+//            AllottedLectures()
+//            DescriptionDelegation()
+//
+//            Spacer(modifier = Modifier.padding(8.dp))
+//
+//            Row (modifier = Modifier
+//                .fillMaxWidth()
+//                .wrapContentHeight()){
+//
+//                Button(onClick = {
+//
+//                },
+//                    colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(top = 10.dp)){
+//                    Text(text = "Create" , color = Color.White,
+//                        fontSize = 20.sp,
+//                        modifier = Modifier.padding(8.dp))
+//                }
+//            }
 
-            SubjectOfDelegation()
 
-            Spacer(modifier = Modifier.padding(8.dp))
 
-            Text(text = "Allot Lectures",
-                fontFamily = poppins,
-                fontSize = 22.sp,
-                color = Color.White,
-                fontWeight = FontWeight.Medium)
-            AllottedLectures()
-            DescriptionDelegation()
+            //----------------------------------------------Suspension Page
 
-            Spacer(modifier = Modifier.padding(8.dp))
 
-            Row (modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()){
 
-                Button(onClick = {
 
-                },
-                    colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp)){
-                    Text(text = "Create" , color = Color.White,
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(8.dp))
-                }
-            }
         }
 
     }
