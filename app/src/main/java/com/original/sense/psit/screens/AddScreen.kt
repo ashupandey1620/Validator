@@ -3,8 +3,6 @@ package com.original.sense.psit.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,17 +22,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -43,9 +34,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -123,8 +112,13 @@ fun ListDemo() {
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavController) {
+
+    var unSelectedDelegation by remember { mutableStateOf(false) }
+    var unSelectedSuspension by remember { mutableStateOf(true) }
+
     Box (modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())
@@ -136,10 +130,105 @@ fun AddScreen(navController: NavController) {
             .padding(20.dp)
             .verticalScroll(rememberScrollState())) {
 
-            DelegationAndSuspension()
+            val name : String = if (!unSelectedDelegation)
+                "Delegation"
+            else
+                "Suspension"
+            DelegationAndSuspension(name)
             Spacer(modifier = Modifier.padding(5.dp))
-            DelegationAndSuspensionButton()
+
+            Card(shape = RoundedCornerShape(25.dp),
+                colors = CardDefaults.cardColors(Color(0xFF2d2e34)),
+                border = BorderStroke(0.5.dp, Color.White)
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    horizontalArrangement = Arrangement.SpaceEvenly ,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+
+                    FilterChip(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 4.dp) ,
+
+                        onClick = { unSelectedDelegation = !unSelectedDelegation
+                            unSelectedSuspension = !unSelectedSuspension},
+
+                        colors = FilterChipDefaults.filterChipColors(
+
+                            containerColor = Color(0xFFfffffe),
+                            disabledContainerColor = Color(0xFFfffffe),
+                            labelColor = Color.Black,
+                            selectedContainerColor =  Color(0xFF2d2e34),
+                            selectedLabelColor = Color.White
+                        ),
+
+                        label = {
+
+                            Column(
+                                modifier = Modifier.fillMaxSize() ,
+                                horizontalAlignment = Alignment.CenterHorizontally ,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+
+                                Text(
+                                    modifier = Modifier.padding(vertical = 4.dp),
+                                    text = "Delegation" ,
+                                    fontSize = 20.sp , fontFamily = poppins
+                                )
+                            }
+                        },
+
+                        selected = unSelectedDelegation,
+                        shape = RoundedCornerShape(25.dp)
+                    )
+
+                    FilterChip(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 4.dp),
+                        onClick = { unSelectedSuspension = !unSelectedSuspension
+                            unSelectedDelegation = !unSelectedDelegation},
+
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = Color(0xFFfffffe),
+                            disabledContainerColor = Color(0xFFfffffe),
+                            labelColor = Color.Black,
+                            selectedContainerColor = Color(0xFF2d2e34),
+                            selectedLabelColor = Color.White,
+                        ),
+
+                        label = {
+                            Column(
+                                modifier = Modifier.fillMaxSize() ,
+                                horizontalAlignment = Alignment.CenterHorizontally ,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+
+                                Text(
+                                    modifier = Modifier.padding(vertical = 4.dp),
+                                    text = "Suspension" ,
+                                    fontSize = 20.sp , fontFamily = poppins
+                                )
+                            }
+                        },
+
+                        selected = unSelectedSuspension,
+                        shape = RoundedCornerShape(25.dp)
+                    )
+
+
+
+                }
+            }
+
             Spacer(modifier = Modifier.padding(5.dp))
+
             SubjectOfDelegation()
 
             Spacer(modifier = Modifier.padding(8.dp))
@@ -178,14 +267,14 @@ fun AddScreen(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DelegationAndSuspension() {
+fun DelegationAndSuspension(name: String) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight() ,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
 
-        Text(text = "Delegation",
+        Text(text = name,
             fontFamily = poppins,
             fontSize = 32.sp,
             color = Color.White,
@@ -197,99 +286,11 @@ fun DelegationAndSuspension() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DelegationAndSuspensionButton() {
-
-    var selectedDelegation by remember { mutableStateOf(true) }
-    var selectedSuspension by remember { mutableStateOf(false) }
-
-    Card(shape = RoundedCornerShape(25.dp),
-        colors = CardDefaults.cardColors(Color(0xFFffffff)),
-        border = BorderStroke(1.dp, Color.White)
-    ) {
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.SpaceEvenly ,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-
-            FilterChip(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp) ,
-
-                onClick = { selectedDelegation = !selectedDelegation
-                          selectedSuspension = !selectedSuspension},
-
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color(0xFF2d2e34),
-                    disabledContainerColor = Color(0xFF2d2e34),
-                    labelColor = Color.White,
-                    selectedContainerColor = Color.White,
-                    selectedLabelColor = Color.Black
-                ),
-
-                label = {
-
-                    Column(
-                        modifier = Modifier.fillMaxSize() ,
-                        horizontalAlignment = Alignment.CenterHorizontally ,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-
-                        Text(
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            text = "Delegation" ,
-                            fontSize = 20.sp , fontFamily = poppins
-                        )
-                    }
-                },
-
-                selected = selectedDelegation,
-                shape = RoundedCornerShape(25.dp)
-            )
-
-            FilterChip(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp),
-                onClick = { selectedSuspension = !selectedSuspension
-                          selectedDelegation =! selectedDelegation},
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color(0xFF2d2e34),
-                    disabledContainerColor = Color(0xFF2d2e34),
-                    labelColor = Color.White,
-                    selectedContainerColor = Color.White,
-                    selectedLabelColor = Color.Black,
-                ),
-
-                label = {
-
-                    Column(
-                        modifier = Modifier.fillMaxSize() ,
-                        horizontalAlignment = Alignment.CenterHorizontally ,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-
-                        Text(
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            text = "Suspension" ,
-                            fontSize = 20.sp , fontFamily = poppins
-                        )
-                    }
-                },
-
-                selected = selectedSuspension,
-                shape = RoundedCornerShape(25.dp)
-            )
+fun DelegationAndSuspensionButton(selectedDelegation: Boolean , selectedSuspension: Boolean) {
 
 
 
-        }
-    }
+
 }
 
 @Composable

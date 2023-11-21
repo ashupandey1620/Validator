@@ -14,6 +14,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
 
     Column(modifier = Modifier.fillMaxSize().background(brush = GradientBackground())) {
 
+
     }
 
 }
