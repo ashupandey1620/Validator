@@ -81,7 +81,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         ) {
 
             val density = LocalDensity.current
-            val offsetX = with(density) { -3.63.dp.roundToPx() }
+            val offsetX = with(density) { -43.63.dp.roundToPx() }
             val offsetY = with(density) { -4.12.dp.roundToPx() }
 
 
@@ -93,14 +93,14 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
                     .size(width = 168.47.dp , height = 168.47.dp)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ellipse_10) ,
+                    painter = painterResource(R.drawable.ellipse_13) ,
                     contentDescription = null
                 )
             }
 
 
-            val offsetX2 = with(density) { 344.06.dp.roundToPx() }
-            val offsetY2 = with(density) { 117.29.dp.roundToPx() }
+            val offsetX2 = with(density) { 370.06.dp.roundToPx() }
+            val offsetY2 = with(density) { 147.29.dp.roundToPx() }
 
             this@Column.AnimatedVisibility(
                 visible = image2Visibility.value ,
@@ -150,17 +150,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
             }
 
 
-
-
-
         }
-
-
-
-
-
-
-
 
 
     }
