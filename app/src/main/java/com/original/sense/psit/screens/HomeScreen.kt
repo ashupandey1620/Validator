@@ -108,8 +108,7 @@ fun HomeScreen(navController: NavController) {
             SearchView(
                 state = textState ,
                 placeHolder = "Search" ,
-                modifier = Modifier
-            )
+                modifier = Modifier)
 
             Row {
 
@@ -220,14 +219,7 @@ fun CircularTapButton() {
 }
 
 
-@Composable
-fun ColumnItem(item: String) {
-    Column(modifier = Modifier.padding(10.dp)) {
-        Text(text = item, modifier = Modifier.padding(vertical = 10.dp),
-            fontSize = 22.sp)
-        Divider()
-    }
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -237,8 +229,9 @@ fun SearchView(
     modifier: Modifier
 ) {
 
-    val context = LocalContext.current.applicationContext
-        TextField(
+     val context = LocalContext.current.applicationContext
+
+    TextField(
             value = state.value ,
             onValueChange = { value ->
                 state.value = value
