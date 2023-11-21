@@ -88,7 +88,8 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
     LaunchedEffect(key1 = 0) {
         image1Visibility.value = true
-        delay(500)
+        show = true
+        delay(200)
         image2Visibility.value = true
         delay(500)
         image3Visibility.value = true
@@ -96,7 +97,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         image4Visibility.value = true
 //        delay(500)
 //        tickVisibility.value = true
-        show = true
+
     }
 
     if (show) {
@@ -214,19 +215,19 @@ fun SignInSheet() {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
-        .fillMaxWidth()
-        .background(Color.Black.copy(alpha = 0.9f)),
-        shape = (RoundedCornerShape(corner = CornerSize(10.dp))),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent,
-        ),) {
+        .fillMaxWidth(),
+        shape = (RoundedCornerShape(30.dp)),
+//        colors = CardDefaults.cardColors(
+//            containerColor = Color.Black.copy(alpha = 0.1f)
+//        )
+
+        ) {
 
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .background(Color.Transparent)
                 .padding(18.dp)
                 .verticalScroll(rememberScrollState()) ,
             horizontalAlignment = Alignment.CenterHorizontally
