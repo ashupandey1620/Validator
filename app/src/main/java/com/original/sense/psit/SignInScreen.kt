@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,11 +31,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.screens.GradientBackground
+import com.original.sense.psit.screens.ReadyToTap
 import kotlinx.coroutines.delay
 
 @Composable
 fun SignInScreen(navController: NavHostController , context: MainActivity) {
+
+    var show by remember {
+        mutableStateOf(false)
+    }
 
 
 
@@ -58,8 +67,22 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         image4Visibility.value = true
 //        delay(500)
 //        tickVisibility.value = true
+        show = true
     }
 
+    if (show) {
+        BottomSheetDialog(
+            onDismissRequest = {
+                show = false
+            } ,
+            properties = BottomSheetDialogProperties()
+        ) {
+            Surface {
+
+                SignInSheet()
+            }
+        }
+    }
 
     var alignment by remember {
         mutableStateOf(Alignment.CenterHorizontally)
@@ -155,4 +178,20 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
     }
 
+}
+
+@Composable
+fun SignInSheet() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(18.dp)
+            .verticalScroll(rememberScrollState()) ,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+
+
+    }
 }
