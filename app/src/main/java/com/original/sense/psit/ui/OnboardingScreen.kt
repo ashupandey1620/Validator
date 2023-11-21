@@ -92,15 +92,6 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             val offsetX = with(density) { 225.1.dp.roundToPx() }
             val offsetY = with(density) { -23.05.dp.roundToPx() }
 
-//            if (image1Visibility.value) {
-//                Image(
-//                    painter = painterResource(R.drawable.ellipse_10),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .offset { IntOffset(offsetX, offsetY) }
-//                        .size(width = 254.65.dp, height = 257.49.dp)
-//                )
-//            }
 
             this@Column.AnimatedVisibility(
                 visible = image1Visibility.value,
