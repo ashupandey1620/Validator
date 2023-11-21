@@ -55,6 +55,7 @@ import androidx.navigation.NavController
 import com.original.sense.psit.PersonModel
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
+import java.security.cert.CertPathValidatorException.Reason
 
 
 private val studentList = mutableListOf<PersonModel>()
@@ -227,49 +228,252 @@ fun AddScreen(navController: NavController) {
                 }
             }
 
-//            Spacer(modifier = Modifier.padding(5.dp))
-//
-//            SubjectOfDelegation()
-//
-//            Spacer(modifier = Modifier.padding(8.dp))
-//
-//            Text(text = "Allot Lectures",
-//                fontFamily = poppins,
-//                fontSize = 22.sp,
-//                color = Color.White,
-//                fontWeight = FontWeight.Medium)
-//            AllottedLectures()
-//            DescriptionDelegation()
-//
-//            Spacer(modifier = Modifier.padding(8.dp))
-//
-//            Row (modifier = Modifier
-//                .fillMaxWidth()
-//                .wrapContentHeight()){
-//
-//                Button(onClick = {
-//
-//                },
-//                    colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(top = 10.dp)){
-//                    Text(text = "Create" , color = Color.White,
-//                        fontSize = 20.sp,
-//                        modifier = Modifier.padding(8.dp))
-//                }
-//            }
+            if(!unSelectedDelegation) {
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                SubjectOfDelegation()
+
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                Text(
+                    text = "Allot Lectures" ,
+                    fontFamily = poppins ,
+                    fontSize = 22.sp ,
+                    color = Color.White ,
+                    fontWeight = FontWeight.Medium
+                )
+                AllottedLectures()
+                DescriptionDelegation()
+
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                ) {
+
+                    Button(
+                        onClick = {
+
+                        } ,
+                        colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
+                    ) {
+                        Text(
+                            text = "Create" , color = Color.White ,
+                            fontSize = 20.sp ,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
+
+            }else {
+
+                //----------------------------------------------Suspension Page
 
 
+                Spacer(modifier = Modifier.padding(8.dp))
 
-            //----------------------------------------------Suspension Page
+                Text(
+                    text = "Reason: " ,
+                    fontFamily = poppins ,
+                    fontSize = 22.sp ,
+                    color = Color.White ,
+                    fontWeight = FontWeight.Medium
+                )
+
+                Spacer(modifier = Modifier.padding(4.dp))
 
 
+                ReasonEditText()
 
+
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                Text(
+                    text = "Date: " ,
+                    fontFamily = poppins ,
+                    fontSize = 22.sp ,
+                    color = Color.White ,
+                    fontWeight = FontWeight.Medium
+                )
+
+                Spacer(modifier = Modifier.padding(4.dp))
+
+                DateStartEnd()
+            }
 
         }
 
     }
+}
+
+@Composable
+fun DateStartEnd() {
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text1 by rememberSaveable { mutableStateOf("") }
+    var text2 by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF383838)
+
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()) {
+
+        Box(modifier = Modifier.weight(1f)
+            .padding(horizontal = 3.dp)) {
+
+
+            OutlinedTextField(
+                value = text1 ,
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.desc) ,
+                        contentDescription = "Start Date" ,
+                        tint = Color(0xFFA7A7A7)
+                    )
+                } ,
+                onValueChange = { text1 = it } ,
+                shape = RoundedCornerShape(30.dp) ,
+
+                placeholder = {
+                    Text(
+                        text = "Start Date" ,
+                        color = Color(0xFFA7A7A7) ,
+                        fontSize = 16.sp
+                    )
+                } ,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next ,
+                    keyboardType = KeyboardType.Text
+                ) ,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White ,
+                    focusedContainerColor = containerColor ,
+                    unfocusedContainerColor = containerColor ,
+                    disabledContainerColor = containerColor ,
+                    focusedBorderColor = Color.White ,
+                    unfocusedBorderColor = Color(0xFF383838) ,
+                ) ,
+                singleLine = true ,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .padding(top = 5.dp) ,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+
+                    }
+                )
+
+            )
+        }
+
+        Box (modifier = Modifier.weight(1f)
+            .padding(horizontal = 3.dp)) {
+
+
+            OutlinedTextField(
+                value = text2 ,
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.desc) ,
+                        contentDescription = "End Date" ,
+                        tint = Color(0xFFA7A7A7)
+                    )
+                } ,
+                onValueChange = { text2 = it } ,
+                shape = RoundedCornerShape(30.dp) ,
+
+                placeholder = {
+                    Text(
+                        text = "End Date" ,
+                        color = Color(0xFFA7A7A7) ,
+                        fontSize = 16.sp
+                    )
+                } ,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next ,
+                    keyboardType = KeyboardType.Text
+                ) ,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White ,
+                    focusedContainerColor = containerColor ,
+                    unfocusedContainerColor = containerColor ,
+                    disabledContainerColor = containerColor ,
+                    focusedBorderColor = Color.White ,
+                    unfocusedBorderColor = Color(0xFF383838) ,
+                ) ,
+                singleLine = true ,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .padding(top = 5.dp) ,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+
+                    }
+                )
+
+            )
+        }
+
+
+
+    }
+
+}
+
+@Composable
+fun ReasonEditText() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF383838)
+    OutlinedTextField(
+        value = text ,
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.desc) ,
+                contentDescription = "Reason" ,
+                tint = Color(0xFFA7A7A7)
+            )
+        } ,
+        onValueChange = { text = it } ,
+        shape = RoundedCornerShape(30.dp) ,
+
+        placeholder = { Text(text = "Description" , color = Color(0xFFA7A7A7) , fontSize = 16.sp) } ,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next ,
+            keyboardType = KeyboardType.Text
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = Color.White ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true ,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(65.dp)
+            .padding(top = 5.dp) ,
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+
+            }
+        )
+
+    )
 }
 
 
@@ -292,14 +496,6 @@ fun DelegationAndSuspension(name: String) {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DelegationAndSuspensionButton(selectedDelegation: Boolean , selectedSuspension: Boolean) {
-
-
-
-
-}
 
 @Composable
 fun DescriptionDelegation() {
