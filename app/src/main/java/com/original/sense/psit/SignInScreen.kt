@@ -68,8 +68,6 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         mutableStateOf(false)
     }
 
-
-
     val image1Visibility = remember{ mutableStateOf(false) }
     val image2Visibility = remember{ mutableStateOf(false) }
     val image3Visibility = remember{ mutableStateOf(false) }
@@ -90,8 +88,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         image3Visibility.value = true
         delay(500)
         image4Visibility.value = true
-//        delay(500)
-//        tickVisibility.value = true
+
 
     }
 
@@ -288,10 +285,6 @@ fun SignInSheet(navController: NavHostController) {
                     )
                 }
             }
-
-
-
-
 
 
             Column(
