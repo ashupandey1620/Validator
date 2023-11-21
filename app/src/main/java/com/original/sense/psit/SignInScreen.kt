@@ -316,6 +316,8 @@ fun SignInSheet(navController: NavHostController) {
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
                             Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+                            navController.popBackStack()
+                            navController.navigate("signup_page")
                         })
                 }
             }
