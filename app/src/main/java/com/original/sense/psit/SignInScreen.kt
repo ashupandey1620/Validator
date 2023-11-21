@@ -19,20 +19,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -62,7 +58,6 @@ import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.screens.GradientBackground
-import com.original.sense.psit.screens.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -109,7 +104,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         ) {
             Surface {
 
-                SignInSheet()
+                SignInSheet(navController)
             }
         }
     }
@@ -211,7 +206,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 }
 
 @Composable
-fun SignInSheet() {
+fun SignInSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
@@ -264,6 +259,7 @@ fun SignInSheet() {
                     modifier = Modifier.clickable {
                         Toast.makeText(context , "Forgot Password Clicked" , Toast.LENGTH_SHORT)
                             .show()
+                        navController.navigate("forget_page")
                     })
             }
 

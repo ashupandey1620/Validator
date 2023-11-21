@@ -20,10 +20,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +38,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +46,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -91,7 +102,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
             properties = BottomSheetDialogProperties()
         ) {
             Surface {
-                ForgotSheet()
+                ForgotSheet(navController)
             }
         }
     }
@@ -196,7 +207,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
 }
 
 @Composable
-fun ForgotSheet() {
+fun ForgotSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
@@ -219,7 +230,7 @@ fun ForgotSheet() {
         ) {
 
             Text(
-                text = "Forget Password" ,
+                text = "Resend Password" ,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -231,9 +242,8 @@ fun ForgotSheet() {
             )
 
 
-            SimpleOutlinedTextFieldUsername()
+            SimpleOutlinedTextFieldEmail2()
 
-            SignInPagePassword()
 
             Column(
                 modifier = Modifier
@@ -249,10 +259,12 @@ fun ForgotSheet() {
                     modifier = Modifier.clickable {
                         Toast.makeText(context , "Resend Password Clicked" , Toast.LENGTH_SHORT)
                             .show()
+                        navController.navigate("resend_password_page")
+
                     })
             }
 
-            Spacer(modifier = Modifier.padding(25.dp))
+            Spacer(modifier = Modifier.padding(65.dp))
 
             Row(
                 modifier = Modifier
@@ -262,8 +274,7 @@ fun ForgotSheet() {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context , "Sign In Button Clicked" , Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(context , "Forgot Password Button Click" , Toast.LENGTH_SHORT).show()
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -271,7 +282,7 @@ fun ForgotSheet() {
                         .padding(top = 10.dp)
                 ) {
                     Text(
-                        text = "Sign In" , color = Color.White ,
+                        text = "Send Password" , color = Color.White ,
                         fontSize = 20.sp ,
                         modifier = Modifier.padding(8.dp)
                     )
@@ -293,13 +304,13 @@ fun ForgotSheet() {
                 Row {
 
                     Text(
-                        text = "I am a new User. " ,
+                        text = "Already a User? " ,
                         color = Color(0xFFF6F6F6) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp
                     )
 
-                    Text(text = "Sign Up" ,
+                    Text(text = "Sign In" ,
                         color = Color(0xFF3068de) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
@@ -311,4 +322,53 @@ fun ForgotSheet() {
 
         }
     }
+}
+
+
+
+@Composable
+fun SimpleOutlinedTextFieldEmail2() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF383838)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Email",   fontFamily = poppins,
+            color = Color(0xFFA7A7A7), fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Email
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = Color.White ,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
+
+
+            }
+        )
+
+    )
 }
