@@ -243,6 +243,9 @@ fun AddScreen(navController: NavController) {
                     fontWeight = FontWeight.Medium
                 )
                 AllottedLectures()
+
+                Spacer(modifier = Modifier.padding(4.dp))
+
                 DescriptionDelegation()
 
                 Spacer(modifier = Modifier.padding(8.dp))
