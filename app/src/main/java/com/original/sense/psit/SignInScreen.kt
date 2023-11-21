@@ -1,12 +1,16 @@
 package com.original.sense.psit
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,26 +19,51 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.screens.GradientBackground
 import com.original.sense.psit.screens.ReadyToTap
+import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 @Composable
@@ -182,16 +211,166 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
 @Composable
 fun SignInSheet() {
-    Column(
+    val context = LocalContext.current.applicationContext
+
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .background(Color.Black.copy(alpha = 0.9f)),
+        shape = (RoundedCornerShape(corner = CornerSize(10.dp))),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent,
+        ),) {
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(Color.Transparent)
+                .padding(18.dp)
+                .verticalScroll(rememberScrollState()) ,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Text(
+                text = "Sign In" ,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(start = 5.dp , top = 20.dp) ,
+                fontSize = 35.sp ,
+                color = Color(0xFFF6F6F6) ,
+                fontFamily = poppins ,
+                fontWeight = FontWeight.Bold
+            )
+
+
+            SimpleOutlinedTextFieldUsername()
+
+            SignInPagePassword()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(vertical = 10.dp) ,
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(text = "Forgot Password?" ,
+                    color = Color(0xFFF6F6F6) ,
+                    fontFamily = poppins ,
+                    fontSize = 12.sp ,
+                    modifier = Modifier.clickable {
+                        Toast.makeText(context , "Forgot Password Clicked" , Toast.LENGTH_SHORT)
+                            .show()
+                    })
+            }
+
+            Spacer(modifier = Modifier.padding(25.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+
+                Button(
+                    onClick = {
+                        Toast.makeText(context , "Sign In Button Clicked" , Toast.LENGTH_SHORT)
+                            .show()
+                    } ,
+                    colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                ) {
+                    Text(
+                        text = "Sign In" , color = Color.White ,
+                        fontSize = 20.sp ,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
+
+
+
+
+
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(vertical = 10.dp) ,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row {
+
+                    Text(
+                        text = "I am a new User. " ,
+                        color = Color(0xFFF6F6F6) ,
+                        fontFamily = poppins ,
+                        fontSize = 12.sp
+                    )
+
+                    Text(text = "Sign Up" ,
+                        color = Color(0xFF3068de) ,
+                        fontFamily = poppins ,
+                        fontSize = 12.sp ,
+                        modifier = Modifier.clickable {
+                            Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+                        })
+                }
+            }
+
+        }
+    }
+}
+@Composable
+fun SignInPagePassword() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF383838)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(
+                Icons.Outlined.Lock, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor =  Color.White,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(18.dp)
-            .verticalScroll(rememberScrollState()) ,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
 
 
 
-    }
+            }
+        )
+    )
 }
