@@ -53,7 +53,7 @@ import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
 
-val info = arrayOf("2101641530046","2101641530047","2101641530048","2101641530049")
+val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -257,9 +257,10 @@ fun SearchView(
                 Toast.makeText(context,"Toast Message from the text",Toast.LENGTH_SHORT).show()
                 var searchValue = state.value
 
-                if(info.contains(searchValue.toString())){
-                    Toast.makeText(context,"Present In DB",Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(context,"${searchValue.toString()}",Toast.LENGTH_LONG).show()
+
+
+
 
 
             }
