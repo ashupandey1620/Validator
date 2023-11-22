@@ -255,6 +255,11 @@ fun SearchView(
             onDone = {
 
                 Toast.makeText(context,"Toast Message from the text",Toast.LENGTH_SHORT).show()
+                var searchValue = state.value
+
+                if(info.contains(searchValue.toString())){
+                    Toast.makeText(context,"Present In DB",Toast.LENGTH_SHORT).show()
+                }
 
 
             }
