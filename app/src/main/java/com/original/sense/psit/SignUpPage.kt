@@ -1,5 +1,6 @@
 package com.original.sense.psit
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -339,6 +341,9 @@ fun SimpleOutlinedTextFieldEmail() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
+    val context = LocalContext.current.applicationContext
+
+
     val containerColor = Color(0xFF383838)
     OutlinedTextField(
 
@@ -373,6 +378,8 @@ fun SimpleOutlinedTextFieldEmail() {
             onDone = {
                 keyboardController?.hide()
               //
+
+
 
 
             }
@@ -431,6 +438,7 @@ fun SimpleOutlinedTextFieldPhone() {
 fun SimpleOutlinedTextFieldRoom() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current.applicationContext
 
     val containerColor = Color(0xFF383838)
     OutlinedTextField(
@@ -465,6 +473,11 @@ fun SimpleOutlinedTextFieldRoom() {
             onDone = {
                 keyboardController?.hide()
                 // do something here
+
+                Toast.makeText(context,"Toast Message from the text", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(context,"$text",Toast.LENGTH_LONG).show()
+
             }
         )
 

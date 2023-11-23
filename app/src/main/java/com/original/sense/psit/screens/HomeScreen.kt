@@ -33,12 +33,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -98,7 +100,6 @@ fun HomeScreen(navController: NavController) {
         ) {
 
             SearchView(
-                state = textState ,
                 placeHolder = "Search" ,
                 modifier = Modifier)
 
@@ -216,17 +217,20 @@ fun CircularTapButton() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(
-    state: MutableState<TextFieldValue> ,
     placeHolder: String ,
     modifier: Modifier
 ) {
 
      val context = LocalContext.current.applicationContext
 
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     TextField(
-            value = state.value ,
-            onValueChange = { value ->
-                state.value = value
+            value = text ,
+            onValueChange = {
+                            text = it
             } ,
             modifier
                 .fillMaxWidth(0.6f)
@@ -254,13 +258,17 @@ fun SearchView(
         keyboardActions = KeyboardActions(
             onDone = {
 
+                keyboardController?.hide()
                 Toast.makeText(context,"Toast Message from the text",Toast.LENGTH_SHORT).show()
-                var searchValue = state.value
-
-                Toast.makeText(context,"${searchValue.toString()}",Toast.LENGTH_LONG).show()
 
 
+                Toast.makeText(context,"$text",Toast.LENGTH_LONG).show()
 
+
+                if(info.contains(text))
+                {
+
+                }
 
 
             }
