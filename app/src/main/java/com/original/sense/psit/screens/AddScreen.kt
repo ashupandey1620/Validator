@@ -1,12 +1,12 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,7 +55,6 @@ import androidx.navigation.NavController
 import com.original.sense.psit.PersonModel
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
-import java.security.cert.CertPathValidatorException.Reason
 
 
 private val studentList = mutableListOf<PersonModel>()
@@ -63,25 +62,39 @@ private val studentList = mutableListOf<PersonModel>()
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListDemo() {
+fun ListDemo(sdtList: ArrayList<String>) {
 
-    studentList.add(PersonModel("Anish Singh",2101641530027))
-    studentList.add(PersonModel("Arnav Asthana",2101641530040))
-    studentList.add(PersonModel("Arin Paliwal",2101641530038))
-    studentList.add(PersonModel("Ashutosh Pandey",2101641530046))
-    studentList.add(PersonModel("Sanat Kumar Mishra",2101640100231))
-    studentList.add(PersonModel("Ayush Agnihotri",2101641530049))
-    studentList.add(PersonModel("Satvik Shukla",2101640100235))
-    studentList.add(PersonModel("Rishab Didwania",2101641530046))
-    studentList.add(PersonModel("Aditya Tripathi",2101641530016))
-    studentList.add(PersonModel("Devansh Tiwari",2101641530058))
-    studentList.add(PersonModel("Devesh Shukla",210164010060))
-    studentList.add(PersonModel("Archit Pandey",2101641530037))
-    studentList.add(PersonModel("Deepak Yadav",2101640100301))
-    studentList.add(PersonModel("James Malhotra",2101641530078))
-    studentList.add(PersonModel("Chadwick Khan",2101640100076))
 
-    studentList.sortWith(Comparator { a, b -> a.name.compareTo(b.name) })
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    studentList.add(PersonModel("Anish Singh",2101641530027))
+//    studentList.add(PersonModel("Arnav Asthana",2101641530040))
+//    studentList.add(PersonModel("Arin Paliwal",2101641530038))
+//    studentList.add(PersonModel("Ashutosh Pandey",2101641530046))
+//    studentList.add(PersonModel("Sanat Kumar Mishra",2101640100231))
+//    studentList.add(PersonModel("Ayush Agnihotri",2101641530049))
+//    studentList.add(PersonModel("Satvik Shukla",2101640100235))
+//    studentList.add(PersonModel("Rishab Didwania",2101641530046))
+//    studentList.add(PersonModel("Aditya Tripathi",2101641530016))
+//    studentList.add(PersonModel("Devansh Tiwari",2101641530058))
+//    studentList.add(PersonModel("Devesh Shukla",210164010060))
+//    studentList.add(PersonModel("Archit Pandey",2101641530037))
+//    studentList.add(PersonModel("Deepak Yadav",2101640100301))
+//    studentList.add(PersonModel("James Malhotra",2101641530078))
+//    studentList.add(PersonModel("Chadwick Khan",2101640100076))
+//
+//    studentList.sortWith(Comparator { a , b -> a.name.compareTo(b.name) })
 
 
 
@@ -92,6 +105,7 @@ fun ListDemo() {
         verticalArrangement = Arrangement.Center ,
         horizontalAlignment = Alignment.CenterHorizontally ,
     ) {
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,7 +116,7 @@ fun ListDemo() {
                 ListItem(model = model)
             }
         }
-        
+
         Spacer(modifier = Modifier.padding(horizontal = 50.dp))
     }
 }
@@ -1001,4 +1015,10 @@ fun ListItem(model: PersonModel) {
         }
     }
 }
+
+//fun readJsonFile(context: Context , fileName: String): PersonModel {
+//    val jsonString: String = context.assets.open(fileName).bufferedReader().use { it.readText() }
+//    val json = Json { ignoreUnknownKeys = true }
+//    return json.decodeFromString(jsonString)
+//}
 

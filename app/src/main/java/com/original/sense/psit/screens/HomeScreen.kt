@@ -29,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +55,9 @@ import com.original.sense.psit.ui.theme.poppins
 
 
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
+val sdtList : ArrayList<String> = ArrayList()
+
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -150,7 +152,8 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
-        StudentAddingList()
+        ListDemo(sdtList)
+
     }
     Column(
         modifier = Modifier
@@ -169,10 +172,7 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
-@Composable
-fun StudentAddingList() {
 
-}
 
 
 @Composable
@@ -232,10 +232,10 @@ fun SearchView(
             onValueChange = {
                             text = it
             } ,
-            modifier
-                .fillMaxWidth(0.6f)
-                .height(50.dp)
-                .clip(RoundedCornerShape(15.dp))
+        modifier
+            .fillMaxWidth(0.6f)
+            .height(50.dp)
+            .clip(RoundedCornerShape(15.dp))
 
                 ,
             placeholder = {
@@ -267,6 +267,7 @@ fun SearchView(
 
                 if(info.contains(text))
                 {
+                    sdtList.add(text)
 
                 }
 
