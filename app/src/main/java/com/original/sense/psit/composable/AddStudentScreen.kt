@@ -34,85 +34,90 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun AddStudentScreen() {
 
-    Card (shape = RoundedCornerShape(25.dp)){
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .background(Color(0xFF3068de)) ,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
-            fontFamily = poppins ,
-            text = "Ready to Add Another Student ?" ,
-            color = Color.White ,
-            textAlign = TextAlign.Center ,
-            fontSize = 23.sp
-        )
-
-        Box(
-            modifier = Modifier
-                .size(250.dp) ,
-            contentAlignment = Alignment.Center
-        ) {
-
-            Image(modifier = Modifier.fillMaxSize()
-                ,painter = painterResource(id = R.drawable.mobileman),
-                contentDescription = "")
+    Box(modifier=Modifier.background(Color(0xFF222228))) {
 
 
-        }
+        Card(shape = RoundedCornerShape(25.dp)) {
 
-        Row(
-            modifier = Modifier
-                .padding(top = 20.dp , bottom = 40.dp)
-                .fillMaxWidth()
-                .height(50.dp)
-                ,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-
-            Button(
+            Column(
                 modifier = Modifier
-                    .height(50.dp)
-                    .width(125.dp) ,
-                elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                onClick = {
-
-
-                } ,
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .background(Color(0xFF3068de)) ,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "No" , color = Color.Black, fontSize = 25.sp)
+
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
+                    fontFamily = poppins ,
+                    text = "Ready to Add Another Student ?" ,
+                    color = Color.White ,
+                    textAlign = TextAlign.Center ,
+                    fontSize = 23.sp
+                )
+
+                Box(
+                    modifier = Modifier
+                        .size(250.dp) ,
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    Image(
+                        modifier = Modifier.fillMaxSize() ,
+                        painter = painterResource(id = R.drawable.mobileman) ,
+                        contentDescription = ""
+                    )
+
+
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(top = 20.dp , bottom = 40.dp)
+                        .fillMaxWidth()
+                        .height(50.dp) ,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+
+                    Button(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(125.dp) ,
+                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
+                        onClick = {
+
+
+                        } ,
+                        shape = RoundedCornerShape(10.dp) ,
+                        colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+                    ) {
+                        Text(text = "No" , color = Color.Black , fontSize = 25.sp)
+
+                    }
+
+                    Button(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(125.dp) ,
+                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
+                        onClick = {
+
+
+                        } ,
+                        shape = RoundedCornerShape(10.dp) ,
+                        colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+                    ) {
+                        Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
+
+                    }
+
+
+                }
 
             }
 
-            Button(
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(125.dp) ,
-                elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                onClick = {
-
-
-                } ,
-                shape = RoundedCornerShape(10.dp) ,
-                colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
-            ) {
-                Text(text = "Yes" , color = Color.White, fontSize = 25.sp)
-
-            }
-
-
         }
-
     }
-
-}
 }
