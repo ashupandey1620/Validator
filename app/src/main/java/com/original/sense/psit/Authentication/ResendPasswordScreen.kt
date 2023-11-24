@@ -89,7 +89,11 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
             onDismissRequest = {
                 show = false
             } ,
-            properties = BottomSheetDialogProperties()
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                dismissWithAnimation = true
+            )
         ) {
             Surface {
                 ResendSheet(navController)

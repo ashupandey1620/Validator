@@ -99,7 +99,11 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
             onDismissRequest = {
                 show = false
             } ,
-            properties = BottomSheetDialogProperties()
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                dismissWithAnimation = true
+            )
         ) {
             Surface {
 
