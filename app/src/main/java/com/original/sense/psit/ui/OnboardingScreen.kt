@@ -135,7 +135,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                     .size(width = 27.18.dp , height = 27.18.dp)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ellipse_11),
+                    painter = painterResource(R.drawable.ellipse_13),
                     contentDescription = null
                 )
             }

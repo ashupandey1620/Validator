@@ -1,6 +1,7 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,15 +49,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.original.sense.psit.PersonModel
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
+import org.json.JSONObject
 
 
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
 val sdtList : ArrayList<String> = ArrayList()
-
+val rollArray : ArrayList<Integer> = ArrayList()
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -65,6 +70,35 @@ val sdtList : ArrayList<String> = ArrayList()
 fun HomeScreen(navController: NavController) {
 
     val context = LocalContext.current.applicationContext
+
+    val jsonData = context.applicationContext.resources.openRawResource(
+        context.applicationContext.resources.getIdentifier(
+            "dataa",
+            "raw",
+            context.applicationContext.packageName
+        )
+    ).bufferedReader().use { it.readText() }
+
+
+    val outputJsonString = JSONObject(jsonData)
+
+    val userarray = outputJsonString.getJSONArray("users") as JsonArray
+
+
+
+//    for (i in 0 until userarray.size()){
+//        rollArray.add()
+//    }
+
+
+
+//    Toast.makeText(context,"$userarray",Toast.LENGTH_LONG).show()
+
+
+
+
+
+
     var show by remember {
         mutableStateOf(false)
     }
@@ -152,7 +186,7 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
-        ListDemo(sdtList)
+       // ListDemo(sdtList)
 
     }
     Column(
@@ -278,3 +312,7 @@ fun SearchView(
         )
 
 }
+
+
+
+
