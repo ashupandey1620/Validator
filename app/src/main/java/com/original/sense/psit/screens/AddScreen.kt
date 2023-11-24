@@ -171,8 +171,12 @@ fun AddScreen(navController: NavController) {
                             .weight(1f)
                             .padding(horizontal = 4.dp) ,
 
-                        onClick = { unSelectedDelegation = !unSelectedDelegation
-                            unSelectedSuspension = !unSelectedSuspension},
+                        onClick = {
+                            if (unSelectedDelegation) {
+                                unSelectedDelegation = !unSelectedDelegation
+                                unSelectedSuspension = !unSelectedSuspension
+                            }
+                        },
 
                         colors = FilterChipDefaults.filterChipColors(
 
@@ -207,8 +211,12 @@ fun AddScreen(navController: NavController) {
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 4.dp),
-                        onClick = { unSelectedSuspension = !unSelectedSuspension
-                            unSelectedDelegation = !unSelectedDelegation},
+                        onClick = {
+                            if (unSelectedSuspension) {
+                                unSelectedSuspension = !unSelectedSuspension
+                                unSelectedDelegation = !unSelectedDelegation
+                            }
+                        },
 
                         colors = FilterChipDefaults.filterChipColors(
                             containerColor = Color(0xFFfffffe),

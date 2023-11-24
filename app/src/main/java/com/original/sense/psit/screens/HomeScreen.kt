@@ -82,7 +82,7 @@ fun HomeScreen(navController: NavController) {
 
     val outputJsonString = JSONObject(jsonData)
 
-    val userarray = outputJsonString.getJSONArray("users") as JsonArray
+//    val userarray = outputJsonString.getJSONArray("users") as JsonArray
 
 
 
@@ -196,13 +196,16 @@ fun HomeScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Click on \n\n" +
-                    "“Tap Button” to\n\n Add a Student." ,
+            text = "$outputJsonString" ,
             fontFamily = poppins ,
-            fontSize = 27.sp ,
+            fontSize = 7.sp ,
             color = Color.White,
             textAlign = TextAlign.Center
         )
+
+
+//      "  Click on \n\n" +
+//        "“Tap Button” to\n\n Add a Student"
     }
 }
 
