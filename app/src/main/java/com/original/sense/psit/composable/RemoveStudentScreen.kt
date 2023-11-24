@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
-@Preview
+
 @Composable
 fun RemoveStudentScreen() {
     Column(
