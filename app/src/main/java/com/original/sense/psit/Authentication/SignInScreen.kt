@@ -28,6 +28,7 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -214,9 +215,9 @@ fun SignInSheet(navController: NavHostController) {
     Card(modifier = Modifier
         .fillMaxWidth(),
         shape = (RoundedCornerShape(30.dp)),
-//        colors = CardDefaults.cardColors(
-//            containerColor = Color.Black.copy(alpha = 0.1f)
-//        )
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Black.copy(alpha = 0.4f)
+        )
 
         ) {
 
@@ -259,8 +260,7 @@ fun SignInSheet(navController: NavHostController) {
                     fontFamily = poppins ,
                     fontSize = 12.sp ,
                     modifier = Modifier.clickable {
-                        Toast.makeText(context , "Forgot Password Clicked" , Toast.LENGTH_SHORT)
-                            .show()
+
                         navController.navigate("forget_page")
                     })
             }
