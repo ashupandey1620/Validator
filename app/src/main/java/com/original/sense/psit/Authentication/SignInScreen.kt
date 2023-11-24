@@ -105,10 +105,9 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
                 dismissWithAnimation = true
             )
         ) {
-            Surface {
 
                 SignInSheet(navController)
-            }
+
         }
     }
 
@@ -276,8 +275,8 @@ fun SignInSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context , "Sign In Button Clicked" , Toast.LENGTH_SHORT)
-                            .show()
+
+
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -314,7 +313,7 @@ fun SignInSheet(navController: NavHostController) {
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-                            Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+
                             navController.popBackStack()
                             navController.navigate("signup_page")
                         })

@@ -95,9 +95,8 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
                 dismissWithAnimation = true
             )
         ) {
-            Surface {
-                ResendSheet(navController)
-            }
+
+            ResendSheet(navController)
         }
     }
 
@@ -249,7 +248,9 @@ fun ResendSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context , "Forgot Password Button Click" , Toast.LENGTH_SHORT).show()
+
+
+
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier

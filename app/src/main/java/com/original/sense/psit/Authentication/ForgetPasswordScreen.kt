@@ -77,6 +77,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
     val image4Visibility = remember {
         mutableStateOf(false)
     }
+
     val tickVisibility = remember {
         mutableStateOf(false)
     }
@@ -107,9 +108,9 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
                 dismissWithAnimation = true
             )
         ) {
-            Surface {
-                ForgotSheet(navController)
-            }
+
+            ForgotSheet(navController)
+
         }
     }
 
@@ -162,7 +163,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
                 modifier = Modifier
                     .offset { IntOffset(offsetX2 , offsetY2) }
                     .size(width = 52.5.dp , height = 52.5.dp)
-//                    .rotate(-44.13f)
+                    .rotate(-44.13f)
             ) {
                 Image(modifier = Modifier.rotate(-44.13f),
                     painter = painterResource(R.drawable.ellipse_11) ,
