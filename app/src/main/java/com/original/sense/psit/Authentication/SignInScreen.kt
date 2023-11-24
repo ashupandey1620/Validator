@@ -103,7 +103,7 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
             properties = BottomSheetDialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false,
-                dismissWithAnimation = true
+                dismissWithAnimation = false
             )
         ) {
 

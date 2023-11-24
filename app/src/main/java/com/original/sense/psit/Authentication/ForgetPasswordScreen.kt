@@ -106,7 +106,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
             properties = BottomSheetDialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false,
-                dismissWithAnimation = true
+                dismissWithAnimation = false
             )
         ) {
 
