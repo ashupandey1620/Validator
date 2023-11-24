@@ -1,4 +1,4 @@
-package com.original.sense.psit
+package com.original.sense.psit.Authentication
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -64,6 +64,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.original.sense.psit.MainActivity
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 

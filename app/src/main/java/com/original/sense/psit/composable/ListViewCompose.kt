@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.original.sense.psit.PersonModel
+import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins
 
 

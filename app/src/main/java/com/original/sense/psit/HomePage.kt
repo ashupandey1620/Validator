@@ -64,14 +64,14 @@ fun BottomNavigationBar(navController: NavHostController) {
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             hasNews = false,
-        ),
+        ) ,
         BottomNavigationItem(
             route = "add",
             title = "Add",
             selectedIcon = Icons.Filled.Add,
             unselectedIcon = Icons.Outlined.Add,
             hasNews = false,
-        ),
+        ) ,
 
 
         BottomNavigationItem(
@@ -80,7 +80,7 @@ fun BottomNavigationBar(navController: NavHostController) {
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person,
             hasNews = false,
-        ),
+        ) ,
     )
 
     var selectedItemIndex by rememberSaveable {

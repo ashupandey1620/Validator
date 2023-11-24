@@ -1,4 +1,4 @@
-package com.original.sense.psit
+package com.original.sense.psit.Authentication
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -24,7 +24,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -57,12 +57,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.original.sense.psit.MainActivity
+import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 @Composable
-fun SignInScreen(navController: NavHostController , context: MainActivity) {
+fun ForgetPasswordScreen(navController: NavHostController , context: MainActivity) {
+
 
     var show by remember {
         mutableStateOf(false)
@@ -88,7 +91,8 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
         image3Visibility.value = true
         delay(500)
         image4Visibility.value = true
-
+//        delay(500)
+//        tickVisibility.value = true
 
     }
 
@@ -100,11 +104,12 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
             properties = BottomSheetDialogProperties()
         ) {
             Surface {
-
-                SignInSheet(navController)
+                ForgotSheet(navController)
             }
         }
     }
+
+
 
     var alignment by remember {
         mutableStateOf(Alignment.CenterHorizontally)
@@ -200,10 +205,11 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
     }
 
+
 }
 
 @Composable
-fun SignInSheet(navController: NavHostController) {
+fun ForgotSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
@@ -213,7 +219,7 @@ fun SignInSheet(navController: NavHostController) {
 //            containerColor = Color.Black.copy(alpha = 0.1f)
 //        )
 
-        ) {
+    ) {
 
 
         Column(
@@ -226,7 +232,7 @@ fun SignInSheet(navController: NavHostController) {
         ) {
 
             Text(
-                text = "Sign In" ,
+                text = "Resend Password" ,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -238,9 +244,8 @@ fun SignInSheet(navController: NavHostController) {
             )
 
 
-            SimpleOutlinedTextFieldUsername()
+            SimpleOutlinedTextFieldEmail2()
 
-            SignInPagePassword()
 
             Column(
                 modifier = Modifier
@@ -249,18 +254,19 @@ fun SignInSheet(navController: NavHostController) {
                     .padding(vertical = 10.dp) ,
                 horizontalAlignment = Alignment.End
             ) {
-                Text(text = "Forgot Password?" ,
+                Text(text = "Resend Password" ,
                     color = Color(0xFFF6F6F6) ,
                     fontFamily = poppins ,
                     fontSize = 12.sp ,
                     modifier = Modifier.clickable {
-                        Toast.makeText(context , "Forgot Password Clicked" , Toast.LENGTH_SHORT)
+                        Toast.makeText(context , "Resend Password Clicked" , Toast.LENGTH_SHORT)
                             .show()
-                        navController.navigate("forget_page")
+                        navController.navigate("resend_password_page")
+
                     })
             }
 
-            Spacer(modifier = Modifier.padding(25.dp))
+            Spacer(modifier = Modifier.padding(65.dp))
 
             Row(
                 modifier = Modifier
@@ -270,8 +276,7 @@ fun SignInSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context , "Sign In Button Clicked" , Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(context , "Forgot Password Button Click" , Toast.LENGTH_SHORT).show()
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -279,12 +284,16 @@ fun SignInSheet(navController: NavHostController) {
                         .padding(top = 10.dp)
                 ) {
                     Text(
-                        text = "Sign In" , color = Color.White ,
+                        text = "Send Password" , color = Color.White ,
                         fontSize = 20.sp ,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
             }
+
+
+
+
 
 
             Column(
@@ -297,20 +306,20 @@ fun SignInSheet(navController: NavHostController) {
                 Row {
 
                     Text(
-                        text = "I am a new User. " ,
+                        text = "Already a User? " ,
                         color = Color(0xFFF6F6F6) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp
                     )
 
-                    Text(text = "Sign Up" ,
+                    Text(text = "Sign In" ,
                         color = Color(0xFF3068de) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
                             Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
                             navController.popBackStack()
-                            navController.navigate("signup_page")
+                            navController.navigate("signIn_page")
                         })
                 }
             }
@@ -318,8 +327,10 @@ fun SignInSheet(navController: NavHostController) {
         }
     }
 }
+
+
 @Composable
-fun SignInPagePassword() {
+fun SimpleOutlinedTextFieldEmail2() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -328,26 +339,24 @@ fun SignInPagePassword() {
 
         value = text,
         leadingIcon = {
-            Icon(
-                Icons.Outlined.Lock, contentDescription = "Username",
-                tint = Color(0xFFA7A7A7))
+            Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFA7A7A7))
         },
         onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
-            fontFamily = poppins,fontSize = 16.sp) },
+        placeholder = { Text(text = "Email",   fontFamily = poppins,
+            color = Color(0xFFA7A7A7), fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Password
+            keyboardType = KeyboardType.Email
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
-            focusedBorderColor =  Color.White,
+            focusedBorderColor = Color.White ,
             unfocusedBorderColor = Color(0xFF383838) ,
         ) ,
         singleLine = true,
@@ -361,8 +370,8 @@ fun SignInPagePassword() {
                 //
 
 
-
             }
         )
+
     )
 }

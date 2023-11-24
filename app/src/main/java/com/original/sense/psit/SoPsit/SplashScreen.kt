@@ -1,4 +1,4 @@
-package com.original.sense.psit
+package com.original.sense.psit.SoPsit
 
 import android.content.Context
 import androidx.compose.animation.core.Animatable
@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.original.sense.psit.MainActivity
+import com.original.sense.psit.R
 import kotlinx.coroutines.delay
 
 

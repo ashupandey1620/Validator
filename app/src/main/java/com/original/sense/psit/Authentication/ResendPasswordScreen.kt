@@ -1,4 +1,4 @@
-package com.original.sense.psit
+package com.original.sense.psit.Authentication
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.original.sense.psit.MainActivity
+import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay

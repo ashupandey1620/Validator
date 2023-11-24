@@ -1,4 +1,4 @@
-package com.original.sense.psit
+package com.original.sense.psit.model
 
 data class PersonModel(
     val rollNum: Long,

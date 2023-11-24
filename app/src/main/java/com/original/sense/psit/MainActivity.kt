@@ -6,15 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.original.sense.psit.screens.NotificationScreen
+import com.original.sense.psit.Authentication.ForgetPasswordScreen
+import com.original.sense.psit.Authentication.ResendPasswordScreen
+import com.original.sense.psit.Authentication.SignInScreen
+import com.original.sense.psit.Authentication.SignUpPage
+import com.original.sense.psit.SoPsit.SplashScreen
 import com.original.sense.psit.ui.OnboardingScreen
 import com.original.sense.psit.ui.theme.SoPsitTheme
 

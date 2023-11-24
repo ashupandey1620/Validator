@@ -18,12 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
+
 
 @Composable
 fun StudentProfile(navController: NavHostController) {
@@ -42,7 +44,8 @@ fun StudentProfile(navController: NavHostController) {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp),
-                Arrangement.SpaceBetween){
+                Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically){
 
                 Row( verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { navController.popBackStack()
@@ -53,7 +56,7 @@ fun StudentProfile(navController: NavHostController) {
 
                     Text(text = "Student Profile",
                         color = Color.White,
-                        fontSize = 22.sp,
+                        fontSize = 24.sp,
                         fontFamily = poppins ,
                     )
                 }
@@ -63,7 +66,7 @@ fun StudentProfile(navController: NavHostController) {
 
                     CircularTapButton()
                     Spacer(modifier = Modifier.padding(6.dp))
-                    CircularNotificationButton(navController)
+                  //  CircularNotificationButton(navController)
                 }
 
             }
