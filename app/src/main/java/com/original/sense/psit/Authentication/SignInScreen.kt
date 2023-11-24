@@ -244,7 +244,7 @@ fun SignInSheet(navController: NavHostController) {
             )
 
 
-            SimpleOutlinedTextFieldUsername()
+            SimpleOutlinedTextFieldUsername2()
 
             SignInPagePassword()
 
@@ -328,7 +328,7 @@ fun SignInPagePassword() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
-    val containerColor = Color(0xFF383838)
+    val containerColor = Color(0xFF28292e)
     OutlinedTextField(
 
         value = text,

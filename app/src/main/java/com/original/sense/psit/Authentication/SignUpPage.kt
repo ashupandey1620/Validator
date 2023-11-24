@@ -527,3 +527,59 @@ fun CircleCheckbox(selected: Boolean, enabled: Boolean = true, onChecked: () -> 
             contentDescription = "checkbox")
     }
 }
+
+
+@Composable
+fun SimpleOutlinedTextFieldUsername2() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
+
+    val containerColor = Color(0xFF28292e)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(Icons.Outlined.Person, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Username", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = if(text.isEmpty()) Color.White
+            else if(user.contains(text))
+                Color.Red
+            else
+                Color.Green ,
+            //Color(0xFF64bf75),
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
+
+
+
+            }
+        )
+    )
+}

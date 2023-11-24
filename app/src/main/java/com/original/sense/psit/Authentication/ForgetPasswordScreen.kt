@@ -265,8 +265,7 @@ fun ForgotSheet(navController: NavHostController) {
                     fontFamily = poppins ,
                     fontSize = 12.sp ,
                     modifier = Modifier.clickable {
-                        Toast.makeText(context , "Resend Password Clicked" , Toast.LENGTH_SHORT)
-                            .show()
+
                         navController.navigate("resend_password_page")
 
                     })
@@ -282,7 +281,10 @@ fun ForgotSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context , "Forgot Password Button Click" , Toast.LENGTH_SHORT).show()
+
+
+
+
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -323,7 +325,7 @@ fun ForgotSheet(navController: NavHostController) {
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-                            Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+
                             navController.popBackStack()
                             navController.navigate("signIn_page")
                         })
@@ -340,7 +342,7 @@ fun SimpleOutlinedTextFieldEmail2() {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
-    val containerColor = Color(0xFF383838)
+    val containerColor = Color(0xFF28292e)
     OutlinedTextField(
 
         value = text,
