@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.R
+import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
 @Composable

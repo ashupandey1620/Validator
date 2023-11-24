@@ -2,7 +2,6 @@ package com.original.sense.psit.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.original.sense.psit.R
+import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
 @Composable

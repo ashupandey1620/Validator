@@ -1,4 +1,4 @@
-package com.original.sense.psit.screens
+package com.original.sense.psit.composable
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement

@@ -57,7 +57,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
-import com.original.sense.psit.screens.GradientBackground
+import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 

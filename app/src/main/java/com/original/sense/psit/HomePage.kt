@@ -13,9 +13,7 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,7 +34,6 @@ import com.original.sense.psit.screens.EditProfileScreen
 import com.original.sense.psit.screens.HomeScreen
 import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
-import com.original.sense.psit.screens.RemoveStudentScreen
 import com.original.sense.psit.screens.StudentProfile
 
 

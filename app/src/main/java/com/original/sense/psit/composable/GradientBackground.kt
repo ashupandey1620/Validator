@@ -1,4 +1,4 @@
-package com.original.sense.psit.screens
+package com.original.sense.psit.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset

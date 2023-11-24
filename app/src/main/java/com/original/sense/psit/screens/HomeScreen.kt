@@ -1,7 +1,6 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,12 +48,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
-import com.original.sense.psit.PersonModel
 import com.original.sense.psit.R
+import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
 import org.json.JSONObject
 
