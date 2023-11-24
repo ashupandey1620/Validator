@@ -187,7 +187,7 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 17.dp , horizontal = 14.dp),
+                .padding(vertical = 20.dp , horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -224,9 +224,16 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
 
     Card(onClick = {
+        /**
+         *
+         *
+         * LogOut
+         *
+         *
+         */
+                   },
 
-                   //logOut from the App
-    },
+
         colors = CardDefaults.cardColors(Color(0xFF383841)),
         modifier = Modifier
             .fillMaxWidth()
@@ -236,7 +243,8 @@ fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 17.dp , horizontal = 14.dp),
+                .padding(vertical = 20.dp , horizontal = 14.dp),
+
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
