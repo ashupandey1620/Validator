@@ -18,21 +18,8 @@ import androidx.core.content.ContextCompat.startActivity
 @Composable
 fun addName() {
 
-//    val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-//
-//    if (nfcAdapter == null || !nfcAdapter.isEnabled) {
-//        // NFC is not supported or disabled, show alert
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle("NFC Scanner")
-//        builder.setMessage("Please enable NFC scanner to use this feature.")
-//        builder.setPositiveButton("Open Settings") { dialog, which ->
-//            // Open NFC settings
-//            val intent = Intent(Settings.ACTION_NFC_SETTINGS)
-//            startActivity(intent)
-//        }
-//        builder.setNegativeButton("Cancel", null)
-//        builder.create().show()
-//    }
 
 }
+
+
 
