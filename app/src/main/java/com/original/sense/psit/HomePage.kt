@@ -35,6 +35,7 @@ import com.original.sense.psit.screens.HomeScreen
 import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
 import com.original.sense.psit.screens.StudentProfile
+import com.original.sense.psit.screens.detailScreen
 
 
 data class BottomNavigationItem(
@@ -181,6 +182,10 @@ fun MainPageNavigation(navController: NavHostController) {
 
         composable(route = "studentProfileInfo") {
             StudentProfile(navController)
+        }
+
+        composable(route = "detailedScreen") {
+            detailScreen(navController)
         }
 
     }

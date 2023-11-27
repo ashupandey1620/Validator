@@ -166,7 +166,8 @@ fun HomeScreen(navController: NavController) {
             )
 
             IconButton(modifier = Modifier.size(35.dp) , onClick = {
-                navController.navigate("studentProfileInfo")
+               // navController.navigate("studentProfileInfo")
+                navController.navigate("detailedScreen")
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete) ,
@@ -175,6 +176,8 @@ fun HomeScreen(navController: NavController) {
                 )
             }
         }
+
+
 
        // ListDemo(sdtList)
 
