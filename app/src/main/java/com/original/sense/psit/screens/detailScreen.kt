@@ -1,6 +1,7 @@
 package com.original.sense.psit.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.original.sense.psit.R
+import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
 const val name = "Ashutosh Pandey"
@@ -32,7 +34,9 @@ const val name = "Ashutosh Pandey"
 fun detailScreen(navController: NavController) {
 
 
-    Column {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(brush = GradientBackground())) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -76,9 +80,10 @@ fun detailScreen(navController: NavController) {
 @Composable
 fun FrontLobe( modifier: Modifier) {
 
-    Row ( modifier
-        .fillMaxWidth(0.7f)
-        .height(50.dp)){
+    Row (
+        modifier
+            .fillMaxWidth(0.7f)
+            .height(50.dp)){
 
         Box(modifier = Modifier.size(50.dp)) {
 
