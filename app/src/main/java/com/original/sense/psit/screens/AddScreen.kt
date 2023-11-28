@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,9 +53,13 @@ import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
 
+val alloted = BooleanArray(8)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavController) {
+
+    val context = LocalContext.current.applicationContext
 
     var unSelectedDelegation by remember { mutableStateOf(false) }
     var unSelectedSuspension by remember { mutableStateOf(true) }
@@ -204,6 +210,8 @@ fun AddScreen(navController: NavController) {
 
                     Button(
                         onClick = {
+
+                                  Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
 
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -566,7 +574,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected1 = !selected1 },
+                onClick = { selected1 = !selected1
+                          alloted[0] = !alloted[0]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -599,7 +609,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected2 = !selected2 },
+                onClick = { selected2 = !selected2
+                            alloted[1] = !alloted[1]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -644,7 +656,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected3 = !selected3 },
+                onClick = { selected3 = !selected3
+                            alloted[2] = !alloted[2]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -677,7 +691,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected4 = !selected4 },
+                onClick = { selected4 = !selected4
+                            alloted[3] = !alloted[3]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -722,7 +738,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected5 = !selected5 },
+                onClick = { selected5 = !selected5
+                            alloted[4] = !alloted[4]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -755,7 +773,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected6 = !selected6 },
+                onClick = { selected6 = !selected6
+                            alloted[5] = !alloted[5]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -795,7 +815,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected7 = !selected7 },
+                onClick = { selected7 = !selected7
+                            alloted[6] = !alloted[6]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
@@ -821,7 +843,9 @@ fun AllottedLectures() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp),
-                onClick = { selected8 = !selected8 },
+                onClick = { selected8 = !selected8
+                            alloted[7] = !alloted[7]
+                          },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFF1d1e23),
                     labelColor = Color.White,
