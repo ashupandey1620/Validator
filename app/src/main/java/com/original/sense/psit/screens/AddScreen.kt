@@ -253,6 +253,34 @@ fun AddScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(4.dp))
 
                 DateStartEnd()
+
+                Spacer(modifier = Modifier.padding(146.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+
+                ) {
+
+                    Button(
+                        onClick = {
+
+                        } ,
+                        colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
+                    ) {
+                        Text(
+                            text = "Create" , color = Color.White ,
+                            fontSize = 20.sp ,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
+
+
             }
 
         }
