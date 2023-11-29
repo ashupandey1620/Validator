@@ -54,6 +54,8 @@ import com.original.sense.psit.ui.theme.poppins
 
 
 val alloted = BooleanArray(8)
+var title = ""
+var description = ""
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -211,7 +213,9 @@ fun AddScreen(navController: NavController) {
                     Button(
                         onClick = {
 
+                                  Toast.makeText(context,title,Toast.LENGTH_LONG).show()
                                   Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
+                                  Toast.makeText(context, description,Toast.LENGTH_LONG).show()
 
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -512,7 +516,8 @@ fun DescriptionDelegation() {
                     tint = Color(0xFFA7A7A7)
                 )
             } ,
-            onValueChange = { text = it } ,
+            onValueChange = { text = it
+                            description = text} ,
             shape = RoundedCornerShape(30.dp) ,
 
             placeholder = { Text(text = "Description" , color = Color(0xFFA7A7A7) , fontSize = 16.sp) } ,
@@ -904,7 +909,8 @@ fun SubjectOfDelegation() {
                     tint = Color(0xFFA7A7A7)
                 )
             } ,
-            onValueChange = { text = it } ,
+            onValueChange = { text = it
+                            title = text} ,
             shape = RoundedCornerShape(30.dp) ,
 
             placeholder = { Text(text = "Title" , color = Color(0xFFA7A7A7) , fontSize = 16.sp) } ,

@@ -265,11 +265,10 @@ fun SearchView(
         modifier
             .fillMaxWidth(0.6f)
             .height(50.dp)
-            .clip(RoundedCornerShape(15.dp))
+            .clip(RoundedCornerShape(15.dp)) ,
 
-                ,
             placeholder = {
-                Text(text = placeHolder,fontSize = 15.sp, color =  Color(0xFF222228))
+                Text(text = placeHolder, color =  Color(0xFF222228))
             } ,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.White
