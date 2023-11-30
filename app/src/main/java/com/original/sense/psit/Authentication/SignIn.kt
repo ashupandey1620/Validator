@@ -1,6 +1,5 @@
 package com.original.sense.psit.Authentication
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -20,18 +19,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,8 +45,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,7 +63,7 @@ import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 @Composable
-fun ResendPasswordScreen(navController: NavHostController , context: MainActivity) {
+fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
     var show by remember {
         mutableStateOf(false)
@@ -72,6 +81,7 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
 
 
     LaunchedEffect(key1 = 0) {
+        tickVisibility.value = true
         image1Visibility.value = true
         show = true
         delay(200)
@@ -80,10 +90,9 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
         image3Visibility.value = true
         delay(500)
         image4Visibility.value = true
-//        delay(500)
-//        tickVisibility.value = true
-
     }
+
+
 
     if (show) {
         BottomSheetDialog(
@@ -97,11 +106,10 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
             )
         ) {
 
-            ResendSheet(navController)
+                SignInSheet(navController)
+
         }
     }
-
-
 
     var alignment by remember {
         mutableStateOf(Alignment.CenterHorizontally)
@@ -183,7 +191,7 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
                 enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
                 modifier = Modifier
                     .offset { IntOffset(offsetX4 , offsetY4) }
-                    .size(width = 275.39.dp , height = 278.46.dp)
+                    .size(width = 400.dp , height = 400.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ellipse_10) ,
@@ -191,15 +199,66 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
                 )
             }
 
+            val offsetX5 = with(density) { 130.45.dp.roundToPx() }
+            val offsetY5 = with(density) { 200.73.dp.roundToPx() }
+
+            this@Column.AnimatedVisibility(
+                visible = tickVisibility.value ,
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
+                modifier = Modifier
+                    .offset { IntOffset(offsetX5 , offsetY5) }
+                    .size(width = 100.dp , height = 100.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.tickl) ,
+                    contentDescription = null
+                )
+            }
+
+
+            val offsetX6 = with(density) { 167.55.dp.roundToPx() }
+            val offsetY6 = with(density) { 170.46.dp.roundToPx() }
+
+            this@Column.AnimatedVisibility(
+                visible = tickVisibility.value ,
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
+                modifier = Modifier
+                    .offset { IntOffset(offsetX6 , offsetY6) }
+                    .size(width = 135.dp , height = 135.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.tickr) ,
+                    contentDescription = null
+                )
+            }
+
+
+
+
+            /*
+             * border-radius: 19.5px, 19.5px, 0px, 19.5px
+             * angle: 45 deg
+             *
+             *
+             *
+             * width: 40.38px
+height: 135.46px
+top: 143.71px
+left: 246.99px
+border-radius: 20.19px, 0px, 19.5px, 0px
+angle: -45 deg
+
+             */
 
         }
 
 
     }
+
 }
 
 @Composable
-fun ResendSheet(navController: NavHostController) {
+fun SignInSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
     Card(modifier = Modifier
@@ -209,7 +268,7 @@ fun ResendSheet(navController: NavHostController) {
             containerColor = Color.Black.copy(alpha = 0.4f)
         )
 
-    ) {
+        ) {
 
 
         Column(
@@ -222,7 +281,7 @@ fun ResendSheet(navController: NavHostController) {
         ) {
 
             Text(
-                text = "Forget Password" ,
+                text = "Sign In" ,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -234,12 +293,28 @@ fun ResendSheet(navController: NavHostController) {
             )
 
 
-            SimpleOutlinedTextFieldEmail2()
+            SimpleOutlinedTextFieldUsername2()
 
+            SignInPagePassword()
 
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(vertical = 10.dp) ,
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(text = "Forgot Password?" ,
+                    color = Color(0xFFF6F6F6) ,
+                    fontFamily = poppins ,
+                    fontSize = 12.sp ,
+                    modifier = Modifier.clickable {
 
+                        navController.navigate("forget_page")
+                    })
+            }
 
-            Spacer(modifier = Modifier.padding(65.dp))
+            Spacer(modifier = Modifier.padding(25.dp))
 
             Row(
                 modifier = Modifier
@@ -251,7 +326,6 @@ fun ResendSheet(navController: NavHostController) {
                     onClick = {
 
 
-
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -259,16 +333,12 @@ fun ResendSheet(navController: NavHostController) {
                         .padding(top = 10.dp)
                 ) {
                     Text(
-                        text = "Send Password" , color = Color.White ,
+                        text = "Sign In" , color = Color.White ,
                         fontSize = 20.sp ,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
             }
-
-
-
-
 
 
             Column(
@@ -281,24 +351,72 @@ fun ResendSheet(navController: NavHostController) {
                 Row {
 
                     Text(
-                        text = "Already a User? " ,
+                        text = "I am a new User. " ,
                         color = Color(0xFFF6F6F6) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp
                     )
 
-                    Text(text = "Sign In" ,
+                    Text(text = "Sign Up" ,
                         color = Color(0xFF3068de) ,
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-                            Toast.makeText(context , "Sign Up Clicked" , Toast.LENGTH_SHORT).show()
+
                             navController.popBackStack()
-                            navController.navigate("signIn_page")
+                            navController.navigate("signup_page")
                         })
                 }
             }
 
         }
     }
+}
+@Composable
+fun SignInPagePassword() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF28292e)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(
+                Icons.Outlined.Lock, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor =  Color.White,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
+
+
+
+            }
+        )
+    )
 }

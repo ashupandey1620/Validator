@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.original.sense.psit.Authentication.ForgetPasswordScreen
+import com.original.sense.psit.Authentication.ForgotPasswordScreen
 import com.original.sense.psit.Authentication.ResendPasswordScreen
 import com.original.sense.psit.Authentication.SignInScreen
 import com.original.sense.psit.Authentication.SignUpPage
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable("forget_page") {
-                                ForgetPasswordScreen(navController = navController, context = this@MainActivity)
+                                ForgotPasswordScreen(navController = navController, context = this@MainActivity)
                             }
 
                             composable("resend_password_page") {

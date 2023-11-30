@@ -1,6 +1,5 @@
 package com.original.sense.psit.Authentication
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -32,7 +31,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +63,7 @@ import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 @Composable
-fun ForgetPasswordScreen(navController: NavHostController , context: MainActivity) {
+fun ResendPasswordScreen(navController: NavHostController , context: MainActivity) {
 
 
     var show by remember {
@@ -85,6 +83,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
 
 
     LaunchedEffect(key1 = 0) {
+        tickVisibility.value = true
         image1Visibility.value = true
         show = true
         delay(200)
@@ -94,7 +93,7 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
         delay(500)
         image4Visibility.value = true
 //        delay(500)
-//        tickVisibility.value = true
+
 
     }
 
@@ -206,6 +205,41 @@ fun ForgetPasswordScreen(navController: NavHostController , context: MainActivit
             }
 
 
+
+            val offsetX5 = with(density) { 130.45.dp.roundToPx() }
+            val offsetY5 = with(density) { 200.73.dp.roundToPx() }
+
+            this@Column.AnimatedVisibility(
+                visible = tickVisibility.value ,
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
+                modifier = Modifier
+                    .offset { IntOffset(offsetX5 , offsetY5) }
+                    .size(width = 100.dp , height = 100.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.tickl) ,
+                    contentDescription = null
+                )
+            }
+
+
+            val offsetX6 = with(density) { 167.55.dp.roundToPx() }
+            val offsetY6 = with(density) { 170.46.dp.roundToPx() }
+
+            this@Column.AnimatedVisibility(
+                visible = tickVisibility.value ,
+                enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
+                modifier = Modifier
+                    .offset { IntOffset(offsetX6 , offsetY6) }
+                    .size(width = 135.dp , height = 135.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.tickr) ,
+                    contentDescription = null
+                )
+            }
+
+
         }
 
 
@@ -253,25 +287,8 @@ fun ForgotSheet(navController: NavHostController) {
             SimpleOutlinedTextFieldEmail2()
 
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(vertical = 10.dp) ,
-                horizontalAlignment = Alignment.End
-            ) {
-                Text(text = "Resend Password" ,
-                    color = Color(0xFFF6F6F6) ,
-                    fontFamily = poppins ,
-                    fontSize = 12.sp ,
-                    modifier = Modifier.clickable {
 
-                        navController.navigate("resend_password_page")
-
-                    })
-            }
-
-            Spacer(modifier = Modifier.padding(65.dp))
+            Spacer(modifier = Modifier.padding(85.dp))
 
             Row(
                 modifier = Modifier

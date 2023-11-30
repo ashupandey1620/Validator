@@ -25,7 +25,7 @@ fun GradientBackground(): Brush {
     )
 
     return Brush.linearGradient(
-        colors = colorsBright,
+        colors = colorsDark,
         start = Offset.Zero,
         end = Offset(Float.POSITIVE_INFINITY,
             Float.POSITIVE_INFINITY)
