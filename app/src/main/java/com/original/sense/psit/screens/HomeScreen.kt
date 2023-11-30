@@ -265,7 +265,7 @@ fun SearchView(
         modifier
             .fillMaxWidth(0.6f)
             .height(50.dp)
-            .clip(RoundedCornerShape(15.dp)) ,
+            .clip(RoundedCornerShape(15.dp)),
 
             placeholder = {
                 Text(text = placeHolder, color =  Color(0xFF222228))
