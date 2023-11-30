@@ -33,7 +33,7 @@ import com.original.sense.psit.ui.theme.poppins
 
 @Preview
 @Composable
-fun SureToAssign() {
+fun SureToCancelSuspend() {
     Card (shape = RoundedCornerShape(25.dp)) {
 
         Column(
@@ -49,7 +49,7 @@ fun SureToAssign() {
                     .fillMaxWidth()
                     .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
                 fontFamily = poppins ,
-                text = "Are you sure to Assign these Lectures ?" ,
+                text = "Are you sure to Cancel the Suspension ?" ,
                 color = Color.White ,
                 textAlign = TextAlign.Center ,
                 fontSize = 23.sp
@@ -63,7 +63,7 @@ fun SureToAssign() {
 
                 Image(
                     modifier = Modifier.fillMaxSize() ,
-                    painter = painterResource(id = R.drawable.dustbingirl) ,
+                    painter = painterResource(id = R.drawable.college) ,
                     contentDescription = ""
                 )
 
@@ -90,7 +90,6 @@ fun SureToAssign() {
                     colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
                 ) {
                     Text(text = "No" , color = Color.Black , fontSize = 25.sp)
-
                 }
 
                 Button(
@@ -103,10 +102,9 @@ fun SureToAssign() {
 
                     } ,
                     shape = RoundedCornerShape(10.dp) ,
-                    colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+                    colors = ButtonDefaults.buttonColors(Color(0xFFf03d5f))
                 ) {
                     Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
-
                 }
 
             }
