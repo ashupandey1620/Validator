@@ -101,9 +101,9 @@ fun HomeScreen(navController: NavController) {
             } ,
             properties = BottomSheetDialogProperties()
         ) {
-            Surface {
+
                 ReadyToTap()
-            }
+
         }
     }
 

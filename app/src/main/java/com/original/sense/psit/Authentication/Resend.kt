@@ -92,7 +92,7 @@ fun ResendPasswordScreen(navController: NavHostController , context: MainActivit
         image3Visibility.value = true
         delay(500)
         image4Visibility.value = true
-//        delay(500)
+
 
 
     }
