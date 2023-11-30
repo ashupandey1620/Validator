@@ -48,8 +48,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.composable.ReadyToTap
+import com.original.sense.psit.composable.RemoveStudentScreen
 import com.original.sense.psit.ui.theme.poppins
 
 
@@ -60,6 +64,24 @@ var description = ""
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavController) {
+
+
+    var show by remember {
+        mutableStateOf(false)
+    }
+
+
+    if (show) {
+        BottomSheetDialog(
+            onDismissRequest = {
+                show = false
+            } ,
+            properties = BottomSheetDialogProperties()
+        ) {
+            RemoveStudentScreen()
+        }
+    }
+
 
     val context = LocalContext.current.applicationContext
 
@@ -212,7 +234,7 @@ fun AddScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-
+show = !show
                                   Toast.makeText(context,title,Toast.LENGTH_LONG).show()
                                   Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
                                   Toast.makeText(context, description,Toast.LENGTH_LONG).show()
@@ -277,7 +299,7 @@ fun AddScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-
+show = !show
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                         modifier = Modifier
@@ -313,7 +335,8 @@ fun DateStartEnd() {
         .fillMaxWidth()
         .wrapContentHeight()) {
 
-        Box(modifier = Modifier.weight(1f)
+        Box(modifier = Modifier
+            .weight(1f)
             .padding(horizontal = 3.dp)) {
 
 
@@ -363,7 +386,8 @@ fun DateStartEnd() {
             )
         }
 
-        Box (modifier = Modifier.weight(1f)
+        Box (modifier = Modifier
+            .weight(1f)
             .padding(horizontal = 3.dp)) {
 
 

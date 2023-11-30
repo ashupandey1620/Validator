@@ -33,8 +33,7 @@ import com.original.sense.psit.ui.theme.poppins
 
 @Preview
 @Composable
-fun RemoveStudentScreen() {
-
+fun SureToAssign() {
     Card (shape = RoundedCornerShape(25.dp)) {
 
         Column(

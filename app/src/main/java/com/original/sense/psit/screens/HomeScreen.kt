@@ -101,9 +101,7 @@ fun HomeScreen(navController: NavController) {
             } ,
             properties = BottomSheetDialogProperties()
         ) {
-
                 ReadyToTap()
-
         }
     }
 
@@ -138,7 +136,7 @@ fun HomeScreen(navController: NavController) {
                             .clip(CircleShape)
                             .fillMaxSize()
                             .clickable {
-                                show = true
+                                show = !show
                             } ,
                         painter = painterResource(id = R.drawable.tap) ,
                         contentDescription = ""
