@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -41,19 +42,90 @@ fun DelegationDetails() {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(Color(0xFF3068de)) ,
-            horizontalAlignment = Alignment.CenterHorizontally
+
+
         ) {
+
+Column( modifier = Modifier
+    .fillMaxWidth()
+    .wrapContentHeight()) {
+
+    Row {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
+        fontFamily = poppins ,
+        text = "Delegation Details:" ,
+        color = Color.White ,
+        textAlign = TextAlign.Center ,
+        fontSize = 20.sp
+    )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
+            fontFamily = poppins ,
+            text = "hola" ,
+            color = Color.White ,
+            textAlign = TextAlign.Center ,
+            fontSize = 20.sp
+        )
+}
+
+}
 
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp , end = 30.dp , top = 30.dp) ,
                 fontFamily = poppins ,
-                text = "Delegation Details ?" ,
+                text = "Assigner Details:" ,
                 color = Color.White ,
                 textAlign = TextAlign.Center ,
-                fontSize = 23.sp
+                fontSize = 20.sp
             )
+
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),horizontalArrangement = Arrangement.SpaceBetween){
+
+
+                Column(  modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()) {
+
+                    Spacer(modifier = Modifier.padding(50.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(70.dp) ,
+                        Alignment.BottomStart
+                    )
+                    {
+                        Image(
+                            modifier = Modifier.fillMaxSize() ,
+                            painter = painterResource(id = R.drawable.grass) ,
+                            contentDescription = ""
+                        )
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .size(130.dp) ,
+
+                ) {
+
+                    Image(
+                        modifier = Modifier.fillMaxSize() ,
+                        painter = painterResource(id = R.drawable.thinkman) ,
+                        contentDescription = ""
+                    )
+
+
+                }
+            }
 
         }
     }
