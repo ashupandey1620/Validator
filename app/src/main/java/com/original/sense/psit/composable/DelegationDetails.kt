@@ -55,8 +55,6 @@ fun DelegationDetails() {
                 fontSize = 23.sp
             )
 
-
-
         }
     }
 }
