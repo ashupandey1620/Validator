@@ -37,7 +37,7 @@ fun AddStudentScreen() {
     Box(modifier=Modifier.background(Color(0xFF222228))) {
 
 
-        Card(shape = RoundedCornerShape(25.dp)) {
+        Card(shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp)) {
 
             Column(
                 modifier = Modifier

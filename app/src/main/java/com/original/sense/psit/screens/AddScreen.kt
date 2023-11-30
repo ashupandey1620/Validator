@@ -54,6 +54,8 @@ import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.composable.RemoveStudentScreen
+import com.original.sense.psit.composable.SureToAssign
+import com.original.sense.psit.composable.SureToSuspend
 import com.original.sense.psit.ui.theme.poppins
 
 
@@ -70,15 +72,38 @@ fun AddScreen(navController: NavController) {
         mutableStateOf(false)
     }
 
+    var show2 by remember {
+        mutableStateOf(false)
+    }
+
 
     if (show) {
         BottomSheetDialog(
             onDismissRequest = {
                 show = false
             } ,
-            properties = BottomSheetDialogProperties()
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                dismissWithAnimation = false
+            )
         ) {
-            RemoveStudentScreen()
+            SureToAssign()
+        }
+    }
+
+    if (show2) {
+        BottomSheetDialog(
+            onDismissRequest = {
+                show2 = false
+            } ,
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                dismissWithAnimation = false
+            )
+        ) {
+            SureToSuspend()
         }
     }
 
@@ -234,7 +259,7 @@ fun AddScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-show = !show
+                                  show = !show
                                   Toast.makeText(context,title,Toast.LENGTH_LONG).show()
                                   Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
                                   Toast.makeText(context, description,Toast.LENGTH_LONG).show()
@@ -299,7 +324,7 @@ show = !show
 
                     Button(
                         onClick = {
-show = !show
+                            show2 = !show2
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                         modifier = Modifier

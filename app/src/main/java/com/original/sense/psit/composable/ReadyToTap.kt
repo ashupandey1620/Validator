@@ -36,7 +36,7 @@ import com.original.sense.psit.ui.theme.poppins
 fun ReadyToTap() {
 
 
-    Card (shape = RoundedCornerShape(25.dp)){
+    Card (shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp)){
 
         Column(
             modifier = Modifier

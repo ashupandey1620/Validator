@@ -34,7 +34,7 @@ import com.original.sense.psit.ui.theme.poppins
 @Preview
 @Composable
 fun SureToSuspend() {
-    Card (shape = RoundedCornerShape(25.dp)) {
+    Card (shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp)) {
 
         Column(
             modifier = Modifier

@@ -99,7 +99,11 @@ fun HomeScreen(navController: NavController) {
             onDismissRequest = {
                 show = false
             } ,
-            properties = BottomSheetDialogProperties()
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                dismissWithAnimation = false
+            )
         ) {
                 ReadyToTap()
         }
