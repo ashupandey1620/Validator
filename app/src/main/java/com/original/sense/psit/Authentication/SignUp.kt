@@ -126,6 +126,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         SimpleOutlinedTextFieldRoom()
         Terms()
 
+       var valid : Boolean
 
         Row (modifier = Modifier
             .fillMaxWidth()
@@ -133,12 +134,13 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
             Button(onClick = {
 
-                checkValidity(name, userName,email,phone,room,context)
+                valid = checkValidity(name, userName,email,phone,room,context)
 
+                if(valid) {
+                    navController.popBackStack()
+                    navController.navigate("HomeGraph")
+                }
 
-
-//                navController.popBackStack()
-//                navController.navigate("HomeGraph")
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
                 modifier = Modifier
@@ -162,14 +164,48 @@ fun checkValidity(
     phone: String ,
     room: String ,
     context: MainActivity
-) {
-
-
-
+): Boolean {
     if (name.any { it.isDigit() })
     {
-      Toast.makeText(context,"Contains Digit",Toast.LENGTH_LONG).show()
+      Toast.makeText(context,"Name Should not Contains Digit",Toast.LENGTH_LONG).show()
+        return false
     }
+    else if (name.isEmpty())
+    {
+        Toast.makeText(context,"Name Can't be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if(email.length>200){
+        Toast.makeText(context,"email not valid",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if (email.isEmpty())
+    {
+        Toast.makeText(context,"Email Can't be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if(phone.length>10){
+        Toast.makeText(context,"Phone Number length greater than 10",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if (phone.isEmpty())
+    {
+        Toast.makeText(context,"Phone Number Can't be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if (room.length>10){
+        Toast.makeText(context,"Room Number length greater than 10",Toast.LENGTH_LONG).show()
+        return false
+    }
+    else if (room.isEmpty())
+    {
+        Toast.makeText(context,"Room Number Can't be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+
+
+    return true
 }
 
 @Composable
