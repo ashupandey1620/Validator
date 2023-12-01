@@ -1,5 +1,6 @@
 package com.original.sense.psit.Authentication
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -62,6 +63,7 @@ import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
+var emailResend = ""
 @Composable
 fun ResendPasswordScreen(navController: NavHostController , context: MainActivity) {
 
@@ -284,7 +286,7 @@ fun ForgotSheet(navController: NavHostController) {
             )
 
 
-            SimpleOutlinedTextFieldEmail2()
+            emailResend = SimpleOutlinedTextFieldEmail2()
 
 
 
@@ -299,7 +301,7 @@ fun ForgotSheet(navController: NavHostController) {
                 Button(
                     onClick = {
 
-
+                              Toast.makeText(context, emailResend ,Toast.LENGTH_LONG).show()
 
 
                     } ,

@@ -302,7 +302,7 @@ fun ResendSheet(navController: NavHostController) {
                 Button(
                     onClick = {
 
-
+                              Toast.makeText(context,"$emailForgot",Toast.LENGTH_LONG).show()
 
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
