@@ -45,10 +45,9 @@ fun DelegationDetails() {
 
 
         ) {
-
-Column( modifier = Modifier
-    .fillMaxWidth()
-    .wrapContentHeight()) {
+            Column( modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()) {
 
     Row {
     Text(
