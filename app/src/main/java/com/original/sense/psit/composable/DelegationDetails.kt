@@ -95,7 +95,7 @@ Column( modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight()) {
 
-                    Spacer(modifier = Modifier.padding(50.dp))
+
 
                     Box(
                         modifier = Modifier
