@@ -247,7 +247,6 @@ fun ResendSheet(navController: NavHostController) {
 
     ) {
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
