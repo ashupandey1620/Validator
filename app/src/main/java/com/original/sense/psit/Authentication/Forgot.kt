@@ -52,6 +52,7 @@ import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
+var emailForgot = ""
 @Composable
 fun ForgotPasswordScreen(navController: NavHostController , context: MainActivity) {
 
@@ -269,7 +270,7 @@ fun ResendSheet(navController: NavHostController) {
             )
 
 
-            SimpleOutlinedTextFieldEmail2()
+            emailForgot = SimpleOutlinedTextFieldEmail2()
 
 
             Column(

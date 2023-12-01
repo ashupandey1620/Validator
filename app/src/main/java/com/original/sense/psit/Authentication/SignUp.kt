@@ -119,11 +119,13 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(10.dp))
-        SimpleOutlinedTextFieldName()
-        SimpleOutlinedTextFieldUsername()
-        SimpleOutlinedTextFieldEmail()
-        SimpleOutlinedTextFieldPhone()
-        SimpleOutlinedTextFieldRoom()
+
+        name      =   SimpleOutlinedTextFieldName()
+        userName  =   SimpleOutlinedTextFieldUsername()
+        email     =   SimpleOutlinedTextFieldEmail()
+        phone     =   SimpleOutlinedTextFieldPhone()
+        room      =   SimpleOutlinedTextFieldRoom()
+
         Terms()
 
        var valid : Boolean
@@ -295,7 +297,7 @@ fun Terms() {
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleOutlinedTextFieldName() {
+fun SimpleOutlinedTextFieldName(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -305,8 +307,7 @@ fun SimpleOutlinedTextFieldName() {
         leadingIcon = {
             Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it
-                        name = text},
+        onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
         placeholder = { Text(text = "Name", color =Color(0xFFA7A7A7), fontSize = 16.sp)},
@@ -335,20 +336,15 @@ fun SimpleOutlinedTextFieldName() {
 
             }
         )
-
     )
+
+    return text
 }
 
-//
-//colors = TextFieldDefaults.outlinedTextFieldColors(
-//focusedTextColor = Color.White,
-//focusedBorderColor = Color.White,
-//unfocusedBorderColor = Color(0xFF383838),
-//containerColor = Color(0xFF383838)),
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleOutlinedTextFieldUsername() {
+fun SimpleOutlinedTextFieldUsername(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -362,8 +358,7 @@ fun SimpleOutlinedTextFieldUsername() {
             Icon(Icons.Outlined.Person, contentDescription = "Username",
                 tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it
-                        userName = text},
+        onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -401,11 +396,13 @@ fun SimpleOutlinedTextFieldUsername() {
             }
         )
     )
+
+    return text
 }
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleOutlinedTextFieldEmail() {
+fun SimpleOutlinedTextFieldEmail(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -419,8 +416,7 @@ fun SimpleOutlinedTextFieldEmail() {
         leadingIcon = {
             Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it
-                        email = text},
+        onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -455,11 +451,13 @@ fun SimpleOutlinedTextFieldEmail() {
         )
 
     )
+
+    return text
 }
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleOutlinedTextFieldPhone() {
+fun SimpleOutlinedTextFieldPhone(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -470,9 +468,7 @@ fun SimpleOutlinedTextFieldPhone() {
         leadingIcon = {
             Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it
-                        phone = text
-                        },
+        onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -502,11 +498,13 @@ fun SimpleOutlinedTextFieldPhone() {
             }
         )
     )
+
+    return text
 }
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleOutlinedTextFieldRoom() {
+fun SimpleOutlinedTextFieldRoom(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current.applicationContext
@@ -518,8 +516,7 @@ fun SimpleOutlinedTextFieldRoom() {
         leadingIcon = {
             Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it
-                        room = text},
+        onValueChange = { text = it },
         shape = RoundedCornerShape(30.dp) ,
 
         placeholder = { Text(text = "Room Number",  fontFamily = poppins,
@@ -554,6 +551,8 @@ fun SimpleOutlinedTextFieldRoom() {
         )
 
     )
+
+    return text
 }
 
 @Composable

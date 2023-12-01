@@ -355,7 +355,7 @@ fun ForgotSheet(navController: NavHostController) {
 
 
 @Composable
-fun SimpleOutlinedTextFieldEmail2() {
+fun SimpleOutlinedTextFieldEmail2(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -399,4 +399,5 @@ fun SimpleOutlinedTextFieldEmail2() {
         )
 
     )
+    return text
 }
