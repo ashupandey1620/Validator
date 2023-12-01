@@ -1,5 +1,6 @@
 package com.original.sense.psit.Authentication
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -24,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -62,6 +64,9 @@ import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
+
+var userNameSignIn = ""
+var password = ""
 @Composable
 fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
@@ -234,22 +239,6 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 
 
 
-
-            /*
-             * border-radius: 19.5px, 19.5px, 0px, 19.5px
-             * angle: 45 deg
-             *
-             *
-             *
-             * width: 40.38px
-height: 135.46px
-top: 143.71px
-left: 246.99px
-border-radius: 20.19px, 0px, 19.5px, 0px
-angle: -45 deg
-
-             */
-
         }
 
 
@@ -292,10 +281,10 @@ fun SignInSheet(navController: NavHostController) {
                 fontWeight = FontWeight.Bold
             )
 
+            userNameSignIn = SimpleOutlinedTextFieldUsername2()
+            password = SignInPagePassword()
 
-            SimpleOutlinedTextFieldUsername2()
 
-            SignInPagePassword()
 
             Column(
                 modifier = Modifier
@@ -325,6 +314,7 @@ fun SignInSheet(navController: NavHostController) {
                 Button(
                     onClick = {
 
+                              Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
 
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -373,7 +363,7 @@ fun SignInSheet(navController: NavHostController) {
     }
 }
 @Composable
-fun SignInPagePassword() {
+fun SignInPagePassword(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -419,4 +409,63 @@ fun SignInPagePassword() {
             }
         )
     )
+    return text
+}
+
+
+@Composable
+fun SimpleOutlinedTextFieldUsername2(): String {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+   val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
+
+    val containerColor = Color(0xFF28292e)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(Icons.Outlined.Person, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Username", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor = if(text.isEmpty()) Color.White
+            else if(user.contains(text))
+                Color.Red
+            else
+                Color.Green ,
+            //Color(0xFF64bf75),
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
+
+
+
+            }
+        )
+    )
+
+    return text
 }
