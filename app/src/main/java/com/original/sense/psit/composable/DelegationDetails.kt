@@ -70,9 +70,8 @@ fun DelegationDetails() {
             textAlign = TextAlign.Center ,
             fontSize = 20.sp
         )
-}
-
-}
+    }
+            }
 
             Text(
                 modifier = Modifier

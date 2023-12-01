@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -52,16 +53,17 @@ import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
-import com.original.sense.psit.composable.ReadyToTap
-import com.original.sense.psit.composable.RemoveStudentScreen
 import com.original.sense.psit.composable.SureToAssign
 import com.original.sense.psit.composable.SureToSuspend
 import com.original.sense.psit.ui.theme.poppins
 
-
-val alloted = BooleanArray(8)
-var title = ""
-var description = ""
+var checkVSuspension : Boolean = false
+val alloted     =   BooleanArray(8)
+var title       =   ""
+var description =   ""
+var reasonDesc  =   ""
+var startDate   =   ""
+var endDate     =   ""
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -296,7 +298,7 @@ fun AddScreen(navController: NavController) {
                 Spacer(modifier = Modifier.padding(4.dp))
 
 
-                ReasonEditText()
+               reasonDesc = ReasonEditText()
 
 
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -324,7 +326,14 @@ fun AddScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-                            show2 = !show2
+
+                            checkVSuspension = checkValidity(startDate, endDate, reasonDesc,context)
+
+                            if(checkVSuspension) {
+                                show2 = !show2
+                            }
+
+
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                         modifier = Modifier
@@ -345,6 +354,36 @@ fun AddScreen(navController: NavController) {
         }
 
     }
+}
+
+fun checkValidity(startDate: String , endDate: String , reasonDesc: String , context: Context): Boolean {
+
+    if(reasonDesc.isEmpty())
+    {
+        Toast.makeText(context,"Please Enter Some Description",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    val startDateArrayList = startDate.split("/")
+    val endDateArrayList   = endDate.split("/")
+
+    if( startDateArrayList.size!=3         &&
+        startDateArrayList[0].length!=2    &&
+        startDateArrayList[0].toInt()<=31  &&
+        startDateArrayList[1].length!=2    &&
+        startDateArrayList[1].toInt()<=12  &&
+        startDateArrayList[2].length!=4) {
+        Toast.makeText(context,"Date in wrong Format",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    Toast.makeText(context,"$startDateArrayList",Toast.LENGTH_LONG).show()
+
+    Toast.makeText(context,"$endDateArrayList",Toast.LENGTH_LONG).show()
+
+
+
+    return true
 }
 
 @Composable
@@ -374,7 +413,9 @@ fun DateStartEnd() {
                         tint = Color(0xFFA7A7A7)
                     )
                 } ,
-                onValueChange = { text1 = it } ,
+                onValueChange = { text1 = it
+                                startDate = text1
+                                } ,
                 shape = RoundedCornerShape(30.dp) ,
 
                 placeholder = {
@@ -425,7 +466,9 @@ fun DateStartEnd() {
                         tint = Color(0xFFA7A7A7)
                     )
                 } ,
-                onValueChange = { text2 = it } ,
+                onValueChange = { text2 = it
+                                endDate = text2
+                                } ,
                 shape = RoundedCornerShape(30.dp) ,
 
                 placeholder = {
@@ -469,7 +512,7 @@ fun DateStartEnd() {
 }
 
 @Composable
-fun ReasonEditText() {
+fun ReasonEditText(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -512,6 +555,8 @@ fun ReasonEditText() {
         )
 
     )
+
+    return text
 }
 
 
