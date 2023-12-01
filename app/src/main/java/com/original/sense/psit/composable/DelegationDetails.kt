@@ -96,7 +96,6 @@ Column( modifier = Modifier
                     .wrapContentHeight()) {
 
 
-
                     Box(
                         modifier = Modifier
                             .size(70.dp) ,

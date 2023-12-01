@@ -68,8 +68,19 @@ import com.original.sense.psit.MainActivity
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
+
+
+var name  = ""
+var userName = ""
+var email = ""
+var phone = ""
+var room = ""
+
+
 @Composable
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -121,8 +132,13 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             .wrapContentHeight()){
 
             Button(onClick = {
-                navController.popBackStack()
-                navController.navigate("HomeGraph")
+
+                checkValidity(name, userName,email,phone,room,context)
+
+
+
+//                navController.popBackStack()
+//                navController.navigate("HomeGraph")
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
                 modifier = Modifier
@@ -137,6 +153,23 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         AlreadyAccount(navController)
     }
 
+}
+
+fun checkValidity(
+    name: String ,
+    userName: String ,
+    email: String ,
+    phone: String ,
+    room: String ,
+    context: MainActivity
+) {
+
+
+
+    if (name.any { it.isDigit() })
+    {
+      Toast.makeText(context,"Contains Digit",Toast.LENGTH_LONG).show()
+    }
 }
 
 @Composable
@@ -238,7 +271,8 @@ fun SimpleOutlinedTextFieldName() {
         leadingIcon = {
             Icon(Icons.Outlined.Person, contentDescription = "Search", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it },
+        onValueChange = { text = it
+                        name = text},
         shape = RoundedCornerShape(30.dp) ,
 
         placeholder = { Text(text = "Name", color =Color(0xFFA7A7A7), fontSize = 16.sp)},
@@ -294,7 +328,8 @@ fun SimpleOutlinedTextFieldUsername() {
             Icon(Icons.Outlined.Person, contentDescription = "Username",
                 tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it },
+        onValueChange = { text = it
+                        userName = text},
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -350,7 +385,8 @@ fun SimpleOutlinedTextFieldEmail() {
         leadingIcon = {
             Icon(Icons.Outlined.Email, contentDescription = "Email", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it },
+        onValueChange = { text = it
+                        email = text},
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -400,7 +436,9 @@ fun SimpleOutlinedTextFieldPhone() {
         leadingIcon = {
             Icon(Icons.Outlined.Phone, contentDescription = "Phone", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it },
+        onValueChange = { text = it
+                        phone = text
+                        },
         shape = RoundedCornerShape(30.dp) ,
 
 
@@ -446,7 +484,8 @@ fun SimpleOutlinedTextFieldRoom() {
         leadingIcon = {
             Icon(Icons.Outlined.Place, contentDescription = "Room", tint = Color(0xFFA7A7A7))
         },
-        onValueChange = { text = it },
+        onValueChange = { text = it
+                        room = text},
         shape = RoundedCornerShape(30.dp) ,
 
         placeholder = { Text(text = "Room Number",  fontFamily = poppins,
