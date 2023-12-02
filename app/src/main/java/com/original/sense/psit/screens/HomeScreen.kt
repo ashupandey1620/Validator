@@ -65,7 +65,7 @@ import org.json.JSONObject
 
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
 val sdtList : ArrayList<String> = ArrayList()
-val rollArray : ArrayList<Integer> = ArrayList()
+val rollArray : ArrayList<Int> = ArrayList()
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
