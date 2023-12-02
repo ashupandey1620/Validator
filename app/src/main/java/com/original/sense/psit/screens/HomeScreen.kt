@@ -1,7 +1,7 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.provider.Settings
@@ -25,16 +25,15 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +52,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
@@ -73,7 +71,9 @@ val rollArray : ArrayList<Integer> = ArrayList()
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController ) {
+
+    var dialogVisible by remember { mutableStateOf(false) }
 
     val context = LocalContext.current.applicationContext
 
@@ -98,21 +98,6 @@ fun HomeScreen(navController: NavController) {
 
 
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
-    val showDialog = remember { mutableStateOf(false) }
-    var a = false
-
-    if (nfcAdapter == null || !nfcAdapter.isEnabled) {
-        a = true
-        showDialog.value = true
-
-    }
-
-    Toast.makeText(context,"$a",Toast.LENGTH_LONG).show()
-
-    if(a) {
-       NFCAlertDialog(context = context)
-    }
-
 
 
 
@@ -120,7 +105,6 @@ fun HomeScreen(navController: NavController) {
     var show by remember {
         mutableStateOf(false)
     }
-
 
     if (show) {
         BottomSheetDialog(
@@ -168,7 +152,14 @@ fun HomeScreen(navController: NavController) {
                             .clip(CircleShape)
                             .fillMaxSize()
                             .clickable {
-                                show = !show
+
+                                if (nfcAdapter == null || !nfcAdapter.isEnabled) {
+                                  dialogVisible = true
+                                } else {
+                                    show = !show
+                                }
+
+
                             } ,
                         painter = painterResource(id = R.drawable.tap) ,
                         contentDescription = ""
@@ -230,8 +221,39 @@ fun HomeScreen(navController: NavController) {
 //      "  Click on \n\n" +
 //        "“Tap Button” to\n\n Add a Student"
     }
-}
 
+
+
+    if(dialogVisible) {
+        AlertDialog(
+            onDismissRequest = { dialogVisible = false } ,
+            title = { Text("NFC Scanner") } ,
+            text = { Text("Please enable NFC scanner to use this feature.") } ,
+            confirmButton = {
+                Button(
+                    onClick = {
+                        // Open NFC settings
+                        dialogVisible = false
+                        val intent = Intent(Settings.ACTION_NFC_SETTINGS)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK // Set the FLAG_ACTIVITY_NEW_TASK flag
+                        context.startActivity(intent)
+                    }
+                ) {
+                    Text("Open Settings")
+                }
+            } ,
+            dismissButton = {
+                Button(
+                    onClick = {
+                        dialogVisible = false
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+}
 
 
 

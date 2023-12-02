@@ -15,35 +15,5 @@ import androidx.compose.runtime.setValue
 @Composable
 fun NFCAlertDialog(context: Context) {
 
-    var dialogVisible by remember { mutableStateOf(true) }
 
-    if(dialogVisible) {
-        AlertDialog(
-            onDismissRequest = { dialogVisible = false } ,
-            title = { Text("NFC Scanner") } ,
-            text = { Text("Please enable NFC scanner to use this feature.") } ,
-            confirmButton = {
-                Button(
-                    onClick = {
-                        // Open NFC settings
-                        dialogVisible = false
-                        val intent = Intent(Settings.ACTION_NFC_SETTINGS)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK // Set the FLAG_ACTIVITY_NEW_TASK flag
-                        context.startActivity(intent)
-                    }
-                ) {
-                    Text("Open Settings")
-                }
-            } ,
-            dismissButton = {
-                Button(
-                    onClick = {
-                        dialogVisible = false
-                    }
-                ) {
-                    Text("Cancel")
-                }
-            }
-        )
-    }
 }

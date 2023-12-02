@@ -24,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -156,6 +157,9 @@ fun BottomNavigationBar(navController: NavHostController) {
 
 @Composable
 fun MainPageNavigation(navController: NavHostController) {
+
+    val context = LocalContext.current.applicationContext // Get the context
+
     NavHost(
         navController = navController,
         route = "HomeGraph",
