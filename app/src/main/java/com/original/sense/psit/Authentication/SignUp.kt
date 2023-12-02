@@ -136,12 +136,12 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
             Button(onClick = {
 
-                valid = checkValidity(name, userName,email,phone,room,context)
+               // valid = checkValidity(name, userName,email,phone,room,context)
 
-                if(valid) {
+//                if(true) {
                     navController.popBackStack()
                     navController.navigate("HomeGraph")
-                }
+             //   }
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),

@@ -1,6 +1,10 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
+import android.nfc.NfcAdapter
+import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,11 +53,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.composable.NFCAlertDialog
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
 import org.json.JSONObject
@@ -87,6 +95,26 @@ fun HomeScreen(navController: NavController) {
 //    for (i in 0 until userarray.size()){
 //        rollArray.add()
 //    }
+
+
+    val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
+    val showDialog = remember { mutableStateOf(false) }
+    var a = false
+
+    if (nfcAdapter == null || !nfcAdapter.isEnabled) {
+        a = true
+        showDialog.value = true
+
+    }
+
+    Toast.makeText(context,"$a",Toast.LENGTH_LONG).show()
+
+    if(a) {
+       NFCAlertDialog(context = context)
+    }
+
+
+
 
 
     var show by remember {
