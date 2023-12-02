@@ -364,15 +364,39 @@ fun checkValidity(startDate: String , endDate: String , reasonDesc: String , con
         return false
     }
 
+    if (startDate.isEmpty())
+    {
+        Toast.makeText(context,"Start Date Cant be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+    if (endDate.isEmpty())
+    {
+        Toast.makeText(context,"End Date cant be null",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+
     val startDateArrayList = startDate.split("/")
     val endDateArrayList   = endDate.split("/")
 
-    if( startDateArrayList.size!=3         &&
+    if( startDateArrayList.isEmpty()       ||
+        startDateArrayList.size!=3         &&
         startDateArrayList[0].length!=2    &&
         startDateArrayList[0].toInt()<=31  &&
         startDateArrayList[1].length!=2    &&
         startDateArrayList[1].toInt()<=12  &&
         startDateArrayList[2].length!=4) {
+        Toast.makeText(context,"Date in wrong Format",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    if( endDateArrayList.isEmpty()        ||
+        endDateArrayList.size!=3          &&
+        endDateArrayList[0].length!=2     &&
+        endDateArrayList[0].toInt()<=31   &&
+        endDateArrayList[1].length!=2     &&
+        endDateArrayList[1].toInt()<=12   &&
+        endDateArrayList[2].length!=4) {
         Toast.makeText(context,"Date in wrong Format",Toast.LENGTH_LONG).show()
         return false
     }
