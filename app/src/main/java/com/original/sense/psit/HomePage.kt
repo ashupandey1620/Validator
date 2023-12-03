@@ -1,6 +1,7 @@
 package com.original.sense.psit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
@@ -48,8 +49,8 @@ data class BottomNavigationItem(
     val badgeCount: Int? = null
 )
 @Composable
-fun HomePage(navController: NavHostController = rememberNavController()) {
-    BottomNavigationBar(navController = navController)
+fun HomePage(activity: Activity, navController: NavHostController = rememberNavController()) {
+    BottomNavigationBar(navController = navController,activity)
 }
 
 
@@ -58,7 +59,7 @@ fun HomePage(navController: NavHostController = rememberNavController()) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController,activity: Activity) {
     val items = listOf(
         BottomNavigationItem(
             route = "home",
@@ -149,14 +150,14 @@ fun BottomNavigationBar(navController: NavHostController) {
 
 }
         ){
-        MainPageNavigation(navController = navController)
+        MainPageNavigation(navController = navController,activity)
         }
 }
 
 
 
 @Composable
-fun MainPageNavigation(navController: NavHostController) {
+fun MainPageNavigation(navController: NavHostController,activity: Activity) {
 
     val context = LocalContext.current.applicationContext // Get the context
 
@@ -167,7 +168,7 @@ fun MainPageNavigation(navController: NavHostController) {
     ) {
 
             composable(route = "home") {
-                HomeScreen(navController)
+                HomeScreen(navController,activity)
             }
             composable(route = "add") {
                 AddScreen(navController)

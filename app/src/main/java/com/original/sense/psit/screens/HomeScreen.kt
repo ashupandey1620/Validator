@@ -2,11 +2,9 @@ package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.NfcA
@@ -41,8 +39,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,9 +60,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
-import com.original.sense.psit.composable.NFCAlertDialog
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
 import org.json.JSONObject
@@ -81,11 +77,14 @@ val rollArray : ArrayList<Int> = ArrayList()
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController ) {
-
-    var dialogVisible by remember { mutableStateOf(false) }
-
+fun HomeScreen(navController: NavController,activity: Activity ) {
     val context = LocalContext.current.applicationContext
+    var dialogVisible by remember { mutableStateOf(false) }
+    val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
+
+    var show by remember { mutableStateOf(false) }
+
+
 
     val jsonData = context.applicationContext.resources.openRawResource(
         context.applicationContext.resources.getIdentifier(
@@ -107,14 +106,6 @@ fun HomeScreen(navController: NavController ) {
 //    }
 
 
-    val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
-
-
-
-
-    var show by remember {
-        mutableStateOf(false)
-    }
 
     if (show) {
         BottomSheetDialog(
@@ -138,9 +129,7 @@ fun HomeScreen(navController: NavController ) {
     ) {
 
 
-        val textState = remember {
-            mutableStateOf(TextFieldValue(""))
-        }
+        val textState = remember { mutableStateOf(TextFieldValue("")) }
 
         Row(
             modifier = Modifier
@@ -211,8 +200,9 @@ fun HomeScreen(navController: NavController ) {
 
 
        // ListDemo(sdtList)
-
     }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -228,7 +218,6 @@ fun HomeScreen(navController: NavController ) {
         )
 
     }
-
 
 
     if(dialogVisible) {
@@ -262,11 +251,72 @@ fun HomeScreen(navController: NavController ) {
 
     }
 
+    val intent = activity.intent
+    val action = intent.action
+    if (NfcAdapter.ACTION_TECH_DISCOVERED == action || NfcAdapter.ACTION_TAG_DISCOVERED == action) {
+       handleTechTag(intent,context)
+    }
 
 
 
+    DisposableEffect(Unit) {
+        enableNfcForegroundDispatch(context,activity)
 
+        onDispose {
+            disableNfcForegroundDispatch(context,activity)
+        }
+    }
 
+}
+
+ fun handleTechTag(intent: Intent , context: Context) {
+    val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+    val nfca = NfcA.get(tag)
+    if (nfca != null) {
+        try {
+            nfca.connect()
+
+            Toast.makeText(context,"Connected",Toast.LENGTH_SHORT).show()
+
+            // Read NFC-A tag data
+            val tagData = nfca.tag.id
+            if (tagData != null && tagData.size > 0) {
+                val tagId: String = byteArrayToHexString(tagData)
+                Toast.makeText(context,"$tagId",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"$tagData",Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(context , "Error reading NFC-A tag" , Toast.LENGTH_SHORT).show()
+        } finally {
+            try {
+                nfca.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
+private fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
+    val intent = Intent(context, MainActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+    val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
+    nfcAdapter?.enableForegroundDispatch(
+        activity,
+        PendingIntent.getActivity(
+            context,
+            0,
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+            PendingIntent.FLAG_MUTABLE
+        ),
+        null,
+        null
+    )
+}
+
+private fun disableNfcForegroundDispatch(context: Context,activity: Activity) {
+    val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
+    nfcAdapter?.disableForegroundDispatch(activity)
 }
 
 
@@ -324,44 +374,49 @@ fun SearchView(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     TextField(
-            value = text ,
-            onValueChange = {
-                            text = it
-            } ,
+        value = text ,
+        onValueChange = {
+            text = it
+        } ,
         modifier
             .fillMaxWidth(0.6f)
             .height(50.dp)
-            .clip(RoundedCornerShape(15.dp)),
+            .clip(RoundedCornerShape(15.dp)) ,
 
-            placeholder = {
-                Text(text = placeHolder, color =  Color(0xFF222228))
-            } ,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White
-            ) ,
-            leadingIcon = {
-                Icon(imageVector = Icons.Outlined.Search , contentDescription = "Search", tint =    Color(0xFF222228))
-            },
-            maxLines = 1 ,
-            singleLine = true ,
-            textStyle = TextStyle(
-                color =  Color(0xFF222228) , fontSize = 15.sp
-            ),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number
-            ) ,
+        placeholder = {
+            Text(text = placeHolder , color = Color(0xFF222228))
+        } ,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White ,
+            unfocusedContainerColor = Color.White ,
+            disabledContainerColor = Color.White ,
+        ) ,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Outlined.Search ,
+                contentDescription = "Search" ,
+                tint = Color(0xFF222228)
+            )
+        } ,
+        maxLines = 1 ,
+        singleLine = true ,
+        textStyle = TextStyle(
+            color = Color(0xFF222228) , fontSize = 15.sp
+        ) ,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number
+        ) ,
         keyboardActions = KeyboardActions(
             onDone = {
 
                 keyboardController?.hide()
-                Toast.makeText(context,"Toast Message from the text",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , "Toast Message from the text" , Toast.LENGTH_SHORT).show()
 
 
-                Toast.makeText(context,"$text",Toast.LENGTH_LONG).show()
+                Toast.makeText(context , "$text" , Toast.LENGTH_LONG).show()
 
 
-                if(info.contains(text))
-                {
+                if (info.contains(text)) {
                     sdtList.add(text)
 
                 }
@@ -370,7 +425,7 @@ fun SearchView(
             }
         )
 
-        )
+    )
 
 }
 

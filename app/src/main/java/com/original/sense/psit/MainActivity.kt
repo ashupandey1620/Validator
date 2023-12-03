@@ -1,6 +1,12 @@
 package com.original.sense.psit
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.nfc.tech.NfcA
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,12 +22,18 @@ import com.original.sense.psit.Authentication.ResendPasswordScreen
 import com.original.sense.psit.Authentication.SignInScreen
 import com.original.sense.psit.Authentication.SignUpPage
 import com.original.sense.psit.SoPsit.SplashScreen
+import com.original.sense.psit.screens.handleTechTag
 import com.original.sense.psit.ui.OnboardingScreen
 import com.original.sense.psit.ui.theme.SoPsitTheme
+import java.io.IOException
+
 
 class MainActivity : ComponentActivity() {
+
+//    private var nfcAdapter: NfcAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         setContent {
             SoPsitTheme {
                 // A surface container using the 'background' color from the theme
@@ -65,7 +77,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("HomeGraph") {
-                            HomePage()
+                            HomePage(this@MainActivity)
                         }
 
 
@@ -74,5 +86,83 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        enableNfcForegroundDispatch()
+//    }
+//    override fun onPause() {
+//        super.onPause()
+//        disableNfcForegroundDispatch()
+//    }
+//
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+
+        Toast.makeText(this, "data "+intent.getAction(), Toast.LENGTH_SHORT).show();
+        if (NfcAdapter.ACTION_TECH_DISCOVERED == intent.action || NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
+            handleTechTag(intent,this)
+        }
+    }
+
+//    private fun handleTechTag(intent: Intent) {
+//        val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+//        val nfca = NfcA.get(tag)
+//        if (nfca != null) {
+//            try {
+//                nfca.connect()
+//
+//                Toast.makeText(this,"Connected",Toast.LENGTH_SHORT).show()
+//
+//                // Read NFC-A tag data
+//                val tagData = nfca.tag.id
+//                if (tagData != null && tagData.size > 0) {
+//                    val tagId: String = byteArrayToHexString(tagData)
+//                    Toast.makeText(this,"$tagId",Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this,"$tagData",Toast.LENGTH_SHORT).show()
+//                }
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//                Toast.makeText(this , "Error reading NFC-A tag" , Toast.LENGTH_SHORT).show()
+//            } finally {
+//                try {
+//                    nfca.close()
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    private fun enableNfcForegroundDispatch() {
+//        val intent = Intent(this , MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+//        nfcAdapter?.enableForegroundDispatch(
+//            this ,
+//            PendingIntent.getActivity(
+//                this ,
+//                0 ,
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) ,
+//                PendingIntent.FLAG_MUTABLE
+//            ) ,
+//            null ,
+//            null
+//        )
+//    }
+//
+//
+//    private fun disableNfcForegroundDispatch() {
+//        nfcAdapter?.disableForegroundDispatch(this)
+//    }
+//
+//    private fun byteArrayToHexString(bytes: ByteArray): String {
+//        val sb = StringBuilder()
+//        for (b in bytes) {
+//            sb.append(String.format("%02x" , b))
+//        }
+//        return sb.toString()
+//    }
+
 }
 
