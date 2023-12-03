@@ -1,9 +1,15 @@
 package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.nfc.tech.NfcA
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -34,6 +40,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +70,7 @@ import com.original.sense.psit.composable.NFCAlertDialog
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
 import org.json.JSONObject
+import java.io.IOException
 
 
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
@@ -154,7 +164,7 @@ fun HomeScreen(navController: NavController ) {
                             .clickable {
 
                                 if (nfcAdapter == null || !nfcAdapter.isEnabled) {
-                                  dialogVisible = true
+                                    dialogVisible = true
                                 } else {
                                     show = !show
                                 }
@@ -217,9 +227,6 @@ fun HomeScreen(navController: NavController ) {
             textAlign = TextAlign.Center
         )
 
-
-//      "  Click on \n\n" +
-//        "“Tap Button” to\n\n Add a Student"
     }
 
 
@@ -252,7 +259,14 @@ fun HomeScreen(navController: NavController ) {
                 }
             }
         )
+
     }
+
+
+
+
+
+
 }
 
 
@@ -360,6 +374,13 @@ fun SearchView(
 
 }
 
+private fun byteArrayToHexString(array: ByteArray): String {
+    val stringBuilder = StringBuilder()
+    for (byte in array) {
+        stringBuilder.append(String.format("%02x", byte))
+    }
+    return stringBuilder.toString()
+}
 
 
 
