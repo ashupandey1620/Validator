@@ -280,11 +280,7 @@ fun AllowedLectures() {
                 ListItem2(model = model)
             }
         }
-
-
     }
-
-
 }
 
 
@@ -296,6 +292,7 @@ fun ListItem2(model: AssignedLectureModel) {
             .wrapContentHeight()
             .fillMaxWidth()
     ) {
+
         var checkedState by remember { mutableStateOf(false) }
         val paddingModifier = Modifier.padding(10.dp)
         Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
@@ -317,22 +314,20 @@ fun ListItem2(model: AssignedLectureModel) {
                 Column (modifier = Modifier.padding(vertical = 10.dp)){
 
                     Text(
-                        text = model.lecture.toString() ,
+                        text = "Lecture - ${model.lecture}",
                         fontSize = 18.sp ,
                         fontWeight = FontWeight.SemiBold ,
                         color = Color.White ,
                         fontFamily = poppins
                     )
 
-
                     Text(
-                        text = model.assignedBy,
+                        text = "Assigned By Mr. ${model.assignedBy}",
                         fontSize = 14.sp ,
                         fontWeight = FontWeight.Light ,
                         color = Color.Green ,
                         fontFamily = poppins
                     )
-
                 }
             }
         }
