@@ -73,7 +73,6 @@ val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","21016415300
 val sdtList : ArrayList<String> = ArrayList()
 val rollArray : ArrayList<Int> = ArrayList()
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,6 +82,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
 
     var show by remember { mutableStateOf(false) }
+
 
 
 
@@ -119,6 +119,14 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
             )
         ) {
                 ReadyToTap()
+        }
+
+        DisposableEffect(Unit) {
+            enableNfcForegroundDispatch(context,activity)
+
+            onDispose {
+                disableNfcForegroundDispatch(context,activity)
+            }
         }
     }
 
@@ -259,15 +267,11 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
 
 
-    DisposableEffect(Unit) {
-        enableNfcForegroundDispatch(context,activity)
 
-        onDispose {
-            disableNfcForegroundDispatch(context,activity)
-        }
-    }
 
 }
+
+
 
  fun handleTechTag(intent: Intent , context: Context) {
     val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
@@ -297,7 +301,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
         }
     }
 }
-private fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
+ fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
     val intent = Intent(context, MainActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
@@ -314,7 +318,7 @@ private fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
     )
 }
 
-private fun disableNfcForegroundDispatch(context: Context,activity: Activity) {
+ fun disableNfcForegroundDispatch(context: Context,activity: Activity) {
     val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
     nfcAdapter?.disableForegroundDispatch(activity)
 }

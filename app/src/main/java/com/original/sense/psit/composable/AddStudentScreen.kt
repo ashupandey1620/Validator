@@ -88,7 +88,6 @@ fun AddStudentScreen() {
                         elevation = ButtonDefaults.buttonElevation(4.dp) ,
                         onClick = {
 
-
                         } ,
                         shape = RoundedCornerShape(10.dp) ,
                         colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
