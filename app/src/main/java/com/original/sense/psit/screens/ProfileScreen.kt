@@ -18,21 +18,31 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
+
 
 @Composable
 fun ProfileScreen(navController: NavController) {
@@ -135,12 +145,63 @@ fun ProfileCard(navController: NavController) {
                             navController.navigate("editProfile")
                         } )
 
+                    SupportAccountChangeTheme(mainText = "Change Theme",
+                        onClick = {
+
+                        } )
+
                 }
 
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SupportAccountChangeTheme(mainText: String , onClick: () -> Unit) {
+
+    var checkedState by remember { mutableStateOf(false) }
+
+
+    Card(onClick = onClick,
+        colors = CardDefaults.cardColors(Color(0xFF383841)),
+        modifier = Modifier
+            .fillMaxWidth()
+
+
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp , horizontal = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+
+
+                Spacer(modifier = Modifier.width(14.dp))
+                Column(
+                    modifier = Modifier
+                ) {
+                    Text(
+                        text = mainText,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFfffffe),
+                        fontFamily = poppins
+                    )
+                }
+            }
+
+
+           Switch(modifier = Modifier.size(20.dp).padding(end = 30.dp),checked = checkedState ,
+               onCheckedChange = { checkedState = !checkedState },
+               enabled = true,
+           )
+        }
+    }
+}
 
 
 @Composable
