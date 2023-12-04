@@ -266,9 +266,6 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     }
 
 
-
-
-
 }
 
 
