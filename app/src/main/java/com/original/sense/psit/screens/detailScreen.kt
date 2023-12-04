@@ -69,6 +69,11 @@ fun detailScreen(navController: NavController) {
             }
         }
 
+        DateAndCalendar()
+
+        DateLazyList()
+
+        AllowedLectures()
 
 
 
@@ -76,6 +81,24 @@ fun detailScreen(navController: NavController) {
 
 
 }
+
+@Composable
+fun DateAndCalendar() {
+
+}
+
+
+@Composable
+fun DateLazyList() {
+
+}
+
+@Composable
+fun AllowedLectures() {
+
+}
+
+
 
 @Composable
 fun FrontLobe( modifier: Modifier) {
