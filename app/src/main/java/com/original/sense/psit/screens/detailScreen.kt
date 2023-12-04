@@ -1,12 +1,15 @@
 package com.original.sense.psit.screens
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -40,9 +43,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.kizitonwose.calendar.compose.HorizontalCalendar
+import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.DayPosition
+import com.kizitonwose.calendar.core.OutDateStyle
+import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.AddStudentScreen
 import com.original.sense.psit.composable.GradientBackground
@@ -51,6 +62,9 @@ import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.YearMonth
+import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
 
@@ -61,6 +75,7 @@ val assignedList = mutableListOf<AssignedLectureModel>().apply {
     add(AssignedLectureModel(3, "Sanat Kumar Mishra"))
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun detailScreen(navController: NavController) {
 
@@ -114,6 +129,7 @@ fun detailScreen(navController: NavController) {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateAndCalendar() {
     val context = LocalContext.current.applicationContext
@@ -166,7 +182,42 @@ fun DateAndCalendar() {
 
 
         if(show){
-            AddStudentScreen()
+            val currentMonth = remember { YearMonth.now() }
+            val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
+            val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
+           // val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
+
+            val daysOfWeek = remember { daysOfWeek() }
+
+            val state = rememberCalendarState(
+                startMonth = startMonth,
+                endMonth = endMonth,
+                firstVisibleMonth = currentMonth,
+              //  firstDayOfWeek = firstDayOfWeek
+                firstDayOfWeek = daysOfWeek.first(),
+                //outDateStyle = OutDateStyle.EndOfGrid
+            )
+
+            Card(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(horizontal = 20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)),
+                elevation = CardDefaults.cardElevation(10.dp),
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                HorizontalCalendar(
+                        contentPadding = PaddingValues(8.dp) ,
+                        userScrollEnabled = false ,
+                        state = state ,
+                        dayContent = { Day(it) },
+                        monthHeader = {
+                            DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
+                        }
+
+                    )
+
+            }
         }
 
 
@@ -175,8 +226,34 @@ fun DateAndCalendar() {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        for (dayOfWeek in daysOfWeek) {
+            Text(
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center,
+                text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+            )
+        }
+    }
+}
 
-
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun Day(day: CalendarDay) {
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = day.date.dayOfMonth.toString(),
+            color = if (day.position == DayPosition.MonthDate) Color.White else Color.Gray
+        )
+    }
+}
 
 @Composable
 fun DateLazyList() {

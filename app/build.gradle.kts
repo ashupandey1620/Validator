@@ -91,4 +91,6 @@ dependencies {
     //Pager Support in App for Onboarding Screen
     implementation ("com.google.accompanist:accompanist-pager:0.12.0")
 
+    //Calendar
+    implementation ("com.kizitonwose.calendar:compose:2.4.0")
 }
