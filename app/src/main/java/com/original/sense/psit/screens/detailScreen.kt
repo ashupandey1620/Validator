@@ -16,14 +16,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,19 +40,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.AddStudentScreen
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.composable.studentList
+import com.original.sense.psit.model.AssignedLectureModel
+import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 const val name = "Ashutosh Pandey"
+val assignedList = mutableListOf<AssignedLectureModel>()
 @Composable
 fun detailScreen(navController: NavController) {
 
@@ -59,7 +63,7 @@ fun detailScreen(navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())
-        .verticalScroll(rememberScrollState())) {
+        ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -235,6 +239,104 @@ fun LazyListCardRowItem(day: String) {
 @Composable
 fun AllowedLectures() {
 
+    Column {
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp) ,
+            Arrangement.SpaceBetween ,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = "Allowed Lectures: " ,
+                color = Color.White ,
+                fontSize = 25.sp ,
+                fontFamily = poppins
+            )
+
+
+            Icon(
+                modifier = Modifier.size(25.dp) ,
+                painter = painterResource(id = R.drawable.delete) ,
+                contentDescription = "delete Icon" ,
+                tint = Color.White
+            )
+
+        }
+
+        assignedList.add(AssignedLectureModel(1,"Raghav Tiwari"))
+        assignedList.add(AssignedLectureModel(2,"Ashutosh Pandey"))
+        assignedList.add(AssignedLectureModel(3,"Sanat Kumar Mishra"))
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(10.dp)
+        ) {
+            items(assignedList) { model ->
+                ListItem2(model = model)
+            }
+        }
+
+
+    }
+
+
+}
+
+
+@Composable
+fun ListItem2(model: AssignedLectureModel) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+    ) {
+        var checkedState by remember { mutableStateOf(false) }
+        val paddingModifier = Modifier.padding(10.dp)
+        Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
+            shape = RoundedCornerShape(24.dp) ,
+            colors = CardDefaults.cardColors(Color(0xFF383841))
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
+                ,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState },
+                    colors = CheckboxDefaults.colors(checkmarkColor = Color.White,
+                        checkedColor = Color.Red,
+                        uncheckedColor = Color.White) )
+
+                Column (modifier = Modifier.padding(vertical = 10.dp)){
+
+                    Text(
+                        text = model.lecture.toString() ,
+                        fontSize = 18.sp ,
+                        fontWeight = FontWeight.SemiBold ,
+                        color = Color.White ,
+                        fontFamily = poppins
+                    )
+
+
+                    Text(
+                        text = model.assignedBy,
+                        fontSize = 14.sp ,
+                        fontWeight = FontWeight.Light ,
+                        color = Color.Green ,
+                        fontFamily = poppins
+                    )
+
+                }
+            }
+        }
+    }
 }
 
 
