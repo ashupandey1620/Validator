@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +37,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -167,13 +171,21 @@ fun DateAndCalendar() {
 
 @Composable
 fun DateLazyList() {
+    
+    val days = arrayOf("Mon","Tue","Wed","Thu","Fri","Sat","Sun")
+    val date = arrayOf("1","2","3","4","5","6","7")
 
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()) {
 
-        
+        LazyRow(){
+            items(days){ item ->
 
+                LazyListCardRowItem( day = item)
+            }
+
+        }
 
     }
 
@@ -181,32 +193,35 @@ fun DateLazyList() {
 
 
 @Composable
-fun LazyListCardRowItem(date: String , day: String) {
+fun LazyListCardRowItem(day: String) {
 
     Card(modifier = Modifier
         .padding(10.dp)
-        .fillMaxWidth()
-        .height(150.dp)
-        .aspectRatio(1.5f),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        .height(120.dp)
+        .aspectRatio(0.6f),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)),
         elevation = CardDefaults.cardElevation(10.dp),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(35.dp)
     ){
 
         Column (modifier = Modifier
             .padding(10.dp)
             .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround
             ){
 
-            Text(text = date,
-                color = Color.White,
-                fontSize = 24.sp,
+            Text(
+                text = stringResource(R.string._1) ,
+                color = Color.White ,
+                fontSize = 22.sp ,
                 fontFamily = poppins ,
+                fontWeight = FontWeight.Bold
             )
 
             Text(text = day,
                 color = Color.White,
-                fontSize = 24.sp,
+                fontSize = 15.sp,
                 fontFamily = poppins ,
             )
 
