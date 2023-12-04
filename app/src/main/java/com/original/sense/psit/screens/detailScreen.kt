@@ -56,6 +56,7 @@ import java.util.Locale
 
 const val name = "Ashutosh Pandey"
 val assignedList = mutableListOf<AssignedLectureModel>()
+
 @Composable
 fun detailScreen(navController: NavController) {
 
@@ -239,6 +240,10 @@ fun LazyListCardRowItem(day: String) {
 @Composable
 fun AllowedLectures() {
 
+    assignedList.add(AssignedLectureModel(1,"Raghav Tiwari"))
+    assignedList.add(AssignedLectureModel(2,"Ashutosh Pandey"))
+    assignedList.add(AssignedLectureModel(3,"Sanat Kumar Mishra"))
+
     Column {
 
 
@@ -267,9 +272,6 @@ fun AllowedLectures() {
 
         }
 
-        assignedList.add(AssignedLectureModel(1,"Raghav Tiwari"))
-        assignedList.add(AssignedLectureModel(2,"Ashutosh Pandey"))
-        assignedList.add(AssignedLectureModel(3,"Sanat Kumar Mishra"))
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
