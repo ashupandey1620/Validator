@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -82,8 +84,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata:2.3.1")
 
 
-    //Navigation Support
-    implementation ("androidx.navigation:navigation-compose:2.5.0")
+    //Navigation
+    implementation ("androidx.navigation:navigation-compose:2.6.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     //lottie Animations JSON support
     implementation ("com.airbnb.android:lottie-compose:6.0.0")
@@ -93,4 +96,21 @@ dependencies {
 
     //Calendar
     implementation ("com.kizitonwose.calendar:compose:2.4.0")
+
+    //HILT
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+
+    // ViewModel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    // ViewModel utilities for Compose
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    //Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
+
+
+
 }
