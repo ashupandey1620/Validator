@@ -1,4 +1,4 @@
-package com.original.sense.psit.model
+package com.original.sense.psit.model.ResponseModel
 
 data class TeacherDetailModel(
     val email: String,

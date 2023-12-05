@@ -142,11 +142,6 @@ fun DateAndCalendar() {
 
 
 
-
-    Toast.makeText(context,"month ${year}",Toast.LENGTH_SHORT).show()
-
-    Toast.makeText(context,"month ${month}",Toast.LENGTH_SHORT).show()
-
     var show by remember { mutableStateOf(false) }
 
 

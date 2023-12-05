@@ -1,11 +1,9 @@
 package com.original.sense.psit.API
 
-import com.original.sense.psit.model.LoginResponse
-import com.original.sense.psit.model.TeacherDetailModel
+import com.original.sense.psit.model.ResponseModel.LoginResponse
+import com.original.sense.psit.model.ResponseModel.TeacherDetailModel
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface PsitApi {
