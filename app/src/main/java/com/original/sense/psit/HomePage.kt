@@ -2,6 +2,8 @@ package com.original.sense.psit
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
@@ -156,6 +158,7 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity) {
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainPageNavigation(navController: NavHostController,activity: Activity) {
 

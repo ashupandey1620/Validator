@@ -1,6 +1,6 @@
 package com.original.sense.psit.model.ResponseModel
 
-data class TeacherDetailModel(
+data class UserProfileDetail(
     val email: String,
     val name: String,
     val phoneno: Int,
