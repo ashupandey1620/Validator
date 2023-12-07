@@ -3,7 +3,7 @@ package com.original.sense.psit.model.ResponseModel
 data class UserProfileDetail(
     val email: String,
     val name: String,
-    val phoneno: Int,
-    val roomno: String,
+    val phoneNo: Int,
+    val roomNo: String,
     val username: String
 )

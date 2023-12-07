@@ -3,7 +3,7 @@ package com.original.sense.psit.model.ResponseModel
 data class LoginResponse(
     val error: Boolean ,
     val responseData: ResponseData ,
-    val status_code: Int
+    val statusCode: Int
 )
 
 data class ResponseData(
