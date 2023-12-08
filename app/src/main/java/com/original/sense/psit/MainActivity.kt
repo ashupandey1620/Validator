@@ -36,64 +36,64 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var psitAPI : PsitApi
+//    @Inject
+//    lateinit var psitAPI : PsitApi
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val context: Context = this
+       // val context: Context = this
 
 
-        GlobalScope.launch {
-
-            val registerRequest = TempRegisterPost(
-                "as1188221900066@gmail.com",
-                "Ashutosh Pandey",
-                "he23l56s8800i767r1141",
-                8888880000,
-                "A123"
-            )
-
-            val response = psitAPI.tempRegister(registerRequest)
-
-            Log.d("KodanKing",response.isSuccessful.toString())
-
-            if (response.isSuccessful) {
-
-                val responseBody: TempRegister? = response.body()
-
-                Log.d("KodanKing-error",responseBody.toString())
-
-                responseBody?.let {
-                    val error = it.error
-                    val responseData = it.responseData
-                    val status = it.statusCode
-                    val emailError = it.message?.email
-                    val phoneNumError = it.message?.phoneNo
-                    val userNameError = it.message?.username
-
-
-                    Log.d("KodanKing-error",error.toString())
-                    Log.d("KodanKing-response-code-json",responseData.toString())
-                    Log.d("KodanKing-status",status.toString())
-
-                    Log.d("KodanKing-emailError",emailError.toString())
-                    Log.d("KodanKing-phoneNumber Error",phoneNumError.toString())
-                    Log.d("KodanKing-usernameError",userNameError.toString())
-
-
-
-                }
-            } else {
-                val errorBody = response.errorBody()?.string()
-                Log.d("KodanKing - errorBody ",errorBody.toString())
-
-
-            }
-
-
-        }
+//        GlobalScope.launch {
+//
+//            val registerRequest = TempRegisterPost(
+//                "as1188221900066@gmail.com",
+//                "Ashutosh Pandey",
+//                "he23l56s8800i767r1141",
+//                8888880000,
+//                "A123"
+//            )
+//
+//            val response = psitAPI.tempRegister(registerRequest)
+//
+//            Log.d("KodanKing",response.isSuccessful.toString())
+//
+//            if (response.isSuccessful) {
+//
+//                val responseBody: TempRegister? = response.body()
+//
+//                Log.d("KodanKing-error",responseBody.toString())
+//
+//                responseBody?.let {
+//                    val error = it.error
+//                    val responseData = it.responseData
+//                    val status = it.statusCode
+//                    val emailError = it.message?.email
+//                    val phoneNumError = it.message?.phoneNo
+//                    val userNameError = it.message?.username
+//
+//
+//                    Log.d("KodanKing-error",error.toString())
+//                    Log.d("KodanKing-response-code-json",responseData.toString())
+//                    Log.d("KodanKing-status",status.toString())
+//
+//                    Log.d("KodanKing-emailError",emailError.toString())
+//                    Log.d("KodanKing-phoneNumber Error",phoneNumError.toString())
+//                    Log.d("KodanKing-usernameError",userNameError.toString())
+//
+//
+//
+//                }
+//            } else {
+//                val errorBody = response.errorBody()?.string()
+//                Log.d("KodanKing - errorBody ",errorBody.toString())
+//
+//
+//            }
+//
+//
+//        }
 
         setContent {
             SoPsitTheme {

@@ -1,5 +1,6 @@
 package com.original.sense.psit.Authentication
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -36,7 +37,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -55,12 +58,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -68,7 +77,9 @@ import kotlinx.coroutines.delay
 var userNameSignIn = ""
 var password = ""
 @Composable
-fun SignInScreen(navController: NavHostController , context: MainActivity) {
+fun SignInScreen(navController: NavHostController ,
+                 context: MainActivity,
+) {
 
     var show by remember {
         mutableStateOf(false)
@@ -250,6 +261,10 @@ fun SignInScreen(navController: NavHostController , context: MainActivity) {
 fun SignInSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
+    val psitViewModel : PsitViewModel = hiltViewModel()
+
+    val loginStatus by psitViewModel.loginStatus.observeAsState()
+
     Card(modifier = Modifier
         .fillMaxWidth(),
         shape = (RoundedCornerShape(30.dp)),
@@ -313,8 +328,12 @@ fun SignInSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
+                        Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
+                        val loginPost = LoginPost(userNameSignIn, password) // Create LoginPost data class or object
+                        psitViewModel.loginUser(loginPost)
+//                        psitViewModel.registrationStatus
+                        Log.d("KodanKing-error", psitViewModel.registrationStatus.toString())
 
-                              Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
 
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -362,6 +381,8 @@ fun SignInSheet(navController: NavHostController) {
         }
     }
 }
+
+
 @Composable
 fun SignInPagePassword(): String {
     val keyboardController = LocalSoftwareKeyboardController.current

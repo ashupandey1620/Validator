@@ -9,6 +9,8 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface PsitApi {
+
+
     @POST("/api/user/register/")
     suspend fun tempRegister(
         @Body tempRegisterPost: TempRegisterPost

@@ -1,6 +1,7 @@
 package com.original.sense.psit.Authentication
 
 import android.widget.Toast
+import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,10 +64,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
+import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.ui.theme.poppins
+import androidx.compose.runtime.State
+import kotlinx.coroutines.flow.StateFlow
+import androidx.compose.runtime.collectAsState
+
 
 
 
@@ -79,6 +89,10 @@ var room = ""
 
 @Composable
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
+
+
+
+    val psitViewModel : PsitViewModel = hiltViewModel()
 
 
     Column(
@@ -128,6 +142,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
         Terms()
 
+
+
        var valid : Boolean
 
         Row (modifier = Modifier
@@ -136,11 +152,17 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
             Button(onClick = {
 
-               // valid = checkValidity(name, userName,email,phone,room,context)
+                val signUpPost = TempRegisterPost(
+                    "hello@gmail.com",
+                    "ashu",
+                    "ash7878",
+                    5454545490,
+                    "a-21") // Create LoginPost data class or object
+                psitViewModel.registerUser(signUpPost)
 
 //                if(true) {
-                    navController.popBackStack()
-                    navController.navigate("HomeGraph")
+//                    navController.popBackStack()
+//                    navController.navigate("HomeGraph")
              //   }
 
             },
@@ -153,6 +175,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                     modifier = Modifier.padding(8.dp))
             }
         }
+
+
 
         AlreadyAccount(navController)
     }
