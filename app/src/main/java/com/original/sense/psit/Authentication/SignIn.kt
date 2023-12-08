@@ -95,7 +95,6 @@ fun SignInScreen(navController: NavHostController ,
         mutableStateOf(false)
     }
 
-
     LaunchedEffect(key1 = 0) {
         tickVisibility.value = true
         image1Visibility.value = true
@@ -107,8 +106,6 @@ fun SignInScreen(navController: NavHostController ,
         delay(500)
         image4Visibility.value = true
     }
-
-
 
     if (show) {
         BottomSheetDialog(
@@ -131,8 +128,6 @@ fun SignInScreen(navController: NavHostController ,
         mutableStateOf(Alignment.CenterHorizontally)
     }
 
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -150,7 +145,6 @@ fun SignInScreen(navController: NavHostController ,
             val offsetX = with(density) { -43.63.dp.roundToPx() }
             val offsetY = with(density) { -4.12.dp.roundToPx() }
 
-
             this@Column.AnimatedVisibility(
                 visible = image1Visibility.value ,
                 enter = fadeIn(animationSpec = tween(durationMillis = 5000)) ,
@@ -163,7 +157,6 @@ fun SignInScreen(navController: NavHostController ,
                     contentDescription = null
                 )
             }
-
 
             val offsetX2 = with(density) { 370.06.dp.roundToPx() }
             val offsetY2 = with(density) { 147.29.dp.roundToPx() }
@@ -198,7 +191,6 @@ fun SignInScreen(navController: NavHostController ,
                 )
             }
 
-
             val offsetX4 = with(density) { 249.71.dp.roundToPx() }
             val offsetY4 = with(density) { 265.25.dp.roundToPx() }
 
@@ -231,7 +223,6 @@ fun SignInScreen(navController: NavHostController ,
                 )
             }
 
-
             val offsetX6 = with(density) { 167.55.dp.roundToPx() }
             val offsetY6 = with(density) { 170.46.dp.roundToPx() }
 
@@ -247,14 +238,8 @@ fun SignInScreen(navController: NavHostController ,
                     contentDescription = null
                 )
             }
-
-
-
         }
-
-
     }
-
 }
 
 @Composable
@@ -329,10 +314,9 @@ fun SignInSheet(navController: NavHostController) {
                 Button(
                     onClick = {
                         Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
-                        val loginPost = LoginPost(userNameSignIn, password) // Create LoginPost data class or object
+                        val loginPost = LoginPost(userNameSignIn, password)
                         psitViewModel.loginUser(loginPost)
-//                        psitViewModel.registrationStatus
-                        Log.d("KodanKing-error", psitViewModel.registrationStatus.toString())
+
 
 
                     } ,

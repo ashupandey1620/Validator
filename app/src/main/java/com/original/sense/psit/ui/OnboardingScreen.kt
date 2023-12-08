@@ -106,8 +106,6 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 )
             }
 
-
-
             val offsetX2 = with(density) { 115.02.dp.roundToPx() }
             val offsetY2 = with(density) { 143.5.dp.roundToPx() }
 
@@ -140,8 +138,6 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 )
             }
 
-
-
             val offsetX4 = with(density) { 196.61.dp.roundToPx() }
             val offsetY4 = with(density) { 55.12.dp.roundToPx() }
 
@@ -157,8 +153,6 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                     contentDescription = null
                 )
             }
-
-
         }
 
         var isVisible by remember {
@@ -247,7 +241,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
         }
 
 
-Spacer(modifier = Modifier.padding(100.dp))
+      //  Spacer(modifier = Modifier.padding(.dp))
 
         val width = animateDpAsState(targetValue = if(clickCount==0) 60.dp
         else if (clickCount==1) 150.dp
@@ -266,8 +260,6 @@ Spacer(modifier = Modifier.padding(100.dp))
             if (clickCount2<=3) {
                 clickCount += 1
             }
-
-
 
             if(clickCount2==4){
             onBoardingIsFinished(context = context)

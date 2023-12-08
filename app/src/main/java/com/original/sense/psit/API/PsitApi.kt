@@ -6,11 +6,13 @@ import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface PsitApi {
 
 
+    @Headers("Content-Type: application/json")
     @POST("/api/user/register/")
     suspend fun tempRegister(
         @Body tempRegisterPost: TempRegisterPost

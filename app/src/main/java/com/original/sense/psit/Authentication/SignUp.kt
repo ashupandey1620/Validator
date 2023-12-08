@@ -1,5 +1,6 @@
 package com.original.sense.psit.Authentication
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.background
@@ -153,17 +154,19 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             Button(onClick = {
 
                 val signUpPost = TempRegisterPost(
-                    "hello@gmail.com",
-                    "ashu",
-                    "ash7878",
-                    5454545490,
-                    "a-21") // Create LoginPost data class or object
+                    name,
+                    userName,
+                    email,
+                    phone.toLong(),
+                    room) // Create LoginPost data class or object
                 psitViewModel.registerUser(signUpPost)
 
 //                if(true) {
 //                    navController.popBackStack()
 //                    navController.navigate("HomeGraph")
              //   }
+
+                Log.d("signupPost", signUpPost.toString())
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
