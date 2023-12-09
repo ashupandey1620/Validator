@@ -2,6 +2,7 @@ package com.original.sense.psit.API
 
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.PostModel.sendResetPassword
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import retrofit2.Response
@@ -35,6 +36,11 @@ interface PsitApi {
     suspend fun login(
         @Body loginPost: LoginPost
     ): Response<LoginResponse>
+
+    @POST("/api/user/send-reset-password-email/")
+    suspend fun resetPasswordRequest(
+        @Body resetPost: sendResetPassword
+    ): Response<TempRegister>
 
 }
 
