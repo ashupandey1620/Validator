@@ -77,8 +77,7 @@ import com.original.sense.psit.ui.theme.poppins
 import androidx.compose.runtime.State
 import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.runtime.collectAsState
-
-
+import androidx.compose.runtime.livedata.observeAsState
 
 
 var name  = ""
@@ -92,9 +91,18 @@ var room = ""
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 
-
+    var valid : Boolean
     val psitViewModel : PsitViewModel = hiltViewModel()
 
+    val registerResponse by psitViewModel.registrationStatus.observeAsState()
+
+    registerResponse?.let { response ->
+        Log.d("Registerola -Response","$response")
+        Log.d("Registerola -error","${response.error}")
+        Log.d("Registerola -responseData","${response.responseData}")
+        Log.d("Registerola -","${response.message?.email}")
+        Log.d("Registerola -statusCode","${response.statusCode}")
+    }
 
     Column(
         modifier = Modifier
@@ -104,8 +112,6 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
         Text(text = "Sign Up",
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,7 +122,6 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             fontFamily = poppins,
             fontWeight = FontWeight.ExtraBold
             )
-
         Text(text = "Create an Account to start getting Permission Today",
             modifier = Modifier
                 .fillMaxWidth()
@@ -128,12 +133,13 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             fontFamily = poppins,
             fontWeight = FontWeight.Light,
             softWrap = true
-
         )
-
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(10.dp))
+
+
+
 
         name      =   SimpleOutlinedTextFieldName()
         userName  =   SimpleOutlinedTextFieldUsername()
@@ -144,9 +150,6 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         Terms()
 
 
-
-       var valid : Boolean
-
         Row (modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()){
@@ -154,19 +157,12 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             Button(onClick = {
 
                 val signUpPost = TempRegisterPost(
+                    email,
                     name,
                     userName,
-                    email,
                     phone.toLong(),
                     room) // Create LoginPost data class or object
                 psitViewModel.registerUser(signUpPost)
-
-//                if(true) {
-//                    navController.popBackStack()
-//                    navController.navigate("HomeGraph")
-             //   }
-
-                Log.d("signupPost", signUpPost.toString())
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),

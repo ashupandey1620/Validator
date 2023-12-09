@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class PsitViewModel @Inject constructor(private val repository: PsitRepository) : ViewModel() {
 
@@ -26,7 +27,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository) 
     fun registerUser(tempRegisterPost: TempRegisterPost) {
         viewModelScope.launch {
             val result = repository.registerUser(tempRegisterPost)
-            Log.d("KodanKing-error",result.toString())
             _registrationStatus.postValue(result)
         }
     }
@@ -34,8 +34,11 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository) 
     fun loginUser(loginPost: LoginPost) {
         viewModelScope.launch {
             val result = repository.loginUser(loginPost)
-            Log.d("KodanKing-error",result.toString())
+
             _loginStatus.postValue(result)
+
         }
     }
+
+
 }

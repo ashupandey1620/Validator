@@ -250,15 +250,23 @@ fun SignInSheet(navController: NavHostController) {
 
     val loginStatus by psitViewModel.loginStatus.observeAsState()
 
+
+    loginStatus?.let { response ->
+        Log.d("SignupOla - Response","$response")
+        Log.d("SignupOla - ResponseData Msg", response.responseData.msg)
+        Log.d("SignupOla - Access Token", response.responseData.token.access)
+        Log.d("SignupOla - Refresh Token", response.responseData.token.refresh)
+        Log.d("SignupOla - Error","${response.error}")
+        Log.d("SignupOla - Status Code","${response.statusCode}")
+    }
+
+
     Card(modifier = Modifier
         .fillMaxWidth(),
         shape = (RoundedCornerShape(30.dp)),
         colors = CardDefaults.cardColors(
             containerColor = Color.Black.copy(alpha = 0.4f)
-        )
-
-        ) {
-
+        )) {
 
         Column(
             modifier = Modifier
@@ -313,10 +321,9 @@ fun SignInSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                        Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
+                       // Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
                         val loginPost = LoginPost(userNameSignIn, password)
                         psitViewModel.loginUser(loginPost)
-
 
 
                     } ,
@@ -332,7 +339,6 @@ fun SignInSheet(navController: NavHostController) {
                     )
                 }
             }
-
 
             Column(
                 modifier = Modifier
@@ -364,66 +370,15 @@ fun SignInSheet(navController: NavHostController) {
 
         }
     }
+    Log.d("okhttp","$loginStatus")
 }
-
-
-@Composable
-fun SignInPagePassword(): String {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    var text by rememberSaveable { mutableStateOf("") }
-
-    val containerColor = Color(0xFF28292e)
-    OutlinedTextField(
-
-        value = text,
-        leadingIcon = {
-            Icon(
-                Icons.Outlined.Lock, contentDescription = "Username",
-                tint = Color(0xFFA7A7A7))
-        },
-        onValueChange = { text = it },
-        shape = RoundedCornerShape(30.dp) ,
-
-
-        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
-            fontFamily = poppins,fontSize = 16.sp) },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Password
-        ) ,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White ,
-            focusedContainerColor = containerColor ,
-            unfocusedContainerColor = containerColor ,
-            disabledContainerColor = containerColor ,
-            focusedBorderColor =  Color.White,
-            unfocusedBorderColor = Color(0xFF383838) ,
-        ) ,
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp)
-            .padding(top = 16.dp),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                keyboardController?.hide()
-                //
-
-
-
-            }
-        )
-    )
-    return text
-}
-
 
 @Composable
 fun SimpleOutlinedTextFieldUsername2(): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
-   val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
+    val user = arrayOf("Ashutosh","Satvik","Sanat","Ayush","Rishab")
 
     val containerColor = Color(0xFF28292e)
     OutlinedTextField(
@@ -474,3 +429,52 @@ fun SimpleOutlinedTextFieldUsername2(): String {
 
     return text
 }
+
+@Composable
+fun SignInPagePassword(): String {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var text by rememberSaveable { mutableStateOf("") }
+
+    val containerColor = Color(0xFF28292e)
+    OutlinedTextField(
+
+        value = text,
+        leadingIcon = {
+            Icon(
+                Icons.Outlined.Lock, contentDescription = "Username",
+                tint = Color(0xFFA7A7A7))
+        },
+        onValueChange = { text = it },
+        shape = RoundedCornerShape(30.dp) ,
+
+
+        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
+            fontFamily = poppins,fontSize = 16.sp) },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        ) ,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White ,
+            focusedContainerColor = containerColor ,
+            unfocusedContainerColor = containerColor ,
+            disabledContainerColor = containerColor ,
+            focusedBorderColor =  Color.White,
+            unfocusedBorderColor = Color(0xFF383838) ,
+        ) ,
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(top = 16.dp),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                //
+            }
+        )
+    )
+    return text
+}
+
+
