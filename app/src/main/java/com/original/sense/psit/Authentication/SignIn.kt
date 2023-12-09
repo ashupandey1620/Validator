@@ -37,6 +37,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -73,7 +74,7 @@ import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
-
+var show = false
 var userNameSignIn = ""
 var password = ""
 @Composable
@@ -81,9 +82,6 @@ fun SignInScreen(navController: NavHostController ,
                  context: MainActivity,
 ) {
 
-    var show by remember {
-        mutableStateOf(false)
-    }
 
     val image1Visibility = remember{ mutableStateOf(false) }
     val image2Visibility = remember{ mutableStateOf(false) }
@@ -258,8 +256,13 @@ fun SignInSheet(navController: NavHostController) {
         Log.d("SignupOla - Refresh Token", response.responseData.token.refresh)
         Log.d("SignupOla - Error","${response.error}")
         Log.d("SignupOla - Status Code","${response.statusCode}")
-    }
 
+        if (!response.error){
+            navController.popBackStack()
+            navController.navigate("HomeGraph")
+            show = false
+        }
+    }
 
     Card(modifier = Modifier
         .fillMaxWidth(),

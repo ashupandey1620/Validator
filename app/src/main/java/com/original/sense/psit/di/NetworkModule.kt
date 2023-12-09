@@ -1,11 +1,17 @@
 package com.original.sense.psit.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.original.sense.psit.API.PsitApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -42,7 +48,7 @@ class NetworkModule {
             .build()
     }
 
-//https://special-space-goggles-x5w5pwx6gpphv6wq.github.dev/
+    //https://special-space-goggles-x5w5pwx6gpphv6wq.github.dev/
     //https://animated-capybara-45j74vw7w4gc7r5g-8000.app.github.dev/
     //http://18.61.72.79/
 
@@ -50,6 +56,19 @@ class NetworkModule {
     @Provides
     fun providesPsitAPI(retrofit: Retrofit) : PsitApi{
         return retrofit.create(PsitApi::class.java)
+    }
+
+
+
+    @Module
+    @InstallIn(SingletonComponent::class) // Use appropriate component
+    object DataStoreModule {
+
+        @Provides
+        @Singleton
+        fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+            return PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("name") }
+        }
     }
 }
 

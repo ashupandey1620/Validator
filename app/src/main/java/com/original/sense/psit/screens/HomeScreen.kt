@@ -39,6 +39,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,14 +58,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.ui.theme.poppins
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 import java.io.IOException
 
@@ -83,6 +91,18 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
     var show by remember { mutableStateOf(false) }
 
+//    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+//
+//    val accessToken by tokenStoreViewModel.accessTokenFlow.collectAsState(null)
+//
+//
+//
+//    val refreshToken by tokenStoreViewModel.refreshTokenFlow.collectAsState(null)
+
+
+
+//    Toast.makeText(context,"$accessToken",Toast.LENGTH_SHORT).show()
+//    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
 
 
 
