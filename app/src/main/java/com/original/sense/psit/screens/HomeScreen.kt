@@ -80,29 +80,6 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-
-val studentList = mutableListOf<PersonModel>().apply {
-
-    add(PersonModel("Anish Singh" , 2101641530027))
-    add(PersonModel("Arnav Asthana",2101641530040))
-    add(PersonModel("Arin Paliwal",2101641530038))
-    add(PersonModel("Ashutosh Pandey",2101641530046))
-    add(PersonModel("Sanat Kumar Mishra",2101640100231))
-    add(PersonModel("Ayush Agnihotri",2101641530049))
-    add(PersonModel("Satvik Shukla",2101640100235))
-    add(PersonModel("Rishab Didwania",2101641530046))
-    add(PersonModel("Aditya Tripathi",2101641530016))
-    add(PersonModel("Devansh Tiwari",2101641530058))
-    add(PersonModel("Devesh Shukla",210164010060))
-    add(PersonModel("Archit Pandey",2101641530037))
-    add(PersonModel("Deepak Yadav",2101640100301))
-    add(PersonModel("James Malhotra",2101641530078))
-    add(PersonModel("Chadwick Khan",2101640100076))
-    sortWith(Comparator { a , b -> a.name.compareTo(b.name) })
-
-
-}
-
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
 val sdtList : ArrayList<String> = ArrayList()
 val rollArray : ArrayList<Int> = ArrayList()
@@ -111,6 +88,7 @@ val rollArray : ArrayList<Int> = ArrayList()
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController,activity: Activity ) {
+    val studentList = remember { mutableStateListOf<PersonModel>() }
     val context = LocalContext.current.applicationContext
     var dialogVisible by remember { mutableStateOf(false) }
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
@@ -194,7 +172,12 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
             SearchView(
                 placeHolder = "Search" ,
-                modifier = Modifier)
+                modifier = Modifier,
+                onSearchSubmit = { searchText ->
+                    // Add the entered search text as a new item to the student list
+                    val newPersonModel = PersonModel(name = "", rollNum = searchText.toLong())
+                    studentList.add(newPersonModel)
+                })
 
             Row {
 
@@ -250,9 +233,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
             }
         }
 
-
-
-        ListDemo(selectedItems = selectedItems)
+        ListDemo(selectedItems = selectedItems, studentList = studentList)
     }
 
 
@@ -410,7 +391,8 @@ fun CircularTapButton() {
 @Composable
 fun SearchView(
     placeHolder: String ,
-    modifier: Modifier
+    modifier: Modifier,
+    onSearchSubmit: (String) -> Unit
 ) {
 
      val context = LocalContext.current.applicationContext
@@ -457,16 +439,8 @@ fun SearchView(
 
                 keyboardController?.hide()
                 Toast.makeText(context , "Toast Message from the text" , Toast.LENGTH_SHORT).show()
-
-
                 Toast.makeText(context , "$text" , Toast.LENGTH_LONG).show()
-
-
-                if (info.contains(text)) {
-                    sdtList.add(text)
-
-                }
-
+                onSearchSubmit(text)
 
             }
         )

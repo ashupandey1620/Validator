@@ -28,9 +28,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,7 +43,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.original.sense.psit.model.PersonModel
-import com.original.sense.psit.screens.studentList
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -50,7 +51,19 @@ import kotlinx.coroutines.delay
 fun ListItem( model: PersonModel,
               isSelected: Boolean,
               onItemSelected: (Boolean) -> Unit,
-              isLoading: Boolean) {
+              ) {
+
+    var isLoading by remember { mutableStateOf(true) }
+
+    // Simulating data loading delay with a coroutine
+    LaunchedEffect(Unit) {
+        // Simulate a delay of data loading
+        delay(2000) // Adjust the delay time as per your requirement
+
+        // After the delay, set isLoading to false to indicate data loading is complete
+        isLoading = false
+    }
+
 
     val shimmerColors = listOf(
         Color.LightGray.copy(alpha = 0.6f),
@@ -150,17 +163,10 @@ fun ListItem( model: PersonModel,
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListDemo(selectedItems: MutableList<PersonModel>) {
-    var isLoading by remember { mutableStateOf(true) }
+fun ListDemo(
+    selectedItems: MutableList<PersonModel>,
+    studentList: SnapshotStateList<PersonModel> = mutableStateListOf<PersonModel>()  ) {
 
-    // Simulating data loading delay with a coroutine
-    LaunchedEffect(Unit) {
-        // Simulate a delay of data loading
-        delay(2000) // Adjust the delay time as per your requirement
-
-        // After the delay, set isLoading to false to indicate data loading is complete
-        isLoading = false
-    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -186,7 +192,7 @@ fun ListDemo(selectedItems: MutableList<PersonModel>) {
                             selectedItems.remove(model)
                         }
                     },
-                    isLoading = isLoading
+
                 )
             }
         }
