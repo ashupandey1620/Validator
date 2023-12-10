@@ -41,6 +41,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -69,13 +70,38 @@ import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.composable.ListDemo
 import com.original.sense.psit.composable.ReadyToTap
+import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 import java.io.IOException
 
+
+
+val studentList = mutableListOf<PersonModel>().apply {
+
+    add(PersonModel("Anish Singh" , 2101641530027))
+    add(PersonModel("Arnav Asthana",2101641530040))
+    add(PersonModel("Arin Paliwal",2101641530038))
+    add(PersonModel("Ashutosh Pandey",2101641530046))
+    add(PersonModel("Sanat Kumar Mishra",2101640100231))
+    add(PersonModel("Ayush Agnihotri",2101641530049))
+    add(PersonModel("Satvik Shukla",2101640100235))
+    add(PersonModel("Rishab Didwania",2101641530046))
+    add(PersonModel("Aditya Tripathi",2101641530016))
+    add(PersonModel("Devansh Tiwari",2101641530058))
+    add(PersonModel("Devesh Shukla",210164010060))
+    add(PersonModel("Archit Pandey",2101641530037))
+    add(PersonModel("Deepak Yadav",2101640100301))
+    add(PersonModel("James Malhotra",2101641530078))
+    add(PersonModel("Chadwick Khan",2101640100076))
+    sortWith(Comparator { a , b -> a.name.compareTo(b.name) })
+
+
+}
 
 val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
 val sdtList : ArrayList<String> = ArrayList()
@@ -89,20 +115,27 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     var dialogVisible by remember { mutableStateOf(false) }
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
 
+
+
+    val selectedItems = remember { mutableStateListOf<PersonModel>() }
+
     var show by remember { mutableStateOf(false) }
 
-//    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
-//
-//    val accessToken by tokenStoreViewModel.accessTokenFlow.collectAsState(null)
-//
-//
-//
-//    val refreshToken by tokenStoreViewModel.refreshTokenFlow.collectAsState(null)
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
+
+    Toast.makeText(context,"$accessToken",Toast.LENGTH_SHORT).show()
+    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
 
 
-
-//    Toast.makeText(context,"$accessToken",Toast.LENGTH_SHORT).show()
-//    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
+    // Function to delete selected items
+    val deleteSelectedItems: () -> Unit = {
+        studentList.removeAll(selectedItems)
+        selectedItems.clear()
+    }
 
 
 
@@ -117,13 +150,6 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
     val outputJsonString = JSONObject(jsonData)
 
-//    val userarray = outputJsonString.getJSONArray("users") as JsonArray
-
-
-
-//    for (i in 0 until userarray.size()){
-//        rollArray.add()
-//    }
 
 
 
@@ -214,8 +240,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
             )
 
             IconButton(modifier = Modifier.size(35.dp) , onClick = {
-               // navController.navigate("studentProfileInfo")
-                navController.navigate("detailedScreen")
+                deleteSelectedItems()
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete) ,
@@ -227,25 +252,25 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
 
 
-       // ListDemo(sdtList)
+        ListDemo(selectedItems = selectedItems)
     }
 
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "$outputJsonString" ,
-            fontFamily = poppins ,
-            fontSize = 7.sp ,
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
-
-    }
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize(),
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center
+//    ) {
+//        Text(
+//            text = "$outputJsonString" ,
+//            fontFamily = poppins ,
+//            fontSize = 7.sp ,
+//            color = Color.White,
+//            textAlign = TextAlign.Center
+//        )
+//
+//    }
 
 
     if(dialogVisible) {

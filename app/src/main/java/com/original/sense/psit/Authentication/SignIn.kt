@@ -37,7 +37,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -260,7 +259,7 @@ fun SignInSheet(navController: NavHostController) {
         if (!response.error){
             navController.popBackStack()
             navController.navigate("HomeGraph")
-            show = false
+            show=false
         }
     }
 

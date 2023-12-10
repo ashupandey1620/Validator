@@ -57,7 +57,6 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.AddStudentScreen
 import com.original.sense.psit.composable.GradientBackground
-import com.original.sense.psit.composable.studentList
 import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins

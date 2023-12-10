@@ -18,12 +18,12 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
     }
 
     val accessTokenFlow: Flow<String?> = dataStore.data.map { preferences ->
-        preferences[ACCESS_TOKEN_KEY]
+        preferences[ACCESS_TOKEN_KEY] ?: ""
     }
 
     //Flow for the access of the refresh and access tokens from the ViewModels and Composable functions
     val refreshTokenFlow: Flow<String?> = dataStore.data.map { preferences ->
-        preferences[REFRESH_TOKEN_KEY]
+        preferences[REFRESH_TOKEN_KEY] ?: ""
     }
 
     suspend fun saveTokens(accessToken: String, refreshToken: String) {
