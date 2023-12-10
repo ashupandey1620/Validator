@@ -89,8 +89,6 @@ fun ListItem( model: PersonModel,
         end = Offset(x=translateAnim.value,y=translateAnim.value)
     )
 
-
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
