@@ -35,10 +35,13 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     fun loginUser(loginPost: LoginPost) {
         viewModelScope.launch {
             val result = repository.loginUser(loginPost)
-            if (result!!.error) {
+            if (!result!!.error) {
 
                 val accessToken = result.responseData.token.access
                 val refreshToken = result.responseData.token.refresh
+
+                Log.d("Repository - access token", accessToken)
+                Log.d("Repository - refresh token", refreshToken)
 
                 // Save tokens to DataStore upon successful login
                 tokenStore.saveTokens(accessToken, refreshToken)

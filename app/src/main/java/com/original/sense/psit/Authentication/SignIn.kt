@@ -256,6 +256,8 @@ fun SignInSheet(navController: NavHostController) {
         Log.d("SignupOla - Error","${response.error}")
         Log.d("SignupOla - Status Code","${response.statusCode}")
 
+
+
         if (!response.error){
             navController.popBackStack()
             navController.navigate("HomeGraph")

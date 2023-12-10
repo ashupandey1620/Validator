@@ -100,7 +100,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
     val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
 
-    Toast.makeText(context,"$accessToken",Toast.LENGTH_SHORT).show()
+    Toast.makeText(context,"$accessToken.",Toast.LENGTH_SHORT).show()
     Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
 
 
