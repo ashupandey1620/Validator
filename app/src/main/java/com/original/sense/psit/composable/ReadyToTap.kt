@@ -1,5 +1,7 @@
 package com.original.sense.psit.composable
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +34,7 @@ import com.original.sense.psit.ui.theme.poppins
 
 
 @Composable
-fun ReadyToTap() {
+fun ReadyToTap(context: Context , activity: Activity) {
 
 
     Card (shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp)){

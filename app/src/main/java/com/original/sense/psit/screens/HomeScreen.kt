@@ -123,6 +123,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
 
 
+    var nfcEnabled by remember { mutableStateOf(false) }
 
     if (show) {
         BottomSheetDialog(
@@ -135,16 +136,23 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
                 dismissWithAnimation = false
             )
         ) {
-                ReadyToTap()
+            ReadyToTap(context,activity)
         }
 
         DisposableEffect(Unit) {
-            enableNfcForegroundDispatch(context,activity)
+            if (!nfcEnabled) {
+                enableNfcForegroundDispatch(context, activity)
+                nfcEnabled = true
+            }
 
+            // Cleanup on dispose
             onDispose {
-                disableNfcForegroundDispatch(context,activity)
+                disableNfcForegroundDispatch(context, activity)
+                nfcEnabled = false
             }
         }
+
+
     }
 
     Column(
@@ -293,16 +301,11 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
     val nfca = NfcA.get(tag)
 
-
-
     if (nfca != null) {
         try {
             nfca.connect()
 
             Toast.makeText(context,"Connected",Toast.LENGTH_SHORT).show()
-
-
-
 
             // Read NFC-A tag data
             val tagData = nfca.tag.id
