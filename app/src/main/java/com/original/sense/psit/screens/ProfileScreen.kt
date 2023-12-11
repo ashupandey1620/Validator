@@ -150,6 +150,11 @@ fun ProfileCard(navController: NavController) {
 
                         } )
 
+                    SupportAccountItem(mainText = "Change Password",
+                        onClick = {
+                            navController.navigate("changePassword")
+                        } )
+
                 }
 
         }

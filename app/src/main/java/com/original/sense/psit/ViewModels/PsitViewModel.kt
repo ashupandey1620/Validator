@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
+import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,9 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
     private val _loginStatus = MutableLiveData<LoginResponse?>()
     val loginStatus: LiveData<LoginResponse?> = _loginStatus
+
+    private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
+    val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
     fun registerUser(tempRegisterPost: TempRegisterPost) {
         viewModelScope.launch {
@@ -49,6 +54,13 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
             _loginStatus.postValue(result)
 
+        }
+    }
+
+    fun changePassword(accessToken:String,changePasswordPost: ChangePasswordPost) {
+        viewModelScope.launch {
+            val result = repository.changePassword(accessToken,changePasswordPost)
+            _changePassword.postValue(result)
         }
     }
 

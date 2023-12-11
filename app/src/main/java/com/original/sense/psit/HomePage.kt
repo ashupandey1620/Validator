@@ -34,6 +34,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.screens.AddScreen
+import com.original.sense.psit.screens.ChangePassword
 import com.original.sense.psit.screens.EditProfileScreen
 import com.original.sense.psit.screens.HomeScreen
 import com.original.sense.psit.screens.NotificationScreen
@@ -194,6 +195,10 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity) {
 
         composable(route = "detailedScreen") {
             detailScreen(navController)
+        }
+
+        composable(route = "changePassword") {
+            ChangePassword(navController)
         }
 
     }

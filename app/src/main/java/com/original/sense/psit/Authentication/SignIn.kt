@@ -294,7 +294,7 @@ fun SignInSheet(navController: NavHostController) {
             )
 
             userNameSignIn = SimpleOutlinedTextFieldUsername2()
-            password = SignInPagePassword()
+            password = SignInPagePassword("Password")
 
 
 
@@ -435,7 +435,7 @@ fun SimpleOutlinedTextFieldUsername2(): String {
 }
 
 @Composable
-fun SignInPagePassword(): String {
+fun SignInPagePassword(string: String): String {
     val keyboardController = LocalSoftwareKeyboardController.current
     var text by rememberSaveable { mutableStateOf("") }
 
@@ -452,7 +452,7 @@ fun SignInPagePassword(): String {
         shape = RoundedCornerShape(30.dp) ,
 
 
-        placeholder = { Text(text = "Password", color = Color(0xFFA7A7A7),
+        placeholder = { Text(text = string, color = Color(0xFFA7A7A7),
             fontFamily = poppins,fontSize = 16.sp) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
