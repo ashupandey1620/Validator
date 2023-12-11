@@ -1,11 +1,13 @@
 package com.original.sense.psit.API
 
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
+import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
+import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
@@ -64,6 +66,12 @@ interface PsitApi {
         @Body getStudentPost: GetStudentPost
     ): Response<GetStudentResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("/api/nfc/getpwd/")
+    suspend fun getChipPwd(
+        @Header("Authorization") access: String,
+        @Body getPwdPost: GetPwdPost
+    ): Response<GetPwdResponse>
 
 }
 
