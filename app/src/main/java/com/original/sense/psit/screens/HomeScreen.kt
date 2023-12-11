@@ -292,11 +292,17 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
  fun handleTechTag(intent: Intent , context: Context) {
     val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
     val nfca = NfcA.get(tag)
+
+
+
     if (nfca != null) {
         try {
             nfca.connect()
 
             Toast.makeText(context,"Connected",Toast.LENGTH_SHORT).show()
+
+
+
 
             // Read NFC-A tag data
             val tagData = nfca.tag.id
