@@ -140,15 +140,10 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
         }
 
         DisposableEffect(Unit) {
-            if (!nfcEnabled) {
                 enableNfcForegroundDispatch(context, activity)
-                nfcEnabled = true
-            }
-
             // Cleanup on dispose
             onDispose {
                 disableNfcForegroundDispatch(context, activity)
-                nfcEnabled = false
             }
         }
 

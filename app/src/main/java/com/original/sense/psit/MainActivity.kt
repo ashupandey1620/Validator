@@ -3,7 +3,6 @@ package com.original.sense.psit
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -140,11 +139,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-
-        Toast.makeText(this, "data "+intent.getAction(), Toast.LENGTH_SHORT).show();
         if (NfcAdapter.ACTION_TECH_DISCOVERED == intent.action || NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
             handleTechTag(intent,this)
         }
