@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
+import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
+import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
@@ -34,6 +36,9 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
     private val _getStudent = MutableLiveData<GetStudentResponse?>()
     val getStudent: LiveData<GetStudentResponse?> = _getStudent
+
+    private val _getPwd = MutableLiveData<GetPwdResponse?>()
+    val getPwd: LiveData<GetPwdResponse?> = _getPwd
 
     fun registerUser(tempRegisterPost: TempRegisterPost) {
         viewModelScope.launch {
@@ -70,10 +75,18 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     }
 
 
-    fun getStudent(accessToken:String , getStudentResponse: GetStudentPost) {
+    fun getStudent(accessToken:String , getStudentPost: GetStudentPost) {
         viewModelScope.launch {
-            val result = repository.getStudent(accessToken,getStudentResponse)
+            val result = repository.getStudent(accessToken,getStudentPost)
             _getStudent.postValue(result)
+        }
+    }
+
+
+    fun getPassword(accessToken:String , getPwdPost: GetPwdPost) {
+        viewModelScope.launch {
+            val result = repository.getPwdChip(accessToken,getPwdPost)
+            _getPwd.postValue(result)
         }
     }
 
