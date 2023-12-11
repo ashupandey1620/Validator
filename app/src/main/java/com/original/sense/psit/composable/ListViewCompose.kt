@@ -1,6 +1,7 @@
 package com.original.sense.psit.composable
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,7 +27,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,7 +44,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.model.PersonModel
+import com.original.sense.psit.model.PostModel.GetStudentPost
+import com.original.sense.psit.screens.access
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -52,8 +59,27 @@ fun ListItem( model: PersonModel,
               isSelected: Boolean,
               onItemSelected: (Boolean) -> Unit,
               ) {
+    var studentName by remember {
+        mutableStateOf("")
+    }
+
+    val psitViewModel : PsitViewModel = hiltViewModel()
+
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    val getStudentResponse by psitViewModel.getStudent.observeAsState()
 
     var isLoading by remember { mutableStateOf(true) }
+
+
+
+    accessToken?.let { str ->
+        access = accessToken.toString()
+    }
+
+
 
     // Simulating data loading delay with a coroutine
     LaunchedEffect(Unit) {
@@ -63,6 +89,7 @@ fun ListItem( model: PersonModel,
         // After the delay, set isLoading to false to indicate data loading is complete
         isLoading = false
     }
+
 
 
     val shimmerColors = listOf(
@@ -89,57 +116,76 @@ fun ListItem( model: PersonModel,
         end = Offset(x=translateAnim.value,y=translateAnim.value)
     )
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth()
-    ) {
+    LaunchedEffect(Unit) {
+        if (isLoading) {
+            val accessTokenValue = accessToken ?: return@LaunchedEffect
+            val getStudentPost = GetStudentPost(model.rollNum)
+            psitViewModel.getStudent(accessTokenValue, getStudentPost)
+        }
+    }
 
-        val paddingModifier = Modifier.padding(10.dp)
-        Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
-            shape = RoundedCornerShape(24.dp) ,
-            colors = CardDefaults.cardColors(Color(0xFF383841))
+    getStudentResponse?.let { response ->
+        Log.d("Get student" , "$response")
+        Log.d("Get student errors" , "${response.errors}")
+//        Log.d("Get Student Message" , "${response.message}")
+//        Log.d("Get Student msgs" , "${response.message?.messages}")
+//        Log.d("Get Student code" , response.message.code)
+//        Log.d("Get Student details" , response.message.detail)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically ,
+            modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                ,
-                verticalAlignment = Alignment.CenterVertically
+
+            val paddingModifier = Modifier.padding(10.dp)
+            Card(
+                elevation = CardDefaults.cardElevation(5.dp) , modifier = paddingModifier ,
+                shape = RoundedCornerShape(24.dp) ,
+                colors = CardDefaults.cardColors(Color(0xFF383841))
             ) {
-                Checkbox(
-                    checked = isSelected,
-                    onCheckedChange = { checked -> onItemSelected(checked)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp) ,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = isSelected ,
+                        onCheckedChange = { checked ->
+                            onItemSelected(checked)
 
-                    },
-                    colors = CheckboxDefaults.colors(
-                        checkmarkColor = Color.White,
-                        checkedColor = Color.Red,
-                        uncheckedColor = Color.White
-                    )
-                )
-
-                Column (modifier = Modifier.padding(vertical = 10.dp)){
-
-                    if (isLoading) {
-                        // Render shimmering effect or loading placeholder
-                        Spacer(modifier = Modifier
-                            .height(28.dp)
-                            .fillMaxWidth(0.9f)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(brush))
-                    } else {
-                        Text(
-                            text = model.name ,
-                            fontSize = 18.sp ,
-                            fontWeight = FontWeight.SemiBold ,
-                            color = Color.White ,
-                            fontFamily = poppins
+                        } ,
+                        colors = CheckboxDefaults.colors(
+                            checkmarkColor = Color.White ,
+                            checkedColor = Color.Red ,
+                            uncheckedColor = Color.White
                         )
-                    }
+                    )
 
-                    Spacer(modifier = Modifier.padding(3.dp))
+                    Column(modifier = Modifier.padding(vertical = 10.dp)) {
+
+                        if (isLoading) {
+                            // Render shimmering effect or loading placeholder
+                            Spacer(
+                                modifier = Modifier
+                                    .height(28.dp)
+                                    .fillMaxWidth(0.9f)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(brush)
+                            )
+                        } else {
+                            Text(
+                                text = response.responseData.name ,
+                                fontSize = 18.sp ,
+                                fontWeight = FontWeight.SemiBold ,
+                                color = Color.White ,
+                                fontFamily = poppins
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.padding(3.dp))
 
 
 
@@ -151,6 +197,7 @@ fun ListItem( model: PersonModel,
                             fontFamily = poppins
                         )
 
+                    }
                 }
             }
         }

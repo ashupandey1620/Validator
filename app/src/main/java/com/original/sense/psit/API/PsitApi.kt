@@ -1,10 +1,12 @@
 package com.original.sense.psit.API
 
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
+import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
+import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import retrofit2.Response
@@ -54,6 +56,13 @@ interface PsitApi {
         @Header("Authorization") access: String,
         @Body changePasswordPost : ChangePasswordPost
     ): Response<ChangePasswordResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/student/getdetails/")
+    suspend fun getStudent(
+        @Header("Authorization") access: String,
+        @Body getStudentPost: GetStudentPost
+    ): Response<GetStudentResponse>
 
 
 }
