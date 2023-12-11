@@ -39,7 +39,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -57,7 +56,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
@@ -65,7 +63,6 @@ import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.StudentListViewModel
-import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.composable.ListDemo
 import com.original.sense.psit.composable.ReadyToTap
@@ -94,14 +91,14 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
     var show by remember { mutableStateOf(false) }
 
-    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
-
-    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
-
-    val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
-
-    Toast.makeText(context,"$accessToken.",Toast.LENGTH_SHORT).show()
-    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
+//    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+//
+//    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+//
+//    val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
+//
+//    Toast.makeText(context,"$accessToken.",Toast.LENGTH_SHORT).show()
+//    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
 
 
     // Function to delete selected items
