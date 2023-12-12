@@ -59,7 +59,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
@@ -93,11 +92,13 @@ val rollArray : ArrayList<Int> = ArrayList()
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController,activity: Activity ) {
-    val studentListViewModel: StudentListViewModel = viewModel()
+fun HomeScreen(navController: NavController,activity: Activity ,studentListViewModel: StudentListViewModel) {
+
     val context = LocalContext.current.applicationContext
     var dialogVisible by remember { mutableStateOf(false) }
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
+
+  //  val studentList = remember { studentListViewModel.studentList }
 
 
     val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
@@ -194,6 +195,7 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
                     // Add the entered search text as a new item to the student list
                     val newPersonModel = PersonModel(name = "", rollNum = searchText.toLong())
                     studentListViewModel.addStudent(newPersonModel)
+                    Log.d("SHIVPARVATI",studentListViewModel.studentList.toList().toString())
                 })
 
             Row {
@@ -289,11 +291,9 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
 
   @OptIn(DelicateCoroutinesApi::class)
-  fun handleTechTag(intent: Intent , context: Context) {
+  fun handleTechTag(intent: Intent , context: Context,callback: (String) -> Unit) {
     val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
     val nfca = NfcA.get(tag)
-
-
 
     if (nfca != null) {
         try {
@@ -338,10 +338,37 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
                             Log.d("KodanKing - No error","${response.body()}")
                             val password = response.body()?.responseData?.password
 
+                            val a = password?.substring(0 , 2)!!.toInt(16).toByte()
+                            val b = password.substring(2 , 4).toInt(16).toByte()
+                            val c = password.substring(4 , 6).toInt(16).toByte()
+                            val d = password.substring(6 , 8).toInt(16).toByte()
+                            val pwd = byteArrayOf(a , b , c , d)
+                            val authCommand = byteArrayOf(
+                                0x1B.toByte() ,  // PWD_AUTH command
+                                pwd[0] , pwd[1] , pwd[2] , pwd[3]
+                            )
 
-
-
-
+                            try {
+                                nfca.connect()
+                                //  Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                                val result: ByteArray = nfca.transceive(authCommand)
+                                if (result != null && result.size >= 2 && result[0] == 0x00.toByte() && result[1] == 0x00.toByte()) {
+                                    // Authentication successful
+                                    val PUIDData: ByteArray = nfca.transceive(byteArrayOf(0x30.toByte() , 0x04.toByte()))
+                                    var studentId: String = byteArrayToHexString(PUIDData)
+                                    //Toast.makeText(MainActivity.this, "NFC-A Tag Value: " + PUIDValue, Toast.LENGTH_SHORT).show();
+                                    studentId = studentId.substring(0 , 26)
+                                   // Log.d("KodanKing student id", studentId)
+                                    studentId = getOddIndexedCharacters(studentId)
+                                    callback(studentId)
+                                    //Log.d("KodanKing Student id final", studentId)
+                                } else {
+                                   // Toast.makeText(context , "Tag Data is null" , Toast.LENGTH_SHORT).show()
+                                }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                // Toast.makeText(MainActivity.this, "Error transceiving data", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } catch (e: Exception) {
                         Log.d("KodanKing - Exception","$e")
@@ -364,6 +391,16 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     }
 }
 
+
+fun getOddIndexedCharacters(input: String): String {
+    val result = StringBuilder()
+    for (i in input.indices) {
+        if (i % 2 != 0) {
+            result.append(input[i])
+        }
+    }
+    return result.toString()
+}
 
 //private interface NfcDataCallback {
 //    fun onPasswordReceived(password: String?)

@@ -33,6 +33,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.original.sense.psit.ViewModels.StudentListViewModel
 import com.original.sense.psit.screens.AddScreen
 import com.original.sense.psit.screens.ChangePassword
 import com.original.sense.psit.screens.EditProfileScreen
@@ -52,8 +53,8 @@ data class BottomNavigationItem(
     val badgeCount: Int? = null
 )
 @Composable
-fun HomePage(activity: Activity, navController: NavHostController = rememberNavController()) {
-    BottomNavigationBar(navController = navController,activity)
+fun HomePage(activity: Activity,studentListViewModel: StudentListViewModel, navController: NavHostController = rememberNavController()) {
+    BottomNavigationBar(navController = navController,activity,studentListViewModel)
 }
 
 
@@ -62,7 +63,7 @@ fun HomePage(activity: Activity, navController: NavHostController = rememberNavC
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(navController: NavHostController,activity: Activity) {
+fun BottomNavigationBar(navController: NavHostController,activity: Activity,studentListViewModel: StudentListViewModel) {
     val items = listOf(
         BottomNavigationItem(
             route = "home",
@@ -153,7 +154,7 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity) {
 
 }
         ){
-        MainPageNavigation(navController = navController,activity)
+        MainPageNavigation(navController = navController,activity,studentListViewModel)
         }
 }
 
@@ -161,7 +162,7 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainPageNavigation(navController: NavHostController,activity: Activity) {
+fun MainPageNavigation(navController: NavHostController,activity: Activity,studentListViewModel: StudentListViewModel) {
 
     val context = LocalContext.current.applicationContext // Get the context
 
@@ -172,7 +173,7 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity) {
     ) {
 
             composable(route = "home") {
-                HomeScreen(navController,activity)
+                HomeScreen(navController,activity,studentListViewModel)
             }
             composable(route = "add") {
                 AddScreen(navController)

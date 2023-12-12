@@ -3,8 +3,10 @@ package com.original.sense.psit
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,6 +20,8 @@ import com.original.sense.psit.Authentication.ResendPasswordScreen
 import com.original.sense.psit.Authentication.SignInScreen
 import com.original.sense.psit.Authentication.SignUpPage
 import com.original.sense.psit.SoPsit.SplashScreen
+import com.original.sense.psit.ViewModels.StudentListViewModel
+import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.screens.handleTechTag
 import com.original.sense.psit.ui.OnboardingScreen
 import com.original.sense.psit.ui.theme.SoPsitTheme
@@ -26,6 +30,8 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val studentListViewModel: StudentListViewModel by viewModels()
 
 //    @Inject
 //    lateinit var psitAPI : PsitApi
@@ -129,7 +135,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("HomeGraph") {
-                            HomePage(this@MainActivity)
+                            HomePage(this@MainActivity,studentListViewModel)
                         }
 
 
@@ -142,7 +148,16 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_TECH_DISCOVERED == intent.action || NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
-            handleTechTag(intent,this)
+            handleTechTag(intent, this) { studentId ->
+                // Access your ViewModel and add the student ID to the studentList
+                // Retrieve your ViewModel using Hilt or ViewModelProvider
+                Log.d("NARAYAN",studentId)
+                // Add the student ID to the studentList in ViewModel
+                studentListViewModel.addStudent(PersonModel("",studentId.toLong()))
+
+                Log.d("NARAYAN",studentListViewModel.studentList.toList().toString())
+
+            }
         }
     }
 
