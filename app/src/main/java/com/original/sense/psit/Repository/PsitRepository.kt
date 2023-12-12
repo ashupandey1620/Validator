@@ -6,12 +6,17 @@ import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
+import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -119,6 +124,88 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             }
         } catch (e: Exception) {
             // Handle exceptions here
+            null
+        }
+    }
+
+
+    suspend fun postDelegation(access:String,postDelegation: PostDelegation): ResponsePostDelegation? {
+        return try {
+            val response = psitApi.postDelegation(access,postDelegation)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("SHINCHAN - POST DELEGATION",e.toString())
+            null
+        }
+    }
+
+
+    suspend fun postSuspension(access:String,postSuspension: PostSuspension): ResponsePostDelegation? {
+        return try {
+            val response = psitApi.postSuspension(access,postSuspension)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("SHINCHAN - POST SUSPENSION",e.toString())
+            null
+        }
+    }
+
+
+
+    suspend fun getDelegation(access: String,getDelegationPost: getDelegationPost): ResponseGetDelegation? {
+        return try {
+            val response = psitApi.getDelegation(access,getDelegationPost)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("SHINCHAN - GET DELEGATION",e.toString())
+            null
+        }
+    }
+
+
+
+    suspend fun getSuspension(access: String,getDelegationPost: getDelegationPost): ResponseGetDelegation? {
+        return try {
+            val response = psitApi.getDelegation(access,getDelegationPost)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("SHINCHAN - GET SUSPENSION",e.toString())
             null
         }
     }
