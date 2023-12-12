@@ -185,16 +185,15 @@ fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit
                 }
             }
 
-            IconButton(onClick = {},modifier = Modifier.size(20.dp)) {
+            IconButton(onClick = {
+
+            }, modifier = Modifier.size(20.dp).padding(3.dp)) {
                 Icon(tint = Color.White,
                     contentDescription = "",
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(15.dp),
                     painter = painterResource(id = R.drawable.pencil)
                 )
             }
-
-
-
 
         }
     }

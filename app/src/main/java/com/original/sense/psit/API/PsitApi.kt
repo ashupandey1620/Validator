@@ -4,13 +4,18 @@ import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
+import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -79,6 +84,37 @@ interface PsitApi {
         @Header("Authorization") access: String,
         @Body getPwdPost: GetPwdPost
     ): Response<GetPwdResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/permission/adddelegation/")
+    suspend fun postDelegation(
+        @Header("Authorization") access: String,
+        @Body postDelegation: PostDelegation
+    ): Response<ResponsePostDelegation>
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/permission/getpermission/")
+    suspend fun getDelegation(
+        @Header("Authorization") access: String,
+        @Body getDelegationPost: getDelegationPost
+    ): Response<ResponseGetDelegation>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/permission/addsuspension/")
+    suspend fun postSuspension(
+        @Header("Authorization") access: String,
+        @Body postSuspension: PostSuspension
+    ): Response<ResponsePostDelegation>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/permission/getpermission/")
+    suspend fun getSuspension(
+        @Header("Authorization") access: String,
+        @Body getDelegationPost: getDelegationPost
+    ): Response<ResponseGetDelegation>
+
 
 }
 
