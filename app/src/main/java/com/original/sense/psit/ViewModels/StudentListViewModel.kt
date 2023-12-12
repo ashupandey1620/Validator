@@ -9,7 +9,9 @@ import com.original.sense.psit.model.PersonModel
 class StudentListViewModel : ViewModel() {
     val studentList = mutableStateListOf<PersonModel>()
 
+
     fun addStudent(student: PersonModel) {
+
         studentList.add(student)
     }
 

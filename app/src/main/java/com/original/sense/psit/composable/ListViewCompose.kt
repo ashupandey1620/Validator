@@ -83,7 +83,6 @@ fun ListItem( model: PersonModel,
     LaunchedEffect(Unit) {
         // Simulate a delay of data loading
         delay(2000) // Adjust the delay time as per your requirement
-
         // After the delay, set isLoading to false to indicate data loading is complete
         isLoading = false
     }

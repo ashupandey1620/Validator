@@ -126,7 +126,6 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
 
     // Function to delete selected items
     val deleteSelectedItems: () -> Unit = {
-//        studentList.removeAll(selectedItems)
         studentListViewModel.removeStudent(selectedItems)
         selectedItems.clear()
     }
