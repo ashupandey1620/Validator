@@ -1,6 +1,6 @@
 package com.original.sense.psit.model
 
 data class PersonModel(
-    val name: String ,
+    var name: String = "" ,
     val rollNum: Long
 )

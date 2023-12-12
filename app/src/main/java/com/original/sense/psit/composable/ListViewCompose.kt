@@ -1,7 +1,6 @@
 package com.original.sense.psit.composable
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -59,13 +58,13 @@ fun ListItem( model: PersonModel,
               isSelected: Boolean,
               onItemSelected: (Boolean) -> Unit,
               ) {
-    var studentName by remember {
-        mutableStateOf("")
-    }
 
-    val psitViewModel : PsitViewModel = hiltViewModel()
 
-    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+  //  val rollNumberToNameMap = remember { mutableMapOf<Long , String>() }
+
+    val psitViewModel: PsitViewModel = hiltViewModel()
+
+    val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
@@ -80,7 +79,6 @@ fun ListItem( model: PersonModel,
     }
 
 
-
     // Simulating data loading delay with a coroutine
     LaunchedEffect(Unit) {
         // Simulate a delay of data loading
@@ -91,118 +89,117 @@ fun ListItem( model: PersonModel,
     }
 
 
-
     val shimmerColors = listOf(
-        Color.LightGray.copy(alpha = 0.6f),
-        Color.LightGray.copy(alpha = 0.2f),
-        Color.LightGray.copy(alpha = 0.6f),
+        Color.LightGray.copy(alpha = 0.6f) ,
+        Color.LightGray.copy(alpha = 0.2f) ,
+        Color.LightGray.copy(alpha = 0.6f) ,
     )
 
     val transition = rememberInfiniteTransition()
     val translateAnim = transition.animateFloat(
         initialValue = 0f ,
-        targetValue =  1000f,
+        targetValue = 1000f ,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = 1000,
+                durationMillis = 1000 ,
                 easing = FastOutSlowInEasing
             )
         ) , label = ""
     )
 
     val brush = Brush.linearGradient(
-        colors = shimmerColors,
-        start = Offset.Zero,
-        end = Offset(x=translateAnim.value,y=translateAnim.value)
+        colors = shimmerColors ,
+        start = Offset.Zero ,
+        end = Offset(x = translateAnim.value , y = translateAnim.value)
     )
 
     LaunchedEffect(Unit) {
-        if (isLoading) {
+        if (accessToken != null && isLoading) {
             val accessTokenValue = accessToken ?: return@LaunchedEffect
             val getStudentPost = GetStudentPost(model.rollNum)
-            psitViewModel.getStudent(accessTokenValue, getStudentPost)
+            psitViewModel.getStudent(accessTokenValue , getStudentPost)
         }
     }
 
+
     getStudentResponse?.let { response ->
-        Log.d("Get student" , "$response")
-        Log.d("Get student errors" , "${response.errors}")
-//        Log.d("Get Student Message" , "${response.message}")
-//        Log.d("Get Student msgs" , "${response.message?.messages}")
-//        Log.d("Get Student code" , response.message.code)
-//        Log.d("Get Student details" , response.message.detail)
+        model.name = response.responseData.name
+    }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically ,
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
+
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically ,
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+    ) {
+
+        val paddingModifier = Modifier.padding(10.dp)
+        Card(
+            elevation = CardDefaults.cardElevation(5.dp) , modifier = paddingModifier ,
+            shape = RoundedCornerShape(24.dp) ,
+            colors = CardDefaults.cardColors(Color(0xFF383841))
         ) {
-
-            val paddingModifier = Modifier.padding(10.dp)
-            Card(
-                elevation = CardDefaults.cardElevation(5.dp) , modifier = paddingModifier ,
-                shape = RoundedCornerShape(24.dp) ,
-                colors = CardDefaults.cardColors(Color(0xFF383841))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp) ,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp) ,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(
-                        checked = isSelected ,
-                        onCheckedChange = { checked ->
-                            onItemSelected(checked)
+                Checkbox(
+                    checked = isSelected ,
+                    onCheckedChange = { checked ->
+                        onItemSelected(checked)
 
-                        } ,
-                        colors = CheckboxDefaults.colors(
-                            checkmarkColor = Color.White ,
-                            checkedColor = Color.Red ,
-                            uncheckedColor = Color.White
-                        )
+                    } ,
+                    colors = CheckboxDefaults.colors(
+                        checkmarkColor = Color.White ,
+                        checkedColor = Color.Red ,
+                        uncheckedColor = Color.White
                     )
+                )
 
-                    Column(modifier = Modifier.padding(vertical = 10.dp)) {
-
-                        if (isLoading) {
-                            // Render shimmering effect or loading placeholder
-                            Spacer(
-                                modifier = Modifier
-                                    .height(28.dp)
-                                    .fillMaxWidth(0.9f)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(brush)
-                            )
-                        } else {
-                            Text(
-                                text = response.responseData.name ,
-                                fontSize = 18.sp ,
-                                fontWeight = FontWeight.SemiBold ,
-                                color = Color.White ,
-                                fontFamily = poppins
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.padding(3.dp))
+                Column(modifier = Modifier.padding(vertical = 10.dp)) {
 
 
+                    if (isLoading) {
+                        // Render shimmering effect or loading placeholder
+                        Spacer(
+                            modifier = Modifier
+                                .height(28.dp)
+                                .fillMaxWidth(0.8f)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(brush)
+                        )
 
+                    } else {
                         Text(
-                            text = model.rollNum.toString() ,
-                            fontSize = 14.sp ,
-                            fontWeight = FontWeight.Light ,
+                            text = model.name ,
+                            fontSize = 18.sp ,
+                            fontWeight = FontWeight.SemiBold ,
                             color = Color.White ,
                             fontFamily = poppins
                         )
-
                     }
+
+
+                    //   Spacer(modifier = Modifier.padding(3.dp))
+
+
+                    Text(
+                        text = model.rollNum.toString() ,
+                        fontSize = 14.sp ,
+                        fontWeight = FontWeight.Light ,
+                        color = Color.White ,
+                        fontFamily = poppins
+                    )
                 }
+            }
             }
         }
     }
-}
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
