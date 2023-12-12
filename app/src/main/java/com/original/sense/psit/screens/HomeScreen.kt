@@ -9,6 +9,7 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.NfcA
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +40,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -56,19 +58,31 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.original.sense.psit.API.PsitApi
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.StudentListViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.composable.ListDemo
 import com.original.sense.psit.composable.ReadyToTap
 import com.original.sense.psit.model.PersonModel
+import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 
@@ -85,6 +99,14 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     var dialogVisible by remember { mutableStateOf(false) }
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
 
+
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    accessToken?.let { str ->
+        access = accessToken.toString()
+    }
 
 
     val selectedItems = remember { mutableStateListOf<PersonModel>() }
@@ -146,7 +168,6 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
                 disableNfcForegroundDispatch(context, activity)
             }
         }
-
 
     }
 
@@ -233,23 +254,6 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
     }
 
 
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(
-//            text = "$outputJsonString" ,
-//            fontFamily = poppins ,
-//            fontSize = 7.sp ,
-//            color = Color.White,
-//            textAlign = TextAlign.Center
-//        )
-//
-//    }
-
-
     if(dialogVisible) {
         AlertDialog(
             onDismissRequest = { dialogVisible = false } ,
@@ -281,20 +285,15 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
 
     }
 
-    val intent = activity.intent
-    val action = intent.action
-    if (NfcAdapter.ACTION_TECH_DISCOVERED == action || NfcAdapter.ACTION_TAG_DISCOVERED == action) {
-       handleTechTag(intent,context)
-    }
-
-
 }
 
 
-
- fun handleTechTag(intent: Intent , context: Context) {
+  @OptIn(DelicateCoroutinesApi::class)
+  fun handleTechTag(intent: Intent , context: Context) {
     val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
     val nfca = NfcA.get(tag)
+
+
 
     if (nfca != null) {
         try {
@@ -305,9 +304,52 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
             // Read NFC-A tag data
             val tagData = nfca.tag.id
             if (tagData != null && tagData.size > 0) {
-                val tagId: String = byteArrayToHexString(tagData)
-                Toast.makeText(context,"$tagId",Toast.LENGTH_SHORT).show()
+                var tagId: String = byteArrayToHexString(tagData)
+                tagId = tagId.uppercase()
+                Toast.makeText(context, tagId ,Toast.LENGTH_SHORT).show()
                 Toast.makeText(context,"$tagData",Toast.LENGTH_SHORT).show()
+
+
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+                // Create an OkHttpClient with the interceptor
+
+                // Create an OkHttpClient with the interceptor
+                val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+
+                    val retrofit: Retrofit = Retrofit.Builder()
+                        .baseUrl("http://18.61.72.79/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(client)
+                        .build()
+
+                val apiService: PsitApi = retrofit.create(PsitApi::class.java)
+                val tagIdModel = GetPwdPost(tagId) // Create your model object
+
+                // Make the network call asynchronously
+                GlobalScope.launch(Dispatchers.IO) {
+                    try {
+                        val response = apiService.getChipPwd("Bearer $access",tagIdModel)
+                        if (response.body()?.errors == true) {
+                            Log.d("KodanKing","${response.body()}")
+                        } else {
+                            Log.d("KodanKing - No error","${response.body()}")
+                            val password = response.body()?.responseData?.password
+
+
+
+
+
+                        }
+                    } catch (e: Exception) {
+                        Log.d("KodanKing - Exception","$e")
+                    }
+                }
+
+
+
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -321,7 +363,58 @@ fun HomeScreen(navController: NavController,activity: Activity ) {
         }
     }
 }
- fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
+
+
+//private interface NfcDataCallback {
+//    fun onPasswordReceived(password: String?)
+//}
+
+//private fun sendNfcDataToServer(
+//    tagId: String ,
+//    callback: NfcDataCallback
+//) {
+//    val interceptor = HttpLoggingInterceptor()
+//    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+//
+//    // Create an OkHttpClient with the interceptor
+//    val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+//    val retrofit: Retrofit = Retrofit.Builder()
+//        .baseUrl("http://18.61.72.79/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .client(client)
+//        .build()
+//
+//
+//
+//
+//        val apiService: PsitApi = retrofit.create(PsitApi::class.java)
+//        val request = GetPwdPost(tagId)
+//
+//        val call: Call<GetPwdResponse> = apiService.getChipPwd(access, request)
+//        call.enqueue(object : Callback<GetPwdResponse> {
+//            override fun onResponse(call: Call<GetPwdResponse>, response: Response<GetPwdResponse>) {
+//                if (response.isSuccessful) {
+//                    val passwordResponse: GetPwdResponse? = response.body()
+//                    // Handle successful response
+//                    callback.onPasswordReceived(passwordResponse?.errors.to())
+//                } else {
+//                    // Handle unsuccessful response
+//                    callback.onPasswordReceived("No Response")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<GetPwdResponse>, t: Throwable) {
+//                // Handle failure or exception
+//                callback.onPasswordReceived("No Response")
+//            }
+//        })
+//
+//}
+//
+
+
+
+fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
     val intent = Intent(context, MainActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
