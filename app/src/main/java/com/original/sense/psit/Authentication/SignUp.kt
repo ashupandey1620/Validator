@@ -2,7 +2,6 @@ package com.original.sense.psit.Authentication
 
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -45,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -70,14 +71,8 @@ import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.composable.GradientBackground
-import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
-import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.ui.theme.poppins
-import androidx.compose.runtime.State
-import kotlinx.coroutines.flow.StateFlow
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 
 
 var name  = ""
@@ -91,6 +86,8 @@ var room = ""
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 
+
+    var dialogVisible by remember { mutableStateOf(false) }
     var valid : Boolean
     val psitViewModel : PsitViewModel = hiltViewModel()
 
@@ -102,6 +99,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         Log.d("Registerola -responseData","${response.responseData}")
         Log.d("Registerola -","${response.message?.email}")
         Log.d("Registerola -statusCode","${response.statusCode}")
+
+        dialogVisible = !response.error!!
     }
 
     Column(
@@ -138,9 +137,6 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
             .fillMaxWidth()
             .height(10.dp))
 
-
-
-
         name      =   SimpleOutlinedTextFieldName()
         userName  =   SimpleOutlinedTextFieldUsername()
         email     =   SimpleOutlinedTextFieldEmail()
@@ -162,7 +158,10 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                     userName,
                     phone.toLong(),
                     room) // Create LoginPost data class or object
+
                 psitViewModel.registerUser(signUpPost)
+
+                dialogVisible = true
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
@@ -179,6 +178,28 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
         AlreadyAccount(navController)
     }
+
+
+    if(dialogVisible) {
+        AlertDialog(
+                containerColor = Color(0xFF383841) ,
+                shape = RoundedCornerShape(30.dp) ,
+                onDismissRequest = { dialogVisible = false } ,
+                title = { Text("Registered!!", color = Color.White) } ,
+                text = { Text("You will receive a mail in some time with Credentials for Sign In", color = Color.White) } ,
+                confirmButton = {
+                    Button(
+                        onClick = {
+
+                        }
+                    ) {
+                        Text("Okay")
+                    }
+                } ,
+            )
+    }
+
+
 
 }
 
@@ -477,6 +498,9 @@ fun SimpleOutlinedTextFieldEmail(): String {
 
     return text
 }
+
+
+
 
 @OptIn(ExperimentalComposeUiApi::class , ExperimentalMaterial3Api::class)
 @Composable

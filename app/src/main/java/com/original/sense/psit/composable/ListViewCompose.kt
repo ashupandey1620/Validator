@@ -60,7 +60,7 @@ fun ListItem( model: PersonModel,
               ) {
 
 
-  //  val rollNumberToNameMap = remember { mutableMapOf<Long , String>() }
+
 
     val psitViewModel: PsitViewModel = hiltViewModel()
 
