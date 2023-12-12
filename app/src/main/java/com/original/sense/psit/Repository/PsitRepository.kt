@@ -11,7 +11,9 @@ import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
+import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class PsitRepository @Inject constructor(private val psitApi : PsitApi){
@@ -89,6 +91,27 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
         return try {
             val response = psitApi.getChipPwd("Bearer $accessToken",getPwdPost)
 
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            null
+        }
+    }
+
+    suspend fun logOut(refreshToken:String): LogoutResponse? {
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("refresh_token", refreshToken)
+            .build()
+
+
+        return try {
+            val response = psitApi.logOut(body)
             if (response.isSuccessful) {
                 response.body()
             } else {

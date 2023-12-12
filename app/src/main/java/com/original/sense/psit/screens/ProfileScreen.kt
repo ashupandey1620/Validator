@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,15 +19,14 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,11 +35,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
@@ -107,7 +109,7 @@ fun ProfileScreen(navController: NavController) {
                     .padding(top = 45.dp, start = 30.dp))
 
 
-            logOutCard()
+            logOutCard(navController)
         }
 
 
@@ -210,7 +212,9 @@ fun SupportAccountChangeTheme(mainText: String , onClick: () -> Unit) {
 
 
 @Composable
-fun logOutCard() {
+fun logOutCard(navController: NavController) {
+
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -228,12 +232,11 @@ fun logOutCard() {
             Column(modifier = Modifier.height(65.dp),
                 verticalArrangement = Arrangement.Center) {
 
-              logoutAccountItem(mainText = "Sign Out", onClick = {})
+              logoutAccountItem(mainText = "Sign Out",
+                  onClick = {},
+                  navController)
 
             }
-
-
-
 
         }
     }
@@ -287,16 +290,31 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun logoutAccountItem(mainText: String, onClick: () -> Unit) {
+fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: NavController) {
+
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
+
+    val psitViewModel: PsitViewModel = hiltViewModel()
+
+    val getLogout by psitViewModel.getStudent.observeAsState()
+
+    getLogout.let { getLogout->
+        Log.d("HAGEMARU","$getLogout")
+        if (getLogout != null) {
+            if (getLogout.errors){
+                //Show Toast Error
+            }
+            else{
+                navController.popBackStack()
+                navController.navigate("Auth_Graph")
+            }
+        }
+    }
 
     Card(onClick = {
-        /**
-         *
-         *
-         * LogOut
-         *
-         *
-         */
+        refreshToken?.let { psitViewModel.logOut(it) }
                    },
 
 

@@ -10,11 +10,11 @@ import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
+import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -34,11 +34,10 @@ interface PsitApi {
 
 
     @Headers("Content-Type: application/json")
-    @FormUrlEncoded
     @POST("/api/user/logout/")
     suspend fun logOut(
-        @Field("refresh_token") refreshToken: String
-    ):Response<TempRegister>
+        @Body body: MultipartBody
+    ):Response<LogoutResponse>
 
 
 

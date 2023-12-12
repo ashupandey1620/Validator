@@ -8,14 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
-import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
-import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
+import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,6 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PsitViewModel @Inject constructor(private val repository: PsitRepository, private val tokenStore: TokenStore) : ViewModel() {
+
+
 
     private val _registrationStatus = MutableLiveData<TempRegister?>()
     val registrationStatus: LiveData<TempRegister?> = _registrationStatus
@@ -37,8 +38,9 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _getStudent = MutableLiveData<GetStudentResponse?>()
     val getStudent: LiveData<GetStudentResponse?> = _getStudent
 
-    private val _getPwd = MutableLiveData<GetPwdResponse?>()
-    val getPwd: LiveData<GetPwdResponse?> = _getPwd
+
+    private val _logoutResponse = MutableLiveData<LogoutResponse?>()
+    val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
 
     fun registerUser(tempRegisterPost: TempRegisterPost) {
         viewModelScope.launch {
@@ -82,13 +84,13 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
         }
     }
 
-
-    fun getPassword(accessToken:String , getPwdPost: GetPwdPost) {
+    fun logOut(refreshToken:String) {
         viewModelScope.launch {
-            val result = repository.getPwdChip(accessToken,getPwdPost)
-            _getPwd.postValue(result)
+            val result = repository.logOut(refreshToken)
+            _logoutResponse.postValue(result)
         }
     }
+
 
 
 }
