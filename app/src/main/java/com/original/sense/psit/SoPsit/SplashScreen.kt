@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,9 +29,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
+import com.original.sense.psit.screens.access
 import kotlinx.coroutines.delay
 
 
@@ -40,16 +45,32 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
         Animatable(0f)
     }
 
+
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    accessToken?.let { str ->
+        access = accessToken.toString()
+    }
+
+
     LaunchedEffect(key1 = true) {
         alpha.animateTo(1f,
             animationSpec = tween(300)
         )
         delay(1000)
 
-        if (onBoardingIsFinished(context = context)) {
+        if(access!="") {
+            navController.popBackStack()
+            navController.navigate("HomeGraph")
+        }
+        else if (onBoardingIsFinished(context = context)) {
             navController.popBackStack()
             navController.navigate("signup_page")
-        } else {
+        }
+        else
+         {
             navController.popBackStack()
             navController.navigate("Onboarding")
         }
