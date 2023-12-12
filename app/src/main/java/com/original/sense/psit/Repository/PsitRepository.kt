@@ -109,7 +109,6 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             .addFormDataPart("refresh_token", refreshToken)
             .build()
 
-
         return try {
             val response = psitApi.logOut(body)
             if (response.isSuccessful) {
@@ -123,6 +122,4 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             null
         }
     }
-
-
 }
