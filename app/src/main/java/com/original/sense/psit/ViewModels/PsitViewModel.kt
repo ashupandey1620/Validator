@@ -9,7 +9,13 @@ import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostEditProfile
+import com.original.sense.psit.model.PostModel.PostSuspension
+import com.original.sense.psit.model.PostModel.PostTokenAccess
+import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
@@ -43,8 +49,10 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _postDelegation = MutableLiveData<ResponsePostDelegation?>()
     val postDelegationResponse : LiveData<ResponsePostDelegation?> = _postDelegation
 
+
     private val _postSuspension = MutableLiveData<ResponsePostDelegation?>()
     val postSuspension : LiveData<ResponsePostDelegation?> = _postSuspension
+
 
     private val _getDelegation = MutableLiveData<ResponseGetDelegation?>()
     val getDelegation : LiveData<ResponseGetDelegation?> = _getDelegation
@@ -52,11 +60,15 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _getSuspension = MutableLiveData<ResponseGetDelegation?>()
     val getSuspension : LiveData<ResponseGetDelegation?> = _getSuspension
 
+    private val _logoutResponse = MutableLiveData<LogoutResponse?>()
+    val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
+
     private val _updateUserProfileData = MutableLiveData<ResponseEditProfile?>()
     val updateUserProfileData : LiveData<ResponseEditProfile?> = _updateUserProfileData
 
     private val _getUserProfileData = MutableLiveData<UserProfileDetail?>()
     val getUserProfileData : LiveData<UserProfileDetail?> = _getUserProfileData
+
 
     private val _postTokenRefresh = MutableLiveData<ResponseTokenRefresh?>()
     val postTokenRefresh : LiveData<ResponseTokenRefresh?> = _postTokenRefresh
@@ -64,10 +76,63 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _postTokenVerify = MutableLiveData<ResponseTokenAccess?>()
     val postTokenVerify : LiveData<ResponseTokenAccess?> = _postTokenVerify
 
-    private val _logoutResponse = MutableLiveData<LogoutResponse?>()
-    val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
+
+    fun postTokenRefresh(postTokenRefresh: PostTokenRefresh) {
+        viewModelScope.launch {
+            val result = repository.postTokenRefresh(postTokenRefresh)
+            _postTokenRefresh.postValue(result)
+        }
+    }
+
+    fun postTokenVerify(postTokenAccess: PostTokenAccess) {
+        viewModelScope.launch {
+            val result = repository.postTokenVerify(postTokenAccess)
+            _postTokenVerify.postValue(result)
+        }
+    }
+
+    fun updateUserProfile(access: String,postEditProfile: PostEditProfile) {
+        viewModelScope.launch {
+            val result = repository.updateUserProfile(access,postEditProfile)
+            _updateUserProfileData.postValue(result)
+        }
+    }
+
+    fun getUserProfileData(access: String) {
+        viewModelScope.launch {
+            val result = repository.getUserProfileData(access)
+            _getUserProfileData.postValue(result)
+        }
+    }
+
+    fun getSuspension(access:String,getDelegationPost: getDelegationPost) {
+        viewModelScope.launch {
+            val result = repository.getSuspension(access,getDelegationPost)
+            _getSuspension.postValue(result)
+        }
+    }
+
+    fun getDelegation(access: String,getDelegationPost: getDelegationPost) {
+        viewModelScope.launch {
+            val result = repository.getDelegation(access,getDelegationPost)
+            _getDelegation.postValue(result)
+        }
+    }
+
+    fun postSuspension(access:String,postSuspension: PostSuspension) {
+        viewModelScope.launch {
+            val result = repository.postSuspension(access,postSuspension)
+            _postSuspension.postValue(result)
+        }
+    }
 
 
+    fun postDelegation(access:String,postDelegation: PostDelegation) {
+        viewModelScope.launch {
+            val result = repository.postDelegation(access,postDelegation)
+            _postDelegation.postValue(result)
+        }
+    }
 
 
 
