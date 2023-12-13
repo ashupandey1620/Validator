@@ -189,7 +189,7 @@ fun ListItem( model: PersonModel,
 
                     Text(
                         modifier = Modifier.clickable { 
-                            navController.navigate("detailedScreen" + "/{model.rollNum}")
+                            navController.navigate("detailedScreen" + "/${model.rollNum}")
                         },
                         text = model.rollNum.toString(),
                         fontSize = 14.sp ,

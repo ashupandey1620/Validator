@@ -202,8 +202,8 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
                     type = NavType.LongType
                 }
             )
-        ) {index->
-            detailScreen(navController,index.arguments?.getLong("index"))
+        ) {rollNum ->
+            detailScreen(navController,rollNum.arguments?.getLong("rollNum"))
         }
 
         composable(route = "changePassword") {
