@@ -143,8 +143,6 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
 
     val outputJsonString = JSONObject(jsonData)
 
-
-
     var nfcEnabled by remember { mutableStateOf(false) }
 
     if (show) {
@@ -240,14 +238,16 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                 fontFamily = poppins
             )
 
-            IconButton(modifier = Modifier.size(35.dp) , onClick = {
-                deleteSelectedItems()
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.delete) ,
-                    contentDescription = "delete Icon" ,
-                    tint = Color.White
-                )
+            if(!studentListViewModel.studentList.isEmpty()) {
+                IconButton(modifier = Modifier.size(35.dp) , onClick = {
+                    deleteSelectedItems()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete) ,
+                        contentDescription = "delete Icon" ,
+                        tint = Color.White
+                    )
+                }
             }
         }
 

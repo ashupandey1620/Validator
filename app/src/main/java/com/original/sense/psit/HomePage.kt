@@ -29,10 +29,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.original.sense.psit.ViewModels.StudentListViewModel
 import com.original.sense.psit.screens.AddScreen
 import com.original.sense.psit.screens.ChangePassword
@@ -194,8 +196,14 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
             StudentProfile(navController)
         }
 
-        composable(route = "detailedScreen") {
-            detailScreen(navController)
+        composable(route = "detailedScreen/{rollNum}",
+            arguments = listOf(
+                navArgument(name = "rollNum"){
+                    type = NavType.LongType
+                }
+            )
+        ) {index->
+            detailScreen(navController,index.arguments?.getLong("index"))
         }
 
         composable(route = "changePassword") {

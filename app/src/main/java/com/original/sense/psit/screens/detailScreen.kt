@@ -1,7 +1,6 @@
 package com.original.sense.psit.screens
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,14 +50,10 @@ import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
-import com.kizitonwose.calendar.core.OutDateStyle
 import com.kizitonwose.calendar.core.daysOfWeek
-import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.original.sense.psit.R
-import com.original.sense.psit.composable.AddStudentScreen
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.AssignedLectureModel
-import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -76,7 +71,7 @@ val assignedList = mutableListOf<AssignedLectureModel>().apply {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun detailScreen(navController: NavController) {
+fun detailScreen(navController: NavController , rollNum : Long?) {
 
 
     Column(modifier = Modifier
@@ -90,7 +85,7 @@ fun detailScreen(navController: NavController) {
             Arrangement.SpaceBetween
         ) {
 
-            FrontLobe(modifier = Modifier)
+            FrontLobe(modifier = Modifier,rollNum)
 
             Row {
 
@@ -412,7 +407,7 @@ fun ListItem2(model: AssignedLectureModel) {
 
 
 @Composable
-fun FrontLobe( modifier: Modifier) {
+fun FrontLobe(modifier: Modifier , rollNum: Long?) {
 
     Row (
         modifier
@@ -453,7 +448,7 @@ fun FrontLobe( modifier: Modifier) {
                 fontFamily = poppins ,
             )
 
-            Text(text = "2101641530046",
+            Text(text = rollNum.toString(),
                 color = Color.White,
                 fontSize = 14.sp,
                 fontFamily = poppins ,

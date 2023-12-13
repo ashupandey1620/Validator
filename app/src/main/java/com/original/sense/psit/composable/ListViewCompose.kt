@@ -189,12 +189,12 @@ fun ListItem( model: PersonModel,
 
                     Text(
                         modifier = Modifier.clickable { 
-                            navController.navigate("detailedScreen")
+                            navController.navigate("detailedScreen" + "/{model.rollNum}")
                         },
-                        text = model.rollNum.toString() ,
+                        text = model.rollNum.toString(),
                         fontSize = 14.sp ,
-                        fontWeight = FontWeight.Light ,
-                        color = Color.White ,
+                        fontWeight = FontWeight.Light,
+                        color = Color.White,
                         fontFamily = poppins
                     )
                 }
