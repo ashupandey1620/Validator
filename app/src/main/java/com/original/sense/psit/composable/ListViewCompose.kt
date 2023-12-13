@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.model.PersonModel
@@ -57,6 +59,7 @@ import kotlinx.coroutines.delay
 fun ListItem( model: PersonModel,
               isSelected: Boolean,
               onItemSelected: (Boolean) -> Unit,
+              navController: NavController
               ) {
 
 
@@ -136,9 +139,9 @@ fun ListItem( model: PersonModel,
 
         val paddingModifier = Modifier.padding(10.dp)
         Card(
-            elevation = CardDefaults.cardElevation(5.dp) , modifier = paddingModifier ,
+            elevation = CardDefaults.cardElevation(5.dp) , modifier = paddingModifier,
             shape = RoundedCornerShape(24.dp) ,
-            colors = CardDefaults.cardColors(Color(0xFF383841))
+            colors = CardDefaults.cardColors(Color(0xFF383841)),
         ) {
             Row(
                 modifier = Modifier
@@ -187,6 +190,9 @@ fun ListItem( model: PersonModel,
 
 
                     Text(
+                        modifier = Modifier.clickable { 
+                            navController.navigate("detailedScreen")
+                        },
                         text = model.rollNum.toString() ,
                         fontSize = 14.sp ,
                         fontWeight = FontWeight.Light ,
@@ -205,8 +211,10 @@ fun ListItem( model: PersonModel,
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListDemo(
-    selectedItems: MutableList<PersonModel>,
-    studentList: SnapshotStateList<PersonModel> = mutableStateListOf<PersonModel>()  ) {
+    selectedItems: MutableList<PersonModel> ,
+    studentList: SnapshotStateList<PersonModel> = mutableStateListOf<PersonModel>() ,
+    navController: NavController
+) {
 
     Column(
         modifier = Modifier
@@ -233,6 +241,7 @@ fun ListDemo(
                             selectedItems.remove(model)
                         }
                     },
+                    navController
 
                 )
             }

@@ -251,7 +251,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
             }
         }
 
-        ListDemo(selectedItems = selectedItems, studentList = studentListViewModel.studentList)
+        ListDemo(selectedItems = selectedItems, studentList = studentListViewModel.studentList,navController)
     }
 
 

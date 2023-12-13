@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
+import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.PostDelegation
 import com.original.sense.psit.model.PostModel.PostEditProfile
@@ -17,6 +18,7 @@ import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
+import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
@@ -76,6 +78,16 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _postTokenVerify = MutableLiveData<ResponseTokenAccess?>()
     val postTokenVerify : LiveData<ResponseTokenAccess?> = _postTokenVerify
 
+    private val _getStudent = MutableLiveData<GetStudentResponse?>()
+    val getStudent: LiveData<GetStudentResponse?> = _getStudent
+
+
+    fun getStudent(accessToken:String , getStudentPost: GetStudentPost) {
+        viewModelScope.launch {
+            val result = repository.getStudent(accessToken,getStudentPost)
+            _getStudent.postValue(result)
+        }
+    }
 
     fun postTokenRefresh(postTokenRefresh: PostTokenRefresh) {
         viewModelScope.launch {

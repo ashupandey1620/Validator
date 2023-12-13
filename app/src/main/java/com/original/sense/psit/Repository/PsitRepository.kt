@@ -138,7 +138,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun postDelegation(access:String,postDelegation: PostDelegation): ResponsePostDelegation? {
         return try {
-            val response = psitApi.postDelegation(access,postDelegation)
+            val response = psitApi.postDelegation("Bearer $access",postDelegation)
 
 
             if (response.isSuccessful) {
@@ -158,7 +158,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun postSuspension(access:String,postSuspension: PostSuspension): ResponsePostDelegation? {
         return try {
-            val response = psitApi.postSuspension(access,postSuspension)
+            val response = psitApi.postSuspension("Bearer $access",postSuspension)
 
 
             if (response.isSuccessful) {
@@ -179,7 +179,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun getDelegation(access: String,getDelegationPost: getDelegationPost): ResponseGetDelegation? {
         return try {
-            val response = psitApi.getDelegation(access,getDelegationPost)
+            val response = psitApi.getDelegation("Bearer $access",getDelegationPost)
 
 
             if (response.isSuccessful) {
@@ -200,7 +200,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun updateUserProfile(access: String,postEditProfile: PostEditProfile): ResponseEditProfile? {
         return try {
-            val response = psitApi.updateUserProfile(access,postEditProfile)
+            val response = psitApi.updateUserProfile("Bearer $access",postEditProfile)
 
 
             if (response.isSuccessful) {
@@ -221,7 +221,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun getUserProfileData(access: String): UserProfileDetail? {
         return try {
-            val response = psitApi.getUserProfileData(access)
+            val response = psitApi.getUserProfileData("Bearer $access")
 
 
             if (response.isSuccessful) {
@@ -280,7 +280,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
     suspend fun getSuspension(access: String,getDelegationPost: getDelegationPost): ResponseGetDelegation? {
         return try {
-            val response = psitApi.getDelegation(access,getDelegationPost)
+            val response = psitApi.getDelegation("Bearer $access",getDelegationPost)
 
 
             if (response.isSuccessful) {

@@ -32,6 +32,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,14 +49,23 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.StudentListViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.composable.SureToAssign
 import com.original.sense.psit.composable.SureToSuspend
+import com.original.sense.psit.model.PersonModel
+import com.original.sense.psit.model.PostModel.PostDelegation
 import com.original.sense.psit.ui.theme.poppins
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 var checkVSuspension : Boolean = false
 val alloted     =   BooleanArray(8)
@@ -67,7 +77,20 @@ var endDate     =   ""
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen(navController: NavController) {
+fun AddScreen(navController: NavController , studentListViewModel: StudentListViewModel) {
+
+
+    val psitViewModel: PsitViewModel = hiltViewModel()
+
+    val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
+
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    accessToken?.let { str ->
+        access = accessToken.toString()
+    }
+
+
 
 
     var show by remember {
@@ -266,6 +289,19 @@ fun AddScreen(navController: NavController) {
                                   Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
                                   Toast.makeText(context, description,Toast.LENGTH_LONG).show()
 
+
+                            val delegationPost = PostDelegation(
+                                description,
+                                null,
+                                generateIndexList(alloted) ,
+                                extractRollNumbers(studentListViewModel.studentList) ,
+                                title,
+                                getCurrentDate()
+                            ) // Create LoginPost data class or object
+
+                            psitViewModel.postDelegation(access,delegationPost)
+
+
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                         modifier = Modifier
@@ -334,6 +370,9 @@ fun AddScreen(navController: NavController) {
                             }
 
 
+
+
+
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                         modifier = Modifier
@@ -353,7 +392,33 @@ fun AddScreen(navController: NavController) {
 
         }
 
+
     }
+}
+
+
+
+fun getCurrentDate(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val currentDate = Calendar.getInstance().time
+    return dateFormat.format(currentDate)
+}
+
+fun extractRollNumbers(personList: List<PersonModel>): List<Long> {
+    return personList.map { it.rollNum }
+}
+
+
+fun generateIndexList(inputArray: BooleanArray): List<Int> {
+    val resultList = mutableListOf<Int>()
+
+    inputArray.forEachIndexed { index, value ->
+        if (value) {
+            resultList.add(index + 1)
+        }
+    }
+
+    return resultList
 }
 
 fun checkValidity(startDate: String , endDate: String , reasonDesc: String , context: Context): Boolean {

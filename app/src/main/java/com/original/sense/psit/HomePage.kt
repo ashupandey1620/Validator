@@ -176,7 +176,7 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
                 HomeScreen(navController,activity,studentListViewModel)
             }
             composable(route = "add") {
-                AddScreen(navController)
+                AddScreen(navController,studentListViewModel)
             }
             composable(route = "profile") {
                 ProfileScreen(navController)
