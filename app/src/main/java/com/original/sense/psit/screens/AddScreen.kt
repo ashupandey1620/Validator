@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -62,6 +63,7 @@ import com.original.sense.psit.composable.SureToAssign
 import com.original.sense.psit.composable.SureToSuspend
 import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -79,6 +81,7 @@ var endDate     =   ""
 @Composable
 fun AddScreen(navController: NavController , studentListViewModel: StudentListViewModel) {
 
+    val context: Context = LocalContext.current.applicationContext
 
     val psitViewModel: PsitViewModel = hiltViewModel()
 
@@ -86,12 +89,36 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
+    val responseDelegation by psitViewModel.getStudent.observeAsState()
+
+    val responseSuspend by psitViewModel.getStudent.observeAsState()
+
+
     accessToken?.let { str ->
         access = accessToken.toString()
     }
 
+    responseDelegation?.let { str ->
 
 
+
+
+
+
+
+
+    }
+
+    responseSuspend?.let { str ->
+
+
+
+
+
+
+
+
+    }
 
     var show by remember {
         mutableStateOf(false)
@@ -133,7 +160,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
     }
 
 
-    val context = LocalContext.current.applicationContext
+
 
     var unSelectedDelegation by remember { mutableStateOf(false) }
     var unSelectedSuspension by remember { mutableStateOf(true) }
@@ -254,6 +281,20 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                 }
             }
 
+
+
+
+            /**
+             *
+             *
+             * UnSelected Portion Below This
+             *
+             *
+             */
+
+
+
+
             if(!unSelectedDelegation) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
@@ -362,16 +403,22 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
                     Button(
                         onClick = {
-
                             checkVSuspension = checkValidity(startDate, endDate, reasonDesc,context)
 
+//                            if(checkVSuspension) {
+//                                show2 = !show2
+//                            }
+
                             if(checkVSuspension) {
-                                show2 = !show2
+                                val suspensionPost = PostSuspension(
+                                    reasonDesc ,
+                                    "2023-12-14" ,
+                                    extractRollNumbers(studentListViewModel.studentList) ,
+                                    "2023-12-16"
+                                    ) // Create LoginPost data class or object
+
+                                psitViewModel.postSuspension(access , suspensionPost)
                             }
-
-
-
-
 
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -440,40 +487,32 @@ fun checkValidity(startDate: String , endDate: String , reasonDesc: String , con
         return false
     }
 
-
-    val startDateArrayList = startDate.split("/")
-    val endDateArrayList   = endDate.split("/")
-
-    if( startDateArrayList.isEmpty()       ||
-        startDateArrayList.size!=3         &&
-        startDateArrayList[0].length!=2    &&
-        startDateArrayList[0].toInt()<=31  &&
-        startDateArrayList[1].length!=2    &&
-        startDateArrayList[1].toInt()<=12  &&
-        startDateArrayList[2].length!=4) {
-        Toast.makeText(context,"Date in wrong Format",Toast.LENGTH_LONG).show()
+    if(!isDateValid(startDate)){
+        Toast.makeText(context,"Start Date in Wrong Format",Toast.LENGTH_LONG).show()
         return false
     }
 
-    if( endDateArrayList.isEmpty()        ||
-        endDateArrayList.size!=3          &&
-        endDateArrayList[0].length!=2     &&
-        endDateArrayList[0].toInt()<=31   &&
-        endDateArrayList[1].length!=2     &&
-        endDateArrayList[1].toInt()<=12   &&
-        endDateArrayList[2].length!=4) {
-        Toast.makeText(context,"Date in wrong Format",Toast.LENGTH_LONG).show()
+    if(!isDateValid(endDate)){
+        Toast.makeText(context,"End Date in Wrong Format",Toast.LENGTH_LONG).show()
         return false
     }
-
-    Toast.makeText(context,"$startDateArrayList",Toast.LENGTH_LONG).show()
-
-    Toast.makeText(context,"$endDateArrayList",Toast.LENGTH_LONG).show()
-
-
 
     return true
 }
+
+
+fun isDateValid(dateString: String): Boolean {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    dateFormat.isLenient = false
+
+    return try {
+        dateFormat.parse(dateString)
+        true
+    } catch (e: Exception) {
+        false
+    }
+}
+
 
 @Composable
 fun DateStartEnd() {

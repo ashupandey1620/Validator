@@ -63,8 +63,6 @@ fun ListItem( model: PersonModel,
               ) {
 
 
-
-
     val psitViewModel: PsitViewModel = hiltViewModel()
 
     val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
