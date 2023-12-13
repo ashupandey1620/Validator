@@ -8,14 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
-import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
-import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
+import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
+import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
+import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
+import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
+import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,12 +39,38 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
-    private val _getStudent = MutableLiveData<GetStudentResponse?>()
-    val getStudent: LiveData<GetStudentResponse?> = _getStudent
 
+    private val _postDelegation = MutableLiveData<ResponsePostDelegation?>()
+    val postDelegationResponse : LiveData<ResponsePostDelegation?> = _postDelegation
+
+    private val _postSuspension = MutableLiveData<ResponsePostDelegation?>()
+    val postSuspension : LiveData<ResponsePostDelegation?> = _postSuspension
+
+    private val _getDelegation = MutableLiveData<ResponseGetDelegation?>()
+    val getDelegation : LiveData<ResponseGetDelegation?> = _getDelegation
+
+    private val _getSuspension = MutableLiveData<ResponseGetDelegation?>()
+    val getSuspension : LiveData<ResponseGetDelegation?> = _getSuspension
+
+    private val _updateUserProfileData = MutableLiveData<ResponseEditProfile?>()
+    val updateUserProfileData : LiveData<ResponseEditProfile?> = _updateUserProfileData
+
+    private val _getUserProfileData = MutableLiveData<UserProfileDetail?>()
+    val getUserProfileData : LiveData<UserProfileDetail?> = _getUserProfileData
+
+    private val _postTokenRefresh = MutableLiveData<ResponseTokenRefresh?>()
+    val postTokenRefresh : LiveData<ResponseTokenRefresh?> = _postTokenRefresh
+
+    private val _postTokenVerify = MutableLiveData<ResponseTokenAccess?>()
+    val postTokenVerify : LiveData<ResponseTokenAccess?> = _postTokenVerify
 
     private val _logoutResponse = MutableLiveData<LogoutResponse?>()
     val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
+
+
+
+
+
 
     fun registerUser(tempRegisterPost: TempRegisterPost) {
         viewModelScope.launch {
@@ -77,12 +107,7 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     }
 
 
-    fun getStudent(accessToken:String , getStudentPost: GetStudentPost) {
-        viewModelScope.launch {
-            val result = repository.getStudent(accessToken,getStudentPost)
-            _getStudent.postValue(result)
-        }
-    }
+
 
     fun logOut(refreshToken:String) {
         viewModelScope.launch {
