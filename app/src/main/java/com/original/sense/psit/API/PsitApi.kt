@@ -5,7 +5,10 @@ import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostEditProfile
 import com.original.sense.psit.model.PostModel.PostSuspension
+import com.original.sense.psit.model.PostModel.PostTokenAccess
+import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
@@ -14,12 +17,16 @@ import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
+import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
+import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -114,6 +121,31 @@ interface PsitApi {
         @Header("Authorization") access: String,
         @Body getDelegationPost: getDelegationPost
     ): Response<ResponseGetDelegation>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/user/editprofile/")
+    suspend fun updateUserProfile(
+        @Header("Authorization") access: String,
+        @Body postEditProfile: PostEditProfile
+    ): Response<ResponseEditProfile>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/user/profile/")
+    suspend fun getUserProfileData(
+        @Header("Authorization") access: String
+    ): Response<ResponseEditProfile>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/user/token/refresh/")
+    suspend fun postTokenRefresh(
+        @Body postTokenRefresh: PostTokenRefresh
+    ): Response<ResponseTokenRefresh>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/user/token/verify/")
+    suspend fun postTokenVerify(
+        @Body postTokenAccess: PostTokenAccess
+    ): Response<ResponseTokenAccess>
 
 
 }
