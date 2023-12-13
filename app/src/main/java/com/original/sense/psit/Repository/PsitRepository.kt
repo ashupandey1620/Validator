@@ -7,7 +7,10 @@ import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.PostDelegation
+import com.original.sense.psit.model.PostModel.PostEditProfile
 import com.original.sense.psit.model.PostModel.PostSuspension
+import com.original.sense.psit.model.PostModel.PostTokenAccess
+import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
@@ -15,9 +18,13 @@ import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
+import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
+import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
+import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -191,6 +198,86 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
 
 
+    suspend fun updateUserProfile(access: String,postEditProfile: PostEditProfile): ResponseEditProfile? {
+        return try {
+            val response = psitApi.updateUserProfile(access,postEditProfile)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("DINANATH - UpdateUserProfile",e.toString())
+            null
+        }
+    }
+
+
+
+    suspend fun getUserProfileData(access: String): UserProfileDetail? {
+        return try {
+            val response = psitApi.getUserProfileData(access)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("DINANATH - get User profile Data",e.toString())
+            null
+        }
+    }
+
+
+    suspend fun postTokenRefresh(postTokenRefresh: PostTokenRefresh): ResponseTokenRefresh? {
+        return try {
+            val response = psitApi.postTokenRefresh(postTokenRefresh)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("DINANATH - Post Token Refresh",e.toString())
+            null
+        }
+    }
+
+
+    suspend fun postTokenVerify(postTokenAccess: PostTokenAccess): ResponseTokenAccess? {
+        return try {
+            val response = psitApi.postTokenVerify(postTokenAccess)
+
+
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+
+                // Handle unsuccessful response (maybe return null or throw an exception)
+                null
+            }
+        } catch (e: Exception) {
+            // Handle exceptions here
+            Log.d("SHINCHAN - GET SUSPENSION",e.toString())
+            null
+        }
+    }
+
     suspend fun getSuspension(access: String,getDelegationPost: getDelegationPost): ResponseGetDelegation? {
         return try {
             val response = psitApi.getDelegation(access,getDelegationPost)
@@ -209,4 +296,6 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             null
         }
     }
+
+
 }

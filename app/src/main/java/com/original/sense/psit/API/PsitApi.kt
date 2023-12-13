@@ -23,6 +23,7 @@ import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
+import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -133,7 +134,7 @@ interface PsitApi {
     @GET("/api/user/profile/")
     suspend fun getUserProfileData(
         @Header("Authorization") access: String
-    ): Response<ResponseEditProfile>
+    ): Response<UserProfileDetail>
 
     @Headers("Content-Type: application/json")
     @GET("/api/user/token/refresh/")
