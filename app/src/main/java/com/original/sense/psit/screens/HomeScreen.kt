@@ -190,8 +190,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                 modifier = Modifier,
                 onSearchSubmit = { searchText ->
                     // Add the entered search text as a new item to the student list
-                    val newPersonModel = PersonModel(name = "", rollNum = searchText.toLong())
-                    studentListViewModel.addStudent(newPersonModel)
+                    studentListViewModel.addStudent(searchText.toLong())
                     Log.d("SHIVPARVATI",studentListViewModel.studentList.toList().toString())
                 })
 

@@ -89,6 +89,19 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
         }
     }
 
+    fun getStudent2(
+        accessToken: String ,
+        getStudentPost: GetStudentPost ,
+        studentListViewModel: StudentListViewModel
+    ) {
+        viewModelScope.launch {
+            val result = repository.getStudent(accessToken,getStudentPost)
+            if (result != null) {
+                studentListViewModel.updateStudentList(result.responseData.name,getStudentPost.id)
+            }
+        }
+    }
+
     fun postTokenRefresh(postTokenRefresh: PostTokenRefresh) {
         viewModelScope.launch {
             val result = repository.postTokenRefresh(postTokenRefresh)

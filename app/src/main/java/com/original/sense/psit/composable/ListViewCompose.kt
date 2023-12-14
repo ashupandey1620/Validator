@@ -116,15 +116,10 @@ fun ListItem( model: PersonModel,
     LaunchedEffect(Unit) {
         if (accessToken != null && isLoading) {
             val accessTokenValue = accessToken ?: return@LaunchedEffect
-            val getStudentPost = GetStudentPost(model.rollNum)
-            psitViewModel.getStudent(accessTokenValue , getStudentPost)
         }
     }
 
 
-    getStudentResponse?.let { response ->
-        model.name = response.responseData.name
-    }
 
 
 

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -20,77 +21,32 @@ import com.original.sense.psit.Authentication.ResendPasswordScreen
 import com.original.sense.psit.Authentication.SignInScreen
 import com.original.sense.psit.Authentication.SignUpPage
 import com.original.sense.psit.SoPsit.SplashScreen
+import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.StudentListViewModel
+import com.original.sense.psit.ViewModels.ViewModelFactory
 import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.screens.handleTechTag
 import com.original.sense.psit.ui.OnboardingScreen
 import com.original.sense.psit.ui.theme.SoPsitTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val studentListViewModel: StudentListViewModel by viewModels()
+    private lateinit var studentListViewModel: StudentListViewModel
+    private lateinit var psitViewModel: PsitViewModel // Remove the direct injection of PsitViewModel
 
-//    @Inject
-//    lateinit var psitAPI : PsitApi
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       // val context: Context = this
 
+        psitViewModel = ViewModelProvider(this).get(PsitViewModel::class.java) // Obtain PsitViewModel instance
 
-//        GlobalScope.launch {
-//
-//            val registerRequest = TempRegisterPost(
-//                "as1188221900066@gmail.com",
-//                "Ashutosh Pandey",
-//                "he23l56s8800i767r1141",
-//                8888880000,
-//                "A123"
-//            )
-//
-//            val response = psitAPI.tempRegister(registerRequest)
-//
-//            Log.d("KodanKing",response.isSuccessful.toString())
-//
-//            if (response.isSuccessful) {
-//
-//                val responseBody: TempRegister? = response.body()
-//
-//                Log.d("KodanKing-error",responseBody.toString())
-//
-//                responseBody?.let {
-//                    val error = it.error
-//                    val responseData = it.responseData
-//                    val status = it.statusCode
-//                    val emailError = it.message?.email
-//                    val phoneNumError = it.message?.phoneNo
-//                    val userNameError = it.message?.username
-//
-//
-//                    Log.d("KodanKing-error",error.toString())
-//                    Log.d("KodanKing-response-code-json",responseData.toString())
-//                    Log.d("KodanKing-status",status.toString())
-//
-//                    Log.d("KodanKing-emailError",emailError.toString())
-//                    Log.d("KodanKing-phoneNumber Error",phoneNumError.toString())
-//                    Log.d("KodanKing-usernameError",userNameError.toString())
-//
-//
-//
-//                }
-//            } else {
-//                val errorBody = response.errorBody()?.string()
-//                Log.d("KodanKing - errorBody ",errorBody.toString())
-//
-//
-//            }
-//
-//
-//        }
+        studentListViewModel = ViewModelProvider(this, ViewModelFactory(psitViewModel)).get(StudentListViewModel::class.java)
 
         setContent {
             SoPsitTheme {
@@ -153,7 +109,7 @@ class MainActivity : ComponentActivity() {
                 // Retrieve your ViewModel using Hilt or ViewModelProvider
                 Log.d("NARAYAN",studentId)
                 // Add the student ID to the studentList in ViewModel
-                studentListViewModel.addStudent(PersonModel("",studentId.toLong()))
+                studentListViewModel.addStudent(studentId.toLong())
 
                 Log.d("NARAYAN",studentListViewModel.studentList.toList().toString())
 

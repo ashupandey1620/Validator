@@ -5,14 +5,24 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.original.sense.psit.model.PersonModel
+import com.original.sense.psit.model.PostModel.GetStudentPost
+import com.original.sense.psit.model.ResponseModel.GetStudentResponse
+import com.original.sense.psit.screens.access
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class StudentListViewModel : ViewModel() {
+
+class StudentListViewModel @Inject constructor(private val psitViewModel: PsitViewModel) : ViewModel() {
     val studentList = mutableStateListOf<PersonModel>()
 
 
-    fun addStudent(student: PersonModel) {
-
-        studentList.add(student)
+    fun addStudent(rollNo: Long) {
+        val postStudent = GetStudentPost(rollNo)
+        psitViewModel.getStudent2(access,postStudent,this)
+    }
+    fun updateStudentList(name:String, rollNo: Long) {
+        val model = PersonModel(name,rollNo)
+        studentList.add(model)
     }
 
     fun removeStudent(student: SnapshotStateList<PersonModel>) {
