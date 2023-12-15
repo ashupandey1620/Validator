@@ -62,7 +62,7 @@ import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
 
-const val name = "Ashutosh Pandey"
+
 val assignedList = mutableListOf<AssignedLectureModel>().apply {
     add(AssignedLectureModel(1, "Raghav Tiwari"))
     add(AssignedLectureModel(2, "Ashutosh Pandey"))
@@ -71,7 +71,7 @@ val assignedList = mutableListOf<AssignedLectureModel>().apply {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun detailScreen(navController: NavController , rollNum : Long?) {
+fun detailScreen(navController: NavController , rollNum: Long? , name: String?) {
 
 
     Column(modifier = Modifier
@@ -85,7 +85,7 @@ fun detailScreen(navController: NavController , rollNum : Long?) {
             Arrangement.SpaceBetween
         ) {
 
-            FrontLobe(modifier = Modifier,rollNum)
+            FrontLobe(modifier = Modifier,rollNum,name)
 
             Row {
 
@@ -407,7 +407,7 @@ fun ListItem2(model: AssignedLectureModel) {
 
 
 @Composable
-fun FrontLobe(modifier: Modifier , rollNum: Long?) {
+fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String?) {
 
     Row (
         modifier
@@ -427,7 +427,9 @@ fun FrontLobe(modifier: Modifier , rollNum: Long?) {
                     Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "AS" ,
+                        text = if(name!=null)generateAbbreviation(name)
+                        else
+                            "Student",
                         color = Color.White ,
                         fontSize = 20.sp ,
                         fontFamily = poppins ,
@@ -442,11 +444,13 @@ fun FrontLobe(modifier: Modifier , rollNum: Long?) {
             .padding(horizontal = 5.dp),
             verticalArrangement = Arrangement.SpaceBetween) {
 
-            Text(text = name,
-                color = Color.White,
-                fontSize = 16.sp,
-                fontFamily = poppins ,
-            )
+            if (name != null) {
+                Text(text = name,
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontFamily = poppins ,
+                )
+            }
 
             Text(text = rollNum.toString(),
                 color = Color.White,

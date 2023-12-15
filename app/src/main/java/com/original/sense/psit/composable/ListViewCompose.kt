@@ -169,7 +169,9 @@ fun ListItem( model: PersonModel,
                         )
 
                     } else {
-                        Text(
+                        Text( modifier = Modifier.clickable {
+                            navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}")
+                        },
                             text = model.name ,
                             fontSize = 18.sp ,
                             fontWeight = FontWeight.SemiBold ,
@@ -184,7 +186,7 @@ fun ListItem( model: PersonModel,
 
                     Text(
                         modifier = Modifier.clickable { 
-                            navController.navigate("detailedScreen" + "/${model.rollNum}")
+                            navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}")
                         },
                         text = model.rollNum.toString(),
                         fontSize = 14.sp ,
