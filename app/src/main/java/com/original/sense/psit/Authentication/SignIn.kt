@@ -259,7 +259,6 @@ fun SignInSheet(navController: NavHostController) {
 
 
         if (!response.error){
-            navController.popBackStack()
             navController.navigate("HomeGraph")
             show=false
         }

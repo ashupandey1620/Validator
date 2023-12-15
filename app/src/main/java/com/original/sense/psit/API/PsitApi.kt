@@ -1,5 +1,6 @@
 package com.original.sense.psit.API
 
+import com.google.gson.annotations.SerializedName
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
@@ -12,6 +13,7 @@ import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
+import com.original.sense.psit.model.RefreshTokenRequest
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
@@ -27,9 +29,12 @@ import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 
 interface PsitApi {
@@ -45,11 +50,10 @@ interface PsitApi {
 //        @Field("roomno") roomno: String
 //    ):Response<TempRegister>
 
-
     @Headers("Content-Type: application/json")
     @POST("/api/user/logout/")
     suspend fun logOut(
-        @Body body: MultipartBody
+        @Body refreshToken: RefreshTokenRequest
     ):Response<LogoutResponse>
 
 

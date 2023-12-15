@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
@@ -47,7 +49,7 @@ import com.original.sense.psit.ui.theme.poppins
 
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavHostController) {
 
 
     val name = "Ashutosh Pandey "
@@ -233,7 +235,9 @@ fun logOutCard(navController: NavController) {
                 verticalArrangement = Arrangement.Center) {
 
               logoutAccountItem(mainText = "Sign Out",
-                  onClick = {},
+                  onClick = {
+
+                  },
                   navController)
 
             }
@@ -300,21 +304,27 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
 
     val getLogout by psitViewModel.getStudent.observeAsState()
 
+
+
     getLogout.let { getLogout->
         Log.d("HAGEMARU","$getLogout")
         if (getLogout != null) {
             if (getLogout.errors){
-                //Show Toast Error
+
             }
             else{
-                navController.popBackStack()
-                navController.navigate("Auth_Graph")
+
             }
         }
     }
 
     Card(onClick = {
         refreshToken?.let { psitViewModel.logOut(it) }
+
+
+        navController.navigate("Auth_Graph")
+
+
                    },
 
 

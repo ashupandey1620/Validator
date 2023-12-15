@@ -13,6 +13,7 @@ import com.original.sense.psit.model.PostModel.PostTokenAccess
 import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
+import com.original.sense.psit.model.RefreshTokenRequest
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
@@ -25,7 +26,9 @@ import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class PsitRepository @Inject constructor(private val psitApi : PsitApi){
@@ -117,21 +120,21 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     }
 
     suspend fun logOut(refreshToken:String): LogoutResponse? {
-        val body = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("refresh_token", refreshToken)
-            .build()
+        val request = RefreshTokenRequest(refreshToken)
 
         return try {
-            val response = psitApi.logOut(body)
+            val response = psitApi.logOut(request)
+            Log.d("okhttp",response.toString())
             if (response.isSuccessful) {
                 response.body()
             } else {
                 // Handle unsuccessful response (maybe return null or throw an exception)
+                Log.d("okhttp - error",response.toString())
                 null
             }
         } catch (e: Exception) {
             // Handle exceptions here
+            Log.d("okhttp - exception",e.toString())
             null
         }
     }
