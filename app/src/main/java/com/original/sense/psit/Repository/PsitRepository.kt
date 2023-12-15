@@ -41,12 +41,9 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             if (response.isSuccessful) {
                 response.body()
             } else {
-
-                // Handle unsuccessful response (maybe return null or throw an exception)
                 null
             }
         } catch (e: Exception) {
-            // Handle exceptions here
             Log.d("KodanKing-error",e.toString())
             null
         }
@@ -60,11 +57,9 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             if (response.isSuccessful) {
                 response.body()
             } else {
-                // Handle unsuccessful response (maybe return null or throw an exception)
                 null
             }
         } catch (e: Exception) {
-            // Handle exceptions here
             null
         }
     }
@@ -77,11 +72,9 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
                 response.body()
 
             } else {
-                // Handle unsuccessful response (maybe return null or throw an exception)
                 null
             }
         } catch (e: Exception) {
-            // Handle exceptions here
             null
         }
     }
@@ -94,30 +87,13 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             if (response.isSuccessful) {
                 response.body()
             } else {
-                // Handle unsuccessful response (maybe return null or throw an exception)
                 null
             }
         } catch (e: Exception) {
-            // Handle exceptions here
             null
         }
     }
 
-    suspend fun getPwdChip(accessToken:String , getPwdPost: GetPwdPost): GetPwdResponse? {
-        return try {
-            val response = psitApi.getChipPwd("Bearer $accessToken",getPwdPost)
-
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                // Handle unsuccessful response (maybe return null or throw an exception)
-                null
-            }
-        } catch (e: Exception) {
-            // Handle exceptions here
-            null
-        }
-    }
 
     suspend fun logOut(refreshToken:String): LogoutResponse? {
         val request = RefreshTokenRequest(refreshToken)

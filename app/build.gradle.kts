@@ -107,10 +107,12 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
+    //LiveData
     implementation ("androidx.compose.runtime:runtime-livedata:1.2.0-beta01")
 
     // ViewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
     // ViewModel utilities for Compose
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
@@ -118,13 +120,18 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
 
-
+    //moshi converter Library
     implementation ("com.squareup.moshi:moshi:1.12.0")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 
+    //Datastore Preferences
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
+    // Work Manager Library Android
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
 
+    // Hilt for work Manager
+    implementation ("androidx.hilt:hilt-work:1.1.0")
 
 }

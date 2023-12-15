@@ -57,7 +57,6 @@ interface PsitApi {
     ):Response<LogoutResponse>
 
 
-
     @Headers("Content-Type: application/json")
     @POST("/api/user/register/")
     suspend fun tempRegister(
@@ -140,17 +139,19 @@ interface PsitApi {
         @Header("Authorization") access: String
     ): Response<UserProfileDetail>
 
+
     @Headers("Content-Type: application/json")
-    @GET("/api/user/token/refresh/")
+    @POST("/api/user/token/verify/")
+    suspend fun postTokenVerify(
+        @Body postTokenAccess: PostTokenAccess
+    ): Response<ResponseTokenAccess>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/user/token/refresh/")
     suspend fun postTokenRefresh(
         @Body postTokenRefresh: PostTokenRefresh
     ): Response<ResponseTokenRefresh>
 
-    @Headers("Content-Type: application/json")
-    @GET("/api/user/token/verify/")
-    suspend fun postTokenVerify(
-        @Body postTokenAccess: PostTokenAccess
-    ): Response<ResponseTokenAccess>
 
 
 }

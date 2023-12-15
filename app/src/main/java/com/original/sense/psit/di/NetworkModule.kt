@@ -33,14 +33,12 @@ class NetworkModule {
     @Provides
     fun providesOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY) // Set your desired log level
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            // Add any other OkHttpClient configurations if needed
             .build()
     }
-
 
     @Singleton
     @Provides
@@ -51,20 +49,14 @@ class NetworkModule {
             .build()
     }
 
-    //https://special-space-goggles-x5w5pwx6gpphv6wq.github.dev/
-    //https://animated-capybara-45j74vw7w4gc7r5g-8000.app.github.dev/
-    //http://18.61.72.79/
-
     @Singleton
     @Provides
     fun providesPsitAPI(retrofit: Retrofit) : PsitApi{
         return retrofit.create(PsitApi::class.java)
     }
 
-
-
     @Module
-    @InstallIn(SingletonComponent::class) // Use appropriate component
+    @InstallIn(SingletonComponent::class)
     object DataStoreModule {
 
         @Provides
@@ -73,7 +65,6 @@ class NetworkModule {
             return PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("name") }
         }
     }
-
 
 }
 
