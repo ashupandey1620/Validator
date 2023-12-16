@@ -93,7 +93,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
 
             Row {
 
-                Box(modifier = Modifier.size(50.dp)) {
+                Box(modifier = Modifier.size(55.dp)) {
 
                     Image(
                         modifier = Modifier

@@ -196,7 +196,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
 
             Row {
 
-                Box(modifier = Modifier.size(50.dp)) {
+                Box(modifier = Modifier.size(55.dp)) {
 
                     Image(
                         modifier = Modifier
@@ -476,7 +476,7 @@ fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
 @Composable
 fun CircularNotificationButton(navController: NavController) {
     val context = LocalContext.current.applicationContext
-    Box (modifier = Modifier.size(50.dp)){
+    Box (modifier = Modifier.size(55.dp)){
             Image(modifier = Modifier
                 .clip(CircleShape)
                 .fillMaxSize()
@@ -509,9 +509,6 @@ fun CircularTapButton() {
     }
 }
 
-
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(
@@ -533,11 +530,13 @@ fun SearchView(
         } ,
         modifier
             .fillMaxWidth(0.6f)
-            .height(50.dp)
+            .height(60.dp)
             .clip(RoundedCornerShape(15.dp)) ,
 
         placeholder = {
-            Text(text = placeHolder , color = Color(0xFF222228))
+            Row {
+                Text(text = placeHolder, color = Color(0xFF222228),fontSize = 15.sp)
+            }
         } ,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.White ,
