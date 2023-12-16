@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,7 @@ import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.screens.access
+import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 
@@ -95,25 +99,26 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
     ) {
 
             Image(
-                painter = painterResource(id = R.drawable.ellipse_10) ,
+                painter = painterResource(id = R.drawable.pic) ,
                 contentDescription = null ,
                 contentScale = ContentScale.Fit ,
                 modifier = Modifier
-                    .height(120.dp)
-                    .fillMaxWidth(),
+                    .height(150.dp)
+                    .fillMaxWidth()
+                    .clip(CircleShape),
 
                 )
 
 
-        Spacer(modifier = Modifier.height(25.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             text = "SO PSIT",
-            fontFamily = FontFamily.Cursive ,
+            fontFamily = poppins ,
             modifier = Modifier.alpha(alpha.value),
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White
+            fontSize = 33.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF2c53a7)
         )
     }
 }

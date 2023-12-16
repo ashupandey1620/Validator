@@ -130,8 +130,10 @@ dependencies {
     // Work Manager Library Android
     implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
-
     // Hilt for work Manager
     implementation ("androidx.hilt:hilt-work:1.1.0")
+
+    //coil Library for compose
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 }

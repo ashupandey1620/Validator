@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -199,11 +200,11 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 exit  =  fadeOut()
             ) {
 
-                Box {
+                Row(horizontalArrangement = Arrangement.Center) {
                     Text(
                         text = "SO|PSIT" ,
                         fontFamily = poppins ,
-                        fontSize = 40.sp ,
+                        fontSize = 35.sp ,
                         fontWeight = FontWeight.Medium ,
                         color = Color.White ,
                     )
@@ -250,24 +251,27 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             , label = "Animating the width of the button",
             animationSpec = tween(2000))
 
-        Button(modifier = Modifier
-            .height(60.dp)
-            .width(width.value),onClick = {
+        Button(
+            modifier = Modifier
+                .height(60.dp)
+                .width(width.value) ,
+            colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
+            onClick = {
 
-            alignment = Alignment.Start
-            isVisible = !isVisible
-            clickCount2+=1
-            if (clickCount2<=3) {
-                clickCount += 1
-            }
+                alignment = Alignment.Start
+                isVisible = !isVisible
+                clickCount2 += 1
+                if (clickCount2 <= 3) {
+                    clickCount += 1
+                }
 
-            if(clickCount2==4){
-            onBoardingIsFinished(context = context)
-            navController.popBackStack()
-            navController.navigate("Auth_Graph")
-            }
-        },
-           ) {
+                if (clickCount2 == 4) {
+                    onBoardingIsFinished(context = context)
+                    navController.popBackStack()
+                    navController.navigate("Auth_Graph")
+                }
+            } ,
+        ) {
             
             Text(text = buttonText[clickCount],
                 fontFamily = poppins,

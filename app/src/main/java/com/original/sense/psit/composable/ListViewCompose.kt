@@ -155,14 +155,14 @@ fun ListItem( model: PersonModel,
                     )
                 )
 
-                Column(modifier = Modifier.padding(vertical = 10.dp)) {
+                Column(modifier = Modifier.padding(vertical = 5.dp)) {
 
 
                     if (isLoading) {
                         // Render shimmering effect or loading placeholder
                         Spacer(
                             modifier = Modifier
-                                .height(28.dp)
+                                .height(20.dp)
                                 .fillMaxWidth(0.8f)
                                 .clip(RoundedCornerShape(10.dp))
                                 .background(brush)
@@ -173,8 +173,8 @@ fun ListItem( model: PersonModel,
                             navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}")
                         },
                             text = model.name ,
-                            fontSize = 18.sp ,
-                            fontWeight = FontWeight.SemiBold ,
+                            fontSize = 14.sp ,
+                            fontWeight = FontWeight.ExtraBold ,
                             color = Color.White ,
                             fontFamily = poppins
                         )
@@ -237,11 +237,9 @@ fun ListDemo(
                         }
                     },
                     navController
-
                 )
             }
         }
-
         Spacer(modifier = Modifier.padding(horizontal = 50.dp))
     }
 }
