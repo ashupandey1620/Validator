@@ -136,4 +136,7 @@ dependencies {
     //coil Library for compose
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    //Github Fancy Toast
+    implementation ("io.github.shashank02051997:FancyToast:2.0.2")
+
 }

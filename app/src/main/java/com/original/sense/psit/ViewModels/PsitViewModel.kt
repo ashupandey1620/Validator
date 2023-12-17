@@ -48,12 +48,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
 
-    private val _postDelegation = MutableLiveData<ResponsePostDelegation?>()
-    val postDelegationResponse : LiveData<ResponsePostDelegation?> = _postDelegation
-
-
-    private val _postSuspension = MutableLiveData<ResponsePostDelegation?>()
-    val postSuspension : LiveData<ResponsePostDelegation?> = _postSuspension
 
 
     private val _getDelegation = MutableLiveData<ResponseGetDelegation?>()
@@ -141,21 +135,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
         viewModelScope.launch {
             val result = repository.getDelegation(access,getDelegationPost)
             _getDelegation.postValue(result)
-        }
-    }
-
-    fun postSuspension(access:String,postSuspension: PostSuspension) {
-        viewModelScope.launch {
-            val result = repository.postSuspension(access,postSuspension)
-            _postSuspension.postValue(result)
-        }
-    }
-
-
-    fun postDelegation(access:String,postDelegation: PostDelegation) {
-        viewModelScope.launch {
-            val result = repository.postDelegation(access,postDelegation)
-            _postDelegation.postValue(result)
         }
     }
 

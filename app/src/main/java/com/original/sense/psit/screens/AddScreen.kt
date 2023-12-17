@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -30,8 +31,10 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -55,6 +58,7 @@ import androidx.navigation.NavController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.AddScreenViewModel
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.StudentListViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
@@ -65,12 +69,16 @@ import com.original.sense.psit.model.PersonModel
 import com.original.sense.psit.model.PostModel.PostDelegation
 import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 var checkVSuspension : Boolean = false
-val alloted     =   BooleanArray(8)
+var alloted     =   BooleanArray(8)
 var title       =   ""
 var description =   ""
 var reasonDesc  =   ""
@@ -81,46 +89,63 @@ var endDate     =   ""
 @Composable
 fun AddScreen(navController: NavController , studentListViewModel: StudentListViewModel) {
 
+
+     checkVSuspension = false
+     alloted     =   BooleanArray(8)
+     title       =   ""
+     description =   ""
+     reasonDesc  =   ""
+     startDate   =   ""
+     endDate     =   ""
+
     val context: Context = LocalContext.current.applicationContext
 
-    val psitViewModel: PsitViewModel = hiltViewModel()
-
     val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
-
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
-    val responseDelegation by psitViewModel.getStudent.observeAsState()
+    val addScreenViewModel : AddScreenViewModel = hiltViewModel()
 
-    val responseSuspend by psitViewModel.getStudent.observeAsState()
+    val responseDelegation by addScreenViewModel.postDelegationResponse.observeAsState()
+    val responseSuspend by addScreenViewModel.postSuspension.observeAsState()
 
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
 
     accessToken?.let { str ->
         access = accessToken.toString()
     }
 
+    LaunchedEffect(responseDelegation, responseSuspend) {
+        responseDelegation?.let { response ->
+            if (!response.errors)
+            {
+                showToast.value = true
+                toastMessage.value = "Delegation: ${response.responseData.msg}"
+                delay(2000)
+                navController.popBackStack()
+                navController.navigate("add")
 
-    responseDelegation?.let { str ->
+            }
 
+        }
 
+        responseSuspend?.let { response ->
+            if (!response.errors)
+            {
+                navController.popBackStack()
+                navController.navigate("add")
+                showToast.value = true
+                toastMessage.value = "Delegation: ${response.responseData.msg}"
 
-
-
-
+            }
+        }
 
 
     }
 
-
-    responseSuspend?.let { str ->
-
-
-
-
-
-
-
-
-
+    if (showToast.value) {
+        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false // Reset toast state
     }
 
     var show by remember {
@@ -130,7 +155,6 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
     var show2 by remember {
         mutableStateOf(false)
     }
-
 
     if (show) {
         BottomSheetDialog(
@@ -328,10 +352,10 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
                     Button(
                         onClick = {
-                                  show = !show
-                                  Toast.makeText(context,title,Toast.LENGTH_LONG).show()
-                                  Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
-                                  Toast.makeText(context, description,Toast.LENGTH_LONG).show()
+//                                  show = !show
+//                                  Toast.makeText(context,title,Toast.LENGTH_LONG).show()
+//                                  Toast.makeText(context,alloted.contentToString(),Toast.LENGTH_LONG).show()
+//                                  Toast.makeText(context, description,Toast.LENGTH_LONG).show()
 
 
                             val delegationPost = PostDelegation(
@@ -343,7 +367,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                                 getCurrentDate()
                             ) // Create LoginPost data class or object
 
-                            psitViewModel.postDelegation(access,delegationPost)
+                            addScreenViewModel.postDelegation(access,delegationPost)
 
 
                         } ,
@@ -359,6 +383,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                         )
                     }
                 }
+                Spacer(modifier = Modifier.padding(50.dp))
 
             }else {
 
@@ -420,7 +445,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                                     "2023-12-16"
                                     ) // Create LoginPost data class or object
 
-                                psitViewModel.postSuspension(access , suspensionPost)
+                                addScreenViewModel.postSuspension(access , suspensionPost)
                             }
 
                         } ,
@@ -437,6 +462,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                     }
                 }
 
+                Spacer(modifier = Modifier.padding(50.dp))
 
             }
 
@@ -444,6 +470,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
 
     }
+
 }
 
 
@@ -1198,3 +1225,4 @@ fun CreateButton() {
 //    builder.create().show()
 //}
 //
+// Function to show Toast

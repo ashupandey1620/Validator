@@ -65,6 +65,8 @@ import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.API.PsitApi
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.HomeScreenViewModel
+import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.StudentListViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
@@ -95,13 +97,14 @@ val rollArray : ArrayList<Int> = ArrayList()
 fun HomeScreen(navController: NavController,activity: Activity ,studentListViewModel: StudentListViewModel) {
 
     val context = LocalContext.current.applicationContext
+
     var dialogVisible by remember { mutableStateOf(false) }
+
     val nfcAdapter by remember { mutableStateOf(NfcAdapter.getDefaultAdapter(context)) }
 
-  //  val studentList = remember { studentListViewModel.studentList }
-
-
     val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
@@ -109,39 +112,15 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
         access = accessToken.toString()
     }
 
-
     val selectedItems = remember { mutableStateListOf<PersonModel>() }
 
     var show by remember { mutableStateOf(false) }
-
-//    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
-//
-//    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
-//
-//    val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
-//
-//    Toast.makeText(context,"$accessToken.",Toast.LENGTH_SHORT).show()
-//    Toast.makeText(context,"$refreshToken",Toast.LENGTH_SHORT).show()
-
 
     // Function to delete selected items
     val deleteSelectedItems: () -> Unit = {
         studentListViewModel.removeStudent(selectedItems)
         selectedItems.clear()
     }
-
-
-
-    val jsonData = context.applicationContext.resources.openRawResource(
-        context.applicationContext.resources.getIdentifier(
-            "dataa",
-            "raw",
-            context.applicationContext.packageName
-        )
-    ).bufferedReader().use { it.readText() }
-
-
-    val outputJsonString = JSONObject(jsonData)
 
     var nfcEnabled by remember { mutableStateOf(false) }
 
@@ -250,7 +229,9 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
             }
         }
 
-        ListDemo(selectedItems = selectedItems, studentList = studentListViewModel.studentList,navController)
+        ListDemo(selectedItems = selectedItems,
+            studentList = studentListViewModel.studentList,
+            navController)
     }
 
 
@@ -265,7 +246,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                         // Open NFC settings
                         dialogVisible = false
                         val intent = Intent(Settings.ACTION_NFC_SETTINGS)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK // Set the FLAG_ACTIVITY_NEW_TASK flag
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         context.startActivity(intent)
                     }
                 ) {
@@ -311,10 +292,9 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                 val interceptor = HttpLoggingInterceptor()
                 interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-                // Create an OkHttpClient with the interceptor
-
-                // Create an OkHttpClient with the interceptor
-                val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+                val client: OkHttpClient = OkHttpClient.Builder()
+                    .addInterceptor(interceptor).
+                    build()
 
 
                     val retrofit: Retrofit = Retrofit.Builder()
@@ -324,9 +304,9 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                         .build()
 
                 val apiService: PsitApi = retrofit.create(PsitApi::class.java)
-                val tagIdModel = GetPwdPost(tagId) // Create your model object
+                val tagIdModel = GetPwdPost(tagId)
 
-                // Make the network call asynchronously
+
                 GlobalScope.launch(Dispatchers.IO) {
                     try {
                         val response = apiService.getChipPwd("Bearer $access",tagIdModel)
@@ -399,55 +379,6 @@ fun getOddIndexedCharacters(input: String): String {
     }
     return result.toString()
 }
-
-//private interface NfcDataCallback {
-//    fun onPasswordReceived(password: String?)
-//}
-
-//private fun sendNfcDataToServer(
-//    tagId: String ,
-//    callback: NfcDataCallback
-//) {
-//    val interceptor = HttpLoggingInterceptor()
-//    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-//
-//    // Create an OkHttpClient with the interceptor
-//    val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
-//    val retrofit: Retrofit = Retrofit.Builder()
-//        .baseUrl("http://18.61.72.79/")
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .client(client)
-//        .build()
-//
-//
-//
-//
-//        val apiService: PsitApi = retrofit.create(PsitApi::class.java)
-//        val request = GetPwdPost(tagId)
-//
-//        val call: Call<GetPwdResponse> = apiService.getChipPwd(access, request)
-//        call.enqueue(object : Callback<GetPwdResponse> {
-//            override fun onResponse(call: Call<GetPwdResponse>, response: Response<GetPwdResponse>) {
-//                if (response.isSuccessful) {
-//                    val passwordResponse: GetPwdResponse? = response.body()
-//                    // Handle successful response
-//                    callback.onPasswordReceived(passwordResponse?.errors.to())
-//                } else {
-//                    // Handle unsuccessful response
-//                    callback.onPasswordReceived("No Response")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<GetPwdResponse>, t: Throwable) {
-//                // Handle failure or exception
-//                callback.onPasswordReceived("No Response")
-//            }
-//        })
-//
-//}
-//
-
-
 
 fun enableNfcForegroundDispatch(context: Context,activity: Activity) {
     val intent = Intent(context, MainActivity::class.java)

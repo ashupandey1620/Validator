@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.ProfileScreenViewModel
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
@@ -50,6 +51,8 @@ import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun ProfileScreen(navController: NavHostController) {
+
+    val profileScreenViewModel : ProfileScreenViewModel  = hiltViewModel()
 
 
     val name = "Ashutosh Pandey "
@@ -204,7 +207,9 @@ fun SupportAccountChangeTheme(mainText: String , onClick: () -> Unit) {
             }
 
 
-           Switch(modifier = Modifier.size(20.dp).padding(end = 30.dp),checked = checkedState ,
+           Switch(modifier = Modifier
+               .size(20.dp)
+               .padding(end = 30.dp),checked = checkedState ,
                onCheckedChange = { checkedState = !checkedState },
                enabled = true,
            )

@@ -73,6 +73,7 @@ import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.ui.theme.poppins
+import com.shashank.sony.fancytoastlib.FancyToast
 
 
 var name  = ""
@@ -88,6 +89,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 
     var dialogVisible by remember { mutableStateOf(false) }
+
     var valid : Boolean
     val psitViewModel : PsitViewModel = hiltViewModel()
 
@@ -100,8 +102,20 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         Log.d("Registerola -","${response.message?.email}")
         Log.d("Registerola -statusCode","${response.statusCode}")
 
-        dialogVisible = !response.error!!
     }
+
+
+
+    if(registerResponse?.error == true)
+    {
+        Toast.makeText(context,"Error occurred",Toast.LENGTH_LONG).show()
+    }
+    else
+    {
+        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
+    }
+
+
 
     Column(
         modifier = Modifier
@@ -161,7 +175,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
                 psitViewModel.registerUser(signUpPost)
 
-                dialogVisible = true
+                Toast.makeText(context,"Clicked",Toast.LENGTH_LONG).show()
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
