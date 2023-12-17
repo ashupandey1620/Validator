@@ -2,6 +2,7 @@ package com.original.sense.psit.Repository
 
 import android.util.Log
 import com.original.sense.psit.API.PsitApi
+import com.original.sense.psit.model.ErrorHandling
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
@@ -83,14 +84,9 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun getStudent(accessToken:String , getStudentPost: GetStudentPost): GetStudentResponse? {
         return try {
             val response = psitApi.getStudent("Bearer $accessToken",getStudentPost)
-
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                null
-            }
+            response.body()
         } catch (e: Exception) {
-            null
+         null
         }
     }
 

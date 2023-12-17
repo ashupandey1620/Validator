@@ -1,9 +1,9 @@
 package com.original.sense.psit.model.ResponseModel
 
 data class GetStudentResponse(
-    val errors: Boolean,
-    val message: Message,
-    val responseData: ResponseData,
+    val error: Boolean,
+    val message: String,
+    val responseData: ResponseData?,
     val status_code: Int
 )
 

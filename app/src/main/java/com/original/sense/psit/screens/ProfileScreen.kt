@@ -314,7 +314,7 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
     getLogout.let { getLogout->
         Log.d("HAGEMARU","$getLogout")
         if (getLogout != null) {
-            if (getLogout.errors){
+            if (getLogout.error){
 
             }
             else{

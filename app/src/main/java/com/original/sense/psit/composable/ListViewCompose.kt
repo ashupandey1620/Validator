@@ -62,32 +62,20 @@ fun ListItem( model: PersonModel,
               navController: NavController
               ) {
 
-
-    val psitViewModel: PsitViewModel = hiltViewModel()
-
     val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
-    val getStudentResponse by psitViewModel.getStudent.observeAsState()
-
     var isLoading by remember { mutableStateOf(true) }
-
-
 
     accessToken?.let { str ->
         access = accessToken.toString()
     }
 
-
-    // Simulating data loading delay with a coroutine
     LaunchedEffect(Unit) {
-        // Simulate a delay of data loading
-        delay(2000) // Adjust the delay time as per your requirement
-        // After the delay, set isLoading to false to indicate data loading is complete
+        delay(2000)
         isLoading = false
     }
-
 
     val shimmerColors = listOf(
         Color.LightGray.copy(alpha = 0.6f) ,
@@ -96,6 +84,7 @@ fun ListItem( model: PersonModel,
     )
 
     val transition = rememberInfiniteTransition()
+
     val translateAnim = transition.animateFloat(
         initialValue = 0f ,
         targetValue = 1000f ,
@@ -118,10 +107,6 @@ fun ListItem( model: PersonModel,
             val accessTokenValue = accessToken ?: return@LaunchedEffect
         }
     }
-
-
-
-
 
     Row(
         verticalAlignment = Alignment.CenterVertically ,
@@ -157,33 +142,15 @@ fun ListItem( model: PersonModel,
 
                 Column(modifier = Modifier.padding(vertical = 5.dp)) {
 
-
-                    if (isLoading) {
-                        // Render shimmering effect or loading placeholder
-                        Spacer(
-                            modifier = Modifier
-                                .height(20.dp)
-                                .fillMaxWidth(0.8f)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(brush)
-                        )
-
-                    } else {
-                        Text( modifier = Modifier.clickable {
-                            navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}")
-                        },
+                     if(model.name!="Incorrect Student Id"&&model.name!="Internal Server Error"&&model.name!="Network Error"){
+                    Text( modifier = Modifier.clickable {
+                            navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}") },
                             text = model.name ,
                             fontSize = 14.sp ,
                             fontWeight = FontWeight.ExtraBold ,
                             color = Color.White ,
                             fontFamily = poppins
                         )
-                    }
-
-
-                    //   Spacer(modifier = Modifier.padding(3.dp))
-
-
                     Text(
                         modifier = Modifier.clickable { 
                             navController.navigate("detailedScreen" + "/${model.rollNum}"+"/${model.name}")
@@ -193,8 +160,35 @@ fun ListItem( model: PersonModel,
                         fontWeight = FontWeight.Light,
                         color = Color.White,
                         fontFamily = poppins
-                    )
+                    )}
+                    else{
+                         Text(
+                             text = model.name ,
+                             fontSize = 14.sp ,
+                             fontWeight = FontWeight.ExtraBold ,
+                             color = when (model.name) {
+                                 "Incorrect Student Id" -> { Color.Red}
+                                 "Internal Server Error" -> {Color.Yellow}
+                                 else -> {Color.Blue}
+                             } ,
+                             fontFamily = poppins
+                         )
+                         Text(
+                             text = model.rollNum.toString(),
+                             fontSize = 14.sp ,
+                             fontWeight = FontWeight.Light,
+                             color = when (model.name) {
+                                 "Incorrect Student Id" -> { Color.Red}
+                                 "Internal Server Error" -> {Color.Yellow}
+                                 else -> {Color.Blue}
+                             },
+                             fontFamily = poppins
+                         )
+
+                     }
                 }
+
+
             }
             }
         }

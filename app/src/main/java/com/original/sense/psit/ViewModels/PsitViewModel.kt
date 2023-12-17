@@ -90,9 +90,20 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     ) {
         viewModelScope.launch {
             val result = repository.getStudent(accessToken,getStudentPost)
-            if (result != null) {
-                studentListViewModel.updateStudentList(result.responseData.name,getStudentPost.id)
-            }
+            Log.e("okhttp","$result")
+
+                when (result?.status_code) {
+                    200 -> studentListViewModel.updateStudentList(result.responseData!!.name,getStudentPost.id)
+                    400 -> {
+                        studentListViewModel.updateStudentList("Incorrect Student Id",getStudentPost.id)
+                    }
+                    500 -> {
+                        studentListViewModel.updateStudentList("Internal Server Error",getStudentPost.id)
+                    }
+                    else -> {
+                        studentListViewModel.updateStudentList("Network Error",getStudentPost.id)
+                    }
+                }
         }
     }
 

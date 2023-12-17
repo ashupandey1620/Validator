@@ -87,10 +87,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 
-val info = arrayOf("2101641530046" ,"2101641530047","2101641530048","2101641530049")
-val sdtList : ArrayList<String> = ArrayList()
-val rollArray : ArrayList<Int> = ArrayList()
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +112,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
 
     var show by remember { mutableStateOf(false) }
 
-    // Function to delete selected items
+    //Lambda Functions
     val deleteSelectedItems: () -> Unit = {
         studentListViewModel.removeStudent(selectedItems)
         selectedItems.clear()
@@ -128,19 +124,18 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
         BottomSheetDialog(
             onDismissRequest = {
                 show = false
-            } ,
+            },
             properties = BottomSheetDialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false,
                 dismissWithAnimation = false
             )
-        ) {
+        ){
             ReadyToTap(context,activity)
         }
 
         DisposableEffect(Unit) {
                 enableNfcForegroundDispatch(context, activity)
-            // Cleanup on dispose
             onDispose {
                 disableNfcForegroundDispatch(context, activity)
             }
@@ -168,9 +163,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                 placeHolder = "Search" ,
                 modifier = Modifier,
                 onSearchSubmit = { searchText ->
-                    // Add the entered search text as a new item to the student list
                     studentListViewModel.addStudent(searchText.toLong())
-                    Log.d("SHIVPARVATI",studentListViewModel.studentList.toList().toString())
                 })
 
             Row {
@@ -296,7 +289,6 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                     .addInterceptor(interceptor).
                     build()
 
-
                     val retrofit: Retrofit = Retrofit.Builder()
                         .baseUrl("http://18.61.72.79/")
                         .addConverterFactory(GsonConverterFactory.create())
@@ -368,7 +360,6 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
         }
     }
 }
-
 
 fun getOddIndexedCharacters(input: String): String {
     val result = StringBuilder()
