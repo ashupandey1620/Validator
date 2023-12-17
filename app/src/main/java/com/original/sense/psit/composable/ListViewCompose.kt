@@ -196,7 +196,7 @@ fun ListItem( model: PersonModel,
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListDemo(
