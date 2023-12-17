@@ -169,7 +169,7 @@ fun ListItem( model: PersonModel,
                              color = when (model.name) {
                                  "Incorrect Student Id" -> { Color.Red}
                                  "Internal Server Error" -> {Color.Yellow}
-                                 else -> {Color.Blue}
+                                 else -> {Color.Magenta}
                              } ,
                              fontFamily = poppins
                          )
@@ -180,7 +180,7 @@ fun ListItem( model: PersonModel,
                              color = when (model.name) {
                                  "Incorrect Student Id" -> { Color.Red}
                                  "Internal Server Error" -> {Color.Yellow}
-                                 else -> {Color.Blue}
+                                 else -> {Color.Magenta}
                              },
                              fontFamily = poppins
                          )

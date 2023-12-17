@@ -37,13 +37,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun registerUser(tempRegisterPost: TempRegisterPost): TempRegister? {
         return try {
             val response = psitApi.tempRegister(tempRegisterPost)
-
-
-            if (response.isSuccessful) {
                 response.body()
-            } else {
-                null
-            }
         } catch (e: Exception) {
             Log.d("KodanKing-error",e.toString())
             null
@@ -54,12 +48,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
         return try {
             val response = psitApi.login(loginPost)
-
-            if (response.isSuccessful) {
                 response.body()
-            } else {
-                null
-            }
         } catch (e: Exception) {
             null
         }
@@ -68,13 +57,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun changePassword(accessToken:String,changePasswordPost: ChangePasswordPost): ChangePasswordResponse? {
         return try {
             val response = psitApi.changePassword("Bearer $accessToken",changePasswordPost)
-
-            if (response.isSuccessful) {
-                response.body()
-
-            } else {
-                null
-            }
+            response.body()
         } catch (e: Exception) {
             null
         }
@@ -115,18 +98,8 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun postDelegation(access:String,postDelegation: PostDelegation): ResponsePostDelegation? {
         return try {
             val response = psitApi.postDelegation("Bearer $access",postDelegation)
-
-
-            if (response.isSuccessful) {
                 response.body()
-            } else {
-
-                // Handle unsuccessful response (maybe return null or throw an exception)
-                null
-            }
         } catch (e: Exception) {
-            // Handle exceptions here
-            Log.d("SHINCHAN - POST DELEGATION",e.toString())
             null
         }
     }
@@ -135,18 +108,8 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun postSuspension(access:String,postSuspension: PostSuspension): ResponsePostDelegation? {
         return try {
             val response = psitApi.postSuspension("Bearer $access",postSuspension)
-
-
-            if (response.isSuccessful) {
                 response.body()
-            } else {
-
-                // Handle unsuccessful response (maybe return null or throw an exception)
-                null
-            }
         } catch (e: Exception) {
-            // Handle exceptions here
-            Log.d("SHINCHAN - POST SUSPENSION",e.toString())
             null
         }
     }
