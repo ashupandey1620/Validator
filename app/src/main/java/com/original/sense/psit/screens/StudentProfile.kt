@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -39,7 +41,8 @@ fun StudentProfile(navController: NavHostController) {
 
         Column(modifier = Modifier
             .fillMaxSize()
-            .background(brush = GradientBackground())) {
+            .background(brush = GradientBackground())
+            .verticalScroll(rememberScrollState())) {
 
             Row(modifier = Modifier
                 .fillMaxWidth()
@@ -78,6 +81,7 @@ fun StudentProfile(navController: NavHostController) {
             ClassStudent()
             Branch()
             TypeStudent()
+            Spacer(modifier = Modifier.padding(25.dp))
 
         }
     }

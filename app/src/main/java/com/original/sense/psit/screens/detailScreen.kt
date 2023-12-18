@@ -2,6 +2,11 @@ package com.original.sense.psit.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -89,7 +94,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
             Arrangement.SpaceBetween
         ) {
 
-            FrontLobe(modifier = Modifier,rollNum,name)
+            FrontLobe(modifier = Modifier,rollNum,name,navController)
 
             Row {
 
@@ -145,79 +150,89 @@ fun DateAndCalendar() {
 
     Column(modifier = Modifier
         .fillMaxWidth()
-        .wrapContentHeight()){
+        .wrapContentHeight()) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(20.dp) ,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(text = formattedDate,
-                color = Color.White,
-                fontSize = 24.sp,
+            Text(
+                text = formattedDate ,
+                color = Color.White ,
+                fontSize = 24.sp ,
                 fontFamily = poppins ,
             )
 
-            Icon(tint = Color.Gray,
-                contentDescription = "",
+            Icon(
+                tint = Color.Gray ,
+                contentDescription = "" ,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .size(20.dp)
                     .clickable {
                         show = !show
-                    },
+                    } ,
                 painter = painterResource(id = R.drawable.ic_right_arrow)
             )
 
         }
 
 
-        if(show){
+
+        AnimatedVisibility(
+            show ,
+            enter = expandVertically() ,
+            exit = slideOutHorizontally() + fadeOut()
+        ) {
+
             val currentMonth = remember { YearMonth.now() }
             val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
             val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
-           // val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
+            // val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
 
             val daysOfWeek = remember { daysOfWeek() }
 
             val state = rememberCalendarState(
-                startMonth = startMonth,
-                endMonth = endMonth,
-                firstVisibleMonth = currentMonth,
-              //  firstDayOfWeek = firstDayOfWeek
-                firstDayOfWeek = daysOfWeek.first(),
+                startMonth = startMonth ,
+                endMonth = endMonth ,
+                firstVisibleMonth = currentMonth ,
+                //  firstDayOfWeek = firstDayOfWeek
+                firstDayOfWeek = daysOfWeek.first() ,
                 //outDateStyle = OutDateStyle.EndOfGrid
             )
 
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)),
-                elevation = CardDefaults.cardElevation(10.dp),
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 20.dp) ,
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)) ,
+                elevation = CardDefaults.cardElevation(10.dp) ,
                 shape = RoundedCornerShape(30.dp)
             ) {
                 HorizontalCalendar(
-                        contentPadding = PaddingValues(8.dp) ,
-                        userScrollEnabled = false ,
-                        state = state ,
-                        dayContent = { Day(it) },
-                        monthHeader = {
-                            DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
-                        }
+                    contentPadding = PaddingValues(8.dp) ,
+                    userScrollEnabled = false ,
+                    state = state ,
+                    dayContent = { Day(it) } ,
+                    monthHeader = {
+                        DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
+                    }
 
-                    )
+                )
 
             }
         }
+    }
 
 
 
     }
 
-}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -291,12 +306,14 @@ fun LazyListCardRowItem(day: String) {
             ){
 
             Text(
-                text = stringResource(R.string._1) ,
+                text = "18" ,
                 color = Color.White ,
                 fontSize = 22.sp ,
                 fontFamily = poppins ,
                 fontWeight = FontWeight.Bold
             )
+
+
 
             Text(text = day,
                 color = Color.White,
@@ -313,8 +330,6 @@ fun LazyListCardRowItem(day: String) {
 
 @Composable
 fun AllowedLectures() {
-
-
 
     Column {
 
@@ -411,12 +426,15 @@ fun ListItem2(model: AssignedLectureModel) {
 
 
 @Composable
-fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String?) {
+fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String? , navController: NavController) {
 
     Row (
         modifier
             .fillMaxWidth(0.7f)
-            .height(50.dp)){
+            .height(50.dp)
+            .clickable {
+                navController.navigate("studentProfileInfo")
+            }){
 
         Box(modifier = Modifier.size(50.dp)) {
 
