@@ -1,5 +1,6 @@
 package com.original.sense.psit.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,6 +34,7 @@ import com.original.sense.psit.ui.theme.poppins
 @Composable
 fun StudentProfile(navController: NavHostController) {
 
+    val context: Context = LocalContext.current.applicationContext
 
     val name = "Ayush Agnihotri"
     Box (modifier = Modifier
@@ -75,12 +78,12 @@ fun StudentProfile(navController: NavHostController) {
             }
 
             CircularImage(name)
-            NameColumn()
-            CollegeRollNumber()
-            AktuRollNumber()
-            ClassStudent()
-            Branch()
-            TypeStudent()
+            NameColumn("Ashutosh Pandey")
+            CollegeRollNumber("31560")
+            AktuRollNumber("2101641530046")
+            ClassStudent("CS-3A-Elite")
+            Branch("CSE")
+            TypeStudent("Hostler")
             Spacer(modifier = Modifier.padding(25.dp))
 
         }
@@ -90,7 +93,7 @@ fun StudentProfile(navController: NavHostController) {
 }
 
 @Composable
-fun TypeStudent() {
+fun TypeStudent(type:String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -104,7 +107,7 @@ fun TypeStudent() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemMainScreen(mainText = "Day Scholar")
+        EditProfileItemMainScreen(mainText = type)
         {
 
         }
@@ -113,7 +116,7 @@ fun TypeStudent() {
 
 
 @Composable
-fun Branch() {
+fun Branch(branch:String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -127,7 +130,7 @@ fun Branch() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemMainScreen(mainText = "Computer Science and Engineering: Core")
+        EditProfileItemMainScreen(mainText = branch)
         {
 
         }
@@ -135,7 +138,7 @@ fun Branch() {
 }
 
 @Composable
-fun ClassStudent() {
+fun ClassStudent(batchClass:String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -149,7 +152,7 @@ fun ClassStudent() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemMainScreen(mainText = "CS-3A Elite")
+        EditProfileItemMainScreen(mainText = batchClass)
         {
 
         }
@@ -157,7 +160,7 @@ fun ClassStudent() {
 }
 
 @Composable
-fun AktuRollNumber() {
+fun AktuRollNumber(rollNum:String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -171,7 +174,7 @@ fun AktuRollNumber() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemMainScreen(mainText = "2101641530046")
+        EditProfileItemMainScreen(mainText = rollNum)
         {
 
         }
@@ -179,7 +182,7 @@ fun AktuRollNumber() {
 }
 
 @Composable
-fun CollegeRollNumber() {
+fun CollegeRollNumber(uid:String) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -193,7 +196,7 @@ fun CollegeRollNumber() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemMainScreen(mainText = "31560")
+        EditProfileItemMainScreen(mainText = uid)
         {
 
         }

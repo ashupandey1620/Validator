@@ -73,7 +73,7 @@ fun EditProfileScreen(navController: NavHostController) {
 
         CircularImage(name)
 
-        NameColumn()
+        NameColumn("Ashutosh Pandey")
 
         EmailColumn()
 
@@ -225,7 +225,7 @@ fun PhoneColumn() {
 
 
 @Composable
-fun NameColumn() {
+fun NameColumn(name:String) {
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -242,7 +242,7 @@ fun NameColumn() {
 //        Spacer(modifier = Modifier.padding(5.dp))
 
 
-        EditProfileItemMainScreen(mainText = "Ashutosh Pandey")
+        EditProfileItemMainScreen(mainText = name)
         {
 
         }
