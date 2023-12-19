@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
             .build()
 
         val periodicRequest = PeriodicWorkRequestBuilder<CustomWorker>(
-            repeatInterval = 1, // in minutes
+            repeatInterval = 18, // in minutes
             repeatIntervalTimeUnit = TimeUnit.MINUTES
         )
             .setConstraints(constraints)

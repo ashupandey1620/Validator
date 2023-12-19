@@ -6,6 +6,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -185,7 +187,7 @@ fun DateAndCalendar() {
         AnimatedVisibility(
             show ,
             enter = expandVertically() ,
-            exit = slideOutHorizontally() + fadeOut()
+            exit = shrinkVertically()
         ) {
 
             val currentMonth = remember { YearMonth.now() }
