@@ -1,14 +1,12 @@
 package com.original.sense.psit.screens
 
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,7 +37,10 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,11 +52,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
@@ -65,8 +66,12 @@ import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
+import com.original.sense.psit.ViewModels.DetailScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.AssignedLectureModel
+import com.original.sense.psit.model.PostModel.PermissionPost
+import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -85,6 +90,43 @@ val assignedList = mutableListOf<AssignedLectureModel>().apply {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun detailScreen(navController: NavController , rollNum: Long? , name: String?) {
+
+    val context = LocalContext.current.applicationContext
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+
+
+    val detailScreenViewModel: DetailScreenViewModel = hiltViewModel()
+
+
+
+    val responsePermission by detailScreenViewModel.getPermission.observeAsState()
+
+    LaunchedEffect(Unit){
+
+        val studentPost = rollNum?.let { listOf(it.toLong()) }?.let { PermissionPost(it) }
+
+        studentPost?.let { detailScreenViewModel.getPermission(accessToken.toString(), it) }
+    }
+
+    LaunchedEffect(responsePermission) {
+        responsePermission?.let { response ->
+            showToast.value = true
+            toastMessage.value = " ${response.error}"
+        }
+    }
+
+    if (showToast.value) {
+        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false // Reset toast state
+    }
+
+
+
+
 
 
     Column(modifier = Modifier
@@ -109,9 +151,6 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
                         modifier = Modifier
                             .clip(CircleShape)
                             .fillMaxSize()
-//                            .clickable {
-//                                show = true
-//                            }
                         ,
                                 painter = painterResource(id = R.drawable.tap) ,
                         contentDescription = ""
@@ -417,7 +456,7 @@ fun ListItem2(model: AssignedLectureModel) {
                         text = "Assigned By Mr. ${model.assignedBy}",
                         fontSize = 14.sp ,
                         fontWeight = FontWeight.Light ,
-                        color = Color.Green ,
+                        color = Color(0xFF7CEDED) ,
                         fontFamily = poppins
                     )
                 }

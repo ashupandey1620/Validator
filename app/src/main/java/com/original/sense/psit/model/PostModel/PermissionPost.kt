@@ -1,5 +1,5 @@
 package com.original.sense.psit.model.PostModel
 
-data class getDelegationPost(
-    val id: Long
+data class PermissionPost(
+    val id: List<Long>
 )

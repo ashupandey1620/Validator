@@ -21,6 +21,7 @@ import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
+import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
@@ -44,11 +45,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
-    private val _getDelegation = MutableLiveData<ResponseGetDelegation?>()
-    val getDelegation : LiveData<ResponseGetDelegation?> = _getDelegation
-
-    private val _getSuspension = MutableLiveData<ResponseGetDelegation?>()
-    val getSuspension : LiveData<ResponseGetDelegation?> = _getSuspension
 
     private val _logoutResponse = MutableLiveData<LogoutResponse?>()
     val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
@@ -135,19 +131,8 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
         }
     }
 
-    fun getSuspension(access:String,getDelegationPost: getDelegationPost) {
-        viewModelScope.launch {
-            val result = repository.getSuspension(access,getDelegationPost)
-            _getSuspension.postValue(result)
-        }
-    }
 
-    fun getDelegation(access: String,getDelegationPost: getDelegationPost) {
-        viewModelScope.launch {
-            val result = repository.getDelegation(access,getDelegationPost)
-            _getDelegation.postValue(result)
-        }
-    }
+
 
 
 

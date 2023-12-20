@@ -4,6 +4,7 @@ import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.model.PostModel.PermissionPost
 import com.original.sense.psit.model.PostModel.PostDelegation
 import com.original.sense.psit.model.PostModel.PostEditProfile
 import com.original.sense.psit.model.PostModel.PostSuspension
@@ -20,6 +21,7 @@ import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
+import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
@@ -103,10 +105,10 @@ interface PsitApi {
 
     @Headers("Content-Type: application/json")
     @POST("/api/permission/getpermission/")
-    suspend fun getDelegation(
+    suspend fun getPermission(
         @Header("Authorization") access: String,
-        @Body getDelegationPost: getDelegationPost
-    ): Response<ResponseGetDelegation>
+        @Body permissionPost: PermissionPost
+    ): Response<ResponsePermission>
 
     @Headers("Content-Type: application/json")
     @POST("/api/permission/addsuspension/")
@@ -115,12 +117,6 @@ interface PsitApi {
         @Body postSuspension: PostSuspension
     ): Response<ResponsePostDelegation>
 
-    @Headers("Content-Type: application/json")
-    @POST("/api/permission/getpermission/")
-    suspend fun getSuspension(
-        @Header("Authorization") access: String,
-        @Body getDelegationPost: getDelegationPost
-    ): Response<ResponseGetDelegation>
 
     @Headers("Content-Type: application/json")
     @POST("/api/user/editprofile/")
