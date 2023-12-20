@@ -69,6 +69,7 @@ import com.original.sense.psit.ViewModels.DateItem
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.ViewModels.DetailScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.model.AssignedLecture
 import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PostModel.PermissionPost
 import com.original.sense.psit.ui.theme.poppins
@@ -81,9 +82,8 @@ import java.util.Locale
 
 
 val assignedList = mutableListOf<AssignedLectureModel>().apply {
-    add(AssignedLectureModel(1, "Raghav Tiwari"))
-
-
+    add(AssignedLectureModel("8JEI9JDOESE0WR", listOf(1,2,3,4) ,"Raghav Tiwari"))
+    add(AssignedLectureModel("9DDJFNEIFDKDDJ", listOf(5,7,8) ,"Ashutosh Pandey"))
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -122,9 +122,6 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
         Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
         showToast.value = false // Reset toast state
     }
-
-
-
 
 
 
@@ -371,7 +368,22 @@ fun LazyListCardRowItem(dateItem: DateItem) {
 @Composable
 fun AllowedLectures() {
 
-    Column(modifier = Modifier.height(400.dp)) {
+
+    val assignedListFinal = mutableListOf<AssignedLecture>()
+
+// Loop through assignedList to duplicate entries based on the number of lectures
+    assignedList.forEach { assignedModel ->
+        assignedModel.lecture.forEach { lecture ->
+            val newAssignedModel = AssignedLecture(
+                permission_id = assignedModel.permission_id,
+                lecture = lecture,
+                assignedBy = assignedModel.assignedBy
+            )
+            assignedListFinal.add(newAssignedModel)
+        }
+    }
+
+    Column(modifier = Modifier.height(600.dp)) {
 
 
         Row(
@@ -399,13 +411,15 @@ fun AllowedLectures() {
 
         }
 
+
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(10.dp)
         ) {
-            items(assignedList) { model ->
+            items(assignedListFinal) { model ->
                 ListItem2(model = model)
             }
         }
@@ -414,14 +428,13 @@ fun AllowedLectures() {
 
 
 @Composable
-fun ListItem2(model: AssignedLectureModel) {
+fun ListItem2(model: AssignedLecture) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
     ) {
-
         var checkedState by remember { mutableStateOf(false) }
         val paddingModifier = Modifier.padding(10.dp)
         Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
@@ -441,6 +454,15 @@ fun ListItem2(model: AssignedLectureModel) {
                         uncheckedColor = Color.White) )
 
                 Column (modifier = Modifier.padding(vertical = 10.dp)){
+
+
+                    Text(
+                        text = model.permission_id ,
+                        fontSize = 12.sp ,
+                        fontWeight = FontWeight.SemiBold ,
+                        color = Color(0xFFF6F6F6) ,
+                        fontFamily = poppins
+                    )
 
                     Text(
                         text = "Lecture - ${model.lecture}",
