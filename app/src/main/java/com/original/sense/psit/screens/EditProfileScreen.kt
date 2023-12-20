@@ -22,18 +22,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.original.sense.psit.Authentication.phone
+import com.original.sense.psit.Authentication.room
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import java.util.Locale
@@ -41,7 +46,16 @@ import java.util.Locale
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
 
-    val name = remember { mutableStateOf("Ashutosh Pandey") }
+
+
+    val context = LocalContext.current.applicationContext
+    val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
+
+    val name by tokenStoreViewModel.readName.collectAsState()
+    val email by tokenStoreViewModel.readEmail.collectAsState()
+    val phoneNumber by tokenStoreViewModel.readPhoneNo.collectAsState()
+    val room by tokenStoreViewModel.readRoomNo.collectAsState()
+
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -73,15 +87,15 @@ fun EditProfileScreen(navController: NavHostController) {
 
         }
 
-        CircularImage(name.value.toString())
+        name?.let { CircularImage(it) }
 
-        NameColumn(name.value.toString())
+        name?.let { NameColumn(it) }
 
-        EmailColumn()
+        EmailColumn(email)
 
-        PhoneColumn()
+        PhoneColumn(phoneNumber)
 
-        RoomColumn()
+        RoomColumn(room)
 
     }
 
@@ -133,7 +147,7 @@ fun generateAbbreviation(name: String): String {
 }
 
 @Composable
-fun RoomColumn() {
+fun RoomColumn(room: String?) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -148,9 +162,11 @@ fun RoomColumn() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemEditScreen(mainText = "D-31")
-        {
+        room?.let {
+            EditProfileItemEditScreen(mainText = it)
+            {
 
+            }
         }
     }
 
@@ -204,7 +220,7 @@ fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit
 }
 
 @Composable
-fun PhoneColumn() {
+fun PhoneColumn(phoneNumber: String?) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -219,9 +235,11 @@ fun PhoneColumn() {
         )
 //        Spacer(modifier = Modifier.padding(5.dp))
 
-        EditProfileItemEditScreen(mainText = "8963784152")
-        {
+        phoneNumber?.let {
+            EditProfileItemEditScreen(mainText = it)
+            {
 
+            }
         }
     }
 
@@ -294,7 +312,7 @@ fun EditProfileItemMainScreen(mainText: String, onClick: () -> Unit) {
 
 
 @Composable
-fun EmailColumn() {
+fun EmailColumn(email: String?) {
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -311,9 +329,11 @@ fun EmailColumn() {
 //        Spacer(modifier = Modifier.padding(5.dp))
 
 
-        EditProfileItemMainScreen(mainText = "ashupandey1620@gmail.com")
-        {
+        email?.let {
+            EditProfileItemMainScreen(mainText = it)
+            {
 
+            }
         }
     }
 
