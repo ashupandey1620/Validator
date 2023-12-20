@@ -167,20 +167,20 @@ fun ListItem( model: PersonModel,
                              fontSize = 14.sp ,
                              fontWeight = FontWeight.ExtraBold ,
                              color = when (model.name) {
-                                 "Incorrect Student Id" -> { Color.Red}
-                                 "Internal Server Error" -> {Color.Yellow}
-                                 else -> {Color.Magenta}
+                                 "Incorrect Student Id" -> { Color.Yellow}
+                                 "Internal Server Error" -> {Color.Red}
+                                 else -> {Color.Red}
                              } ,
-                             fontFamily = poppins
-                         )
+                             fontFamily = poppins)
+
                          Text(
                              text = model.rollNum.toString(),
                              fontSize = 14.sp ,
                              fontWeight = FontWeight.Light,
                              color = when (model.name) {
-                                 "Incorrect Student Id" -> { Color.Red}
-                                 "Internal Server Error" -> {Color.Yellow}
-                                 else -> {Color.Magenta}
+                                 "Incorrect Student Id" -> { Color.Yellow}
+                                 "Internal Server Error" -> {Color.Red}
+                                 else -> {Color.Red}
                              },
                              fontFamily = poppins
                          )
