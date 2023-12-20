@@ -9,7 +9,7 @@ data class UserProfileDetail(
 data class ResponseDataProfileDetail(
     val email: String,
     val name: String,
-    val phoneno: Int,
+    val phoneno: Long,
     val roomno: String,
     val username: String
 )

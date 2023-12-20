@@ -44,9 +44,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
-
-
-
     private val _getDelegation = MutableLiveData<ResponseGetDelegation?>()
     val getDelegation : LiveData<ResponseGetDelegation?> = _getDelegation
 

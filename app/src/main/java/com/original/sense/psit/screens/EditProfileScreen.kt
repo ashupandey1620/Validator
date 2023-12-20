@@ -326,8 +326,6 @@ fun EmailColumn(email: String?) {
             fontSize = 20.sp ,
             fontFamily = poppins ,
         )
-//        Spacer(modifier = Modifier.padding(5.dp))
-
 
         email?.let {
             EditProfileItemMainScreen(mainText = it)
