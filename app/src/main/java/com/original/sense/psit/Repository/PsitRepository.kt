@@ -25,6 +25,7 @@ import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
+import com.original.sense.psit.model.ResponseModel.ResposneFullDetails
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import okhttp3.MediaType.Companion.toMediaType
@@ -37,7 +38,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun registerUser(tempRegisterPost: TempRegisterPost): TempRegister? {
         return try {
             val response = psitApi.tempRegister(tempRegisterPost)
-                response.body()
+            response.body()
         } catch (e: Exception) {
             Log.d("KodanKing-error",e.toString())
             null
@@ -48,7 +49,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
         return try {
             val response = psitApi.login(loginPost)
-                response.body()
+            response.body()
         } catch (e: Exception) {
             null
         }
@@ -70,6 +71,15 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             response.body()
         } catch (e: Exception) {
          null
+        }
+    }
+
+    suspend fun getFullDetails(accessToken:String , getStudentPost: GetStudentPost): ResposneFullDetails? {
+        return try {
+            val response = psitApi.getFullDetails("Bearer $accessToken",getStudentPost)
+            response.body()
+        } catch (e: Exception) {
+            null
         }
     }
 
@@ -98,7 +108,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun postDelegation(access:String,postDelegation: PostDelegation): ResponsePostDelegation? {
         return try {
             val response = psitApi.postDelegation("Bearer $access",postDelegation)
-                response.body()
+            response.body()
         } catch (e: Exception) {
             null
         }
@@ -108,7 +118,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun postSuspension(access:String,postSuspension: PostSuspension): ResponsePostDelegation? {
         return try {
             val response = psitApi.postSuspension("Bearer $access",postSuspension)
-                response.body()
+            response.body()
         } catch (e: Exception) {
             null
         }

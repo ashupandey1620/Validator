@@ -22,6 +22,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +41,7 @@ import java.util.Locale
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
 
-    val name = stringResource(R.string.ashutosh_pandey)
+    val name = remember { mutableStateOf("Ashutosh Pandey") }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -71,9 +73,9 @@ fun EditProfileScreen(navController: NavHostController) {
 
         }
 
-        CircularImage(name)
+        CircularImage(name.value.toString())
 
-        NameColumn("Ashutosh Pandey")
+        NameColumn(name.value.toString())
 
         EmailColumn()
 
@@ -120,7 +122,9 @@ fun CircularImage(namee: String) {
 fun generateAbbreviation(name: String): String {
     val words = name.split(" ")
 
-    if (words.size == 1) {
+    if (words.isEmpty() || name.isEmpty())
+        return "NA"
+    else if (words.size == 1) {
         return words[0].substring(0, 2).uppercase(Locale.getDefault())
     } else {
         return words[0].substring(0, 1).uppercase(Locale.getDefault()) + words[words.size-1].substring(0, 1)

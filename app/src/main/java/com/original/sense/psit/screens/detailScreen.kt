@@ -28,8 +28,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -76,8 +78,8 @@ import java.util.Locale
 
 val assignedList = mutableListOf<AssignedLectureModel>().apply {
     add(AssignedLectureModel(1, "Raghav Tiwari"))
-    add(AssignedLectureModel(2, "Ashutosh Pandey"))
-    add(AssignedLectureModel(3, "Sanat Kumar Mishra"))
+
+
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -88,6 +90,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())
+        .verticalScroll(rememberScrollState())
         ) {
         Row(
             modifier = Modifier
@@ -126,8 +129,6 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
         DateLazyList()
 
         AllowedLectures()
-
-
 
     }
 
@@ -333,7 +334,7 @@ fun LazyListCardRowItem(day: String) {
 @Composable
 fun AllowedLectures() {
 
-    Column {
+    Column(modifier = Modifier.height(400.dp)) {
 
 
         Row(
@@ -435,7 +436,7 @@ fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String? , navControlle
             .fillMaxWidth(0.7f)
             .height(50.dp)
             .clickable {
-                navController.navigate("studentProfileInfo")
+                navController.navigate("studentProfileInfo"+"/${rollNum}")
             }){
 
         Box(modifier = Modifier.size(50.dp)) {

@@ -1,6 +1,7 @@
 package com.original.sense.psit.screens
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,26 +18,83 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.StudentDetailsViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.delay
 
 
 @Composable
-fun StudentProfile(navController: NavHostController) {
+fun StudentProfile(navController: NavHostController , rollNum: Long?) {
 
     val context: Context = LocalContext.current.applicationContext
 
-    val name = "Ayush Agnihotri"
+    val studentDetailsViewModel:StudentDetailsViewModel = hiltViewModel()
+    val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
+    val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    val responseStudentDetails by studentDetailsViewModel.studentDetails.observeAsState()
+
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
+
+    val name = remember { mutableStateOf("* * * *") }
+    val uid = remember { mutableStateOf("* * * *") }
+    val aktu = remember { mutableStateOf("* * * *") }
+    val classe = remember { mutableStateOf("* * * *") }
+    val branch = remember { mutableStateOf("* * * *") }
+    val type = remember { mutableStateOf("* * * *") }
+
+
+
+    LaunchedEffect(Unit){
+        val studentPost = rollNum?.let { GetStudentPost(it) }
+        accessToken?.let {
+            if (studentPost != null) {
+                studentDetailsViewModel.getStudentDetails(it ,studentPost)
+            }
+        }
+    }
+
+    LaunchedEffect(responseStudentDetails) {
+        responseStudentDetails?.let { response ->
+            if (!response.error) {
+                showToast.value = true
+                toastMessage.value = " ${response.responseData.student_id}"
+                name.value = response.responseData.name
+                uid.value = response.responseData.student_id.toString()
+                aktu.value = response.responseData.roll_no.toString()
+                classe.value = response.responseData.section
+                branch.value = response.responseData.branch
+                type.value = response.responseData.type
+            }
+        }
+    }
+
+    if (showToast.value) {
+        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false // Reset toast state
+    }
+
+
     Box (modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())){
@@ -77,13 +135,13 @@ fun StudentProfile(navController: NavHostController) {
 
             }
 
-            CircularImage(name)
-            NameColumn("Ashutosh Pandey")
-            CollegeRollNumber("31560")
-            AktuRollNumber("2101641530046")
-            ClassStudent("CS-3A-Elite")
-            Branch("CSE")
-            TypeStudent("Hostler")
+            CircularImage(name.value.toString())
+            NameColumn(name.value.toString())
+            CollegeRollNumber(uid.value.toString())
+            AktuRollNumber(aktu.value.toString())
+            ClassStudent(classe.value.toString())
+            Branch(branch.value.toString())
+            TypeStudent(type.value.toString())
             Spacer(modifier = Modifier.padding(25.dp))
 
         }
@@ -194,7 +252,6 @@ fun CollegeRollNumber(uid:String) {
             fontSize = 20.sp,
             fontFamily = poppins,
         )
-//        Spacer(modifier = Modifier.padding(5.dp))
 
         EditProfileItemMainScreen(mainText = uid)
         {

@@ -192,8 +192,17 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
             EditProfileScreen(navController)
         }
 
-        composable(route = "studentProfileInfo") {
-            StudentProfile(navController)
+        composable(route = "studentProfileInfo/{rollNum}",
+            arguments = listOf(
+                navArgument(name = "rollNum"){
+                    type = NavType.LongType
+                },
+            ))
+             { rollNum ->
+            StudentProfile(
+                navController ,
+                rollNum.arguments?.getLong("rollNum")
+            )
         }
 
         composable(route = "detailedScreen/{rollNum}/{name}",

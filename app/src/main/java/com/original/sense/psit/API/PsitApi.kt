@@ -19,11 +19,13 @@ import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
+import com.original.sense.psit.model.ResponseModel.ResponseDataFullDetails
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
+import com.original.sense.psit.model.ResponseModel.ResposneFullDetails
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
 import okhttp3.MultipartBody
@@ -151,6 +153,14 @@ interface PsitApi {
     suspend fun postTokenRefresh(
         @Body postTokenRefresh: PostTokenRefresh
     ): Response<ResponseTokenRefresh>
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/student/getfulldetails/")
+    suspend fun getFullDetails(
+        @Header("Authorization") access: String,
+        @Body getStudentPost: GetStudentPost
+    ): Response<ResposneFullDetails>
 
 
 
