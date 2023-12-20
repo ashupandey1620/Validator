@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
+import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PostModel.PermissionPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.ResponseModel.ResponseDataPermission
@@ -26,6 +27,12 @@ class DetailScreenViewModel @Inject constructor(
     private val repository: PsitRepository ,
     private val tokenStore: TokenStore
 ): ViewModel() {
+
+
+    val assignedList = mutableListOf<AssignedLectureModel>().apply {
+        add(AssignedLectureModel("8JEI9JDOESE0WR", listOf(1,2,3,4) ,"Raghav Tiwari"))
+        add(AssignedLectureModel("9DDJFNEIFDKDDJ", listOf(5,7,8) ,"Ashutosh Pandey"))
+    }
 
 
     private val _getPermission = MutableLiveData<ResponsePermission?>()

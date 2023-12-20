@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -299,71 +300,73 @@ fun Day(day: CalendarDay) {
         )
     }
 }
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
-    
+    var selectedIndex by remember { mutableStateOf(-1) }
 
-
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()) {
-
-        LazyRow(){
-            items(detailScreenViewModel.generateNextSevenDays()){ item ->
-
-                LazyListCardRowItem(item)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        LazyRow {
+            itemsIndexed(detailScreenViewModel.generateNextSevenDays()) { index, item ->
+                LazyListCardRowItem(
+                    item,
+                    isSelected = selectedIndex == index,
+                    onItemClicked = {
+                        selectedIndex = index
+                    }
+                )
             }
-
         }
-
     }
-
 }
 
-
 @Composable
-fun LazyListCardRowItem(dateItem: DateItem) {
+fun LazyListCardRowItem(
+    dateItem: DateItem,
+    isSelected: Boolean,
+    onItemClicked: () -> Unit
+) {
+    val color = if (isSelected) Color(0xFF3068de) else Color(0xFF383841)
 
-    Card(modifier = Modifier
-        .padding(10.dp)
-        .height(120.dp)
-        .aspectRatio(0.5f),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)),
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .height(120.dp)
+            .aspectRatio(0.5f)
+            .clickable(onClick = onItemClicked),
+        colors = CardDefaults.cardColors(containerColor = color),
         elevation = CardDefaults.cardElevation(10.dp),
         shape = RoundedCornerShape(35.dp)
-    ){
-
-        Column (modifier = Modifier
-            .padding(10.dp)
-            .fillMaxSize(),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
-            ){
-
+        ) {
             Text(
-                text = dateItem.date ,
-                color = Color.White ,
-                fontSize = 22.sp ,
-                fontFamily = poppins ,
+                text = dateItem.date,
+                color = Color.White,
+                fontSize = 22.sp,
+                fontFamily = poppins,
                 fontWeight = FontWeight.Bold
             )
 
-
-
-            Text(text = dateItem.day.substring(0,3),
+            Text(
+                text = dateItem.day.substring(0, 3),
                 color = Color.White,
                 fontSize = 15.sp,
-                fontFamily = poppins ,
+                fontFamily = poppins
             )
-
         }
-
     }
-
-    
 }
+
 
 @Composable
 fun AllowedLectures() {
