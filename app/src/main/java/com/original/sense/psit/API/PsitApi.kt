@@ -1,6 +1,5 @@
 package com.original.sense.psit.API
 
-import com.google.gson.annotations.SerializedName
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
@@ -19,7 +18,6 @@ import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
-import com.original.sense.psit.model.ResponseModel.ResponseDataFullDetails
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
@@ -28,15 +26,11 @@ import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.ResposneFullDetails
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
-import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 
 interface PsitApi {

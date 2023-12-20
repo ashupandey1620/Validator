@@ -2,9 +2,7 @@ package com.original.sense.psit.Repository
 
 import android.util.Log
 import com.original.sense.psit.API.PsitApi
-import com.original.sense.psit.model.ErrorHandling
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
-import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.PostDelegation
@@ -16,7 +14,6 @@ import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.RefreshTokenRequest
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
-import com.original.sense.psit.model.ResponseModel.GetPwdResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
@@ -28,9 +25,6 @@ import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.ResposneFullDetails
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class PsitRepository @Inject constructor(private val psitApi : PsitApi){
@@ -171,18 +165,11 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun getUserProfileData(access: String): UserProfileDetail? {
         return try {
             val response = psitApi.getUserProfileData("Bearer $access")
-
-
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-
-                // Handle unsuccessful response (maybe return null or throw an exception)
-                null
-            }
+            Log.d("DINANATH","${response.body()}")
+            response.body()
         } catch (e: Exception) {
             // Handle exceptions here
-            Log.d("DINANATH - get User profile Data",e.toString())
+            Log.d("DINANATH",e.toString())
             null
         }
     }

@@ -10,9 +10,7 @@ import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
-import com.original.sense.psit.model.PostModel.PostDelegation
 import com.original.sense.psit.model.PostModel.PostEditProfile
-import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.model.PostModel.PostTokenAccess
 import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
@@ -23,7 +21,6 @@ import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
-import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
 import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.TempRegister
@@ -131,6 +128,12 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     fun getUserProfileData(access: String) {
         viewModelScope.launch {
             val result = repository.getUserProfileData(access)
+            Log.d("CHAMPAKLAL","$result")
+            result?.let { tokenStore.saveData(result.responseData.username,
+                result.responseData.email,
+                result.responseData.name,
+                result.responseData.phoneno.toString(),
+                result.responseData.roomno) }
             _getUserProfileData.postValue(result)
         }
     }

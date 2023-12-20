@@ -40,8 +40,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -92,6 +94,10 @@ import java.io.IOException
 @Composable
 fun HomeScreen(navController: NavController,activity: Activity ,studentListViewModel: StudentListViewModel) {
 
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
+
+
     val context = LocalContext.current.applicationContext
 
     var dialogVisible by remember { mutableStateOf(false) }
@@ -100,9 +106,33 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
 
     val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
 
+    val psitViewModel : PsitViewModel = hiltViewModel()
+
     val homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
+
+    val responseProfileData by psitViewModel.getUserProfileData.observeAsState()
+
+    LaunchedEffect(Unit){
+        psitViewModel.getUserProfileData(accessToken.toString())
+    }
+
+    LaunchedEffect(responseProfileData) {
+        responseProfileData?.let { response ->
+            showToast.value = true
+            toastMessage.value = " ${response.responseData.name.toString()}"
+            Log.d("okhttp","$response")
+        }
+    }
+
+    if (showToast.value) {
+        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false // Reset toast state
+    }
+
+
+
 
     accessToken?.let { str ->
         access = accessToken.toString()

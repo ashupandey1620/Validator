@@ -94,7 +94,6 @@ fun StudentProfile(navController: NavHostController , rollNum: Long?) {
         showToast.value = false // Reset toast state
     }
 
-
     Box (modifier = Modifier
         .fillMaxSize()
         .background(brush = GradientBackground())){
