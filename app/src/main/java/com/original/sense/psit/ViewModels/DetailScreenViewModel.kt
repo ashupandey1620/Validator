@@ -29,18 +29,20 @@ class DetailScreenViewModel @Inject constructor(
 ): ViewModel() {
 
 
-    val assignedList = mutableListOf<AssignedLectureModel>().apply {
-        add(AssignedLectureModel("8JEI9JDOESE0WR", listOf(1,2,3,4) ,"Raghav Tiwari"))
-        add(AssignedLectureModel("9DDJFNEIFDKDDJ", listOf(5,7,8) ,"Ashutosh Pandey"))
-    }
+   // val assignedList = mutableListOf<AssignedLectureModel>()
 
+    private val _assignedList = MutableLiveData<List<AssignedLectureModel>>()
+    val assignedList: LiveData<List<AssignedLectureModel>> = _assignedList
 
     private val _getPermission = MutableLiveData<ResponsePermission?>()
     val getPermission : LiveData<ResponsePermission?> = _getPermission
 
 
+
+
     private val suspensionList = mutableListOf<ResponseDataPermission>()
     private val delegationList = mutableListOf<ResponseDataPermission>()
+
 
 
     fun getPermission(access:String,permissionPost: PermissionPost) {
@@ -80,6 +82,30 @@ class DetailScreenViewModel @Inject constructor(
                 )
             }
             .toList()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateAssignedList(dateItem: DateItem)
+    {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val selectedDate = LocalDate.parse("2023-12-${dateItem.date}", formatter)
+
+
+        val updatedAssignedList = mutableListOf<AssignedLectureModel>()
+
+        delegationList.forEach { delegationItem ->
+            if (delegationItem.to_date == selectedDate.toString()) {
+                val assignedLectureModel = AssignedLectureModel(
+                    delegationItem.permission_id,
+                    delegationItem.lectures ?: emptyList(), // Consider null case
+                    delegationItem.assigned_by ?: "" // Consider null case
+                )
+                updatedAssignedList.add(assignedLectureModel)
+            }
+        }
+
+        _assignedList.postValue(updatedAssignedList)
+        Log.d("AssignedList", "$updatedAssignedList")
     }
 
 }

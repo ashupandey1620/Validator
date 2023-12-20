@@ -38,6 +38,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -74,6 +75,7 @@ import com.original.sense.psit.model.AssignedLecture
 import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PostModel.PermissionPost
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.YearMonth
@@ -82,10 +84,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-val assignedList = mutableListOf<AssignedLectureModel>().apply {
-    add(AssignedLectureModel("8JEI9JDOESE0WR", listOf(1,2,3,4) ,"Raghav Tiwari"))
-    add(AssignedLectureModel("9DDJFNEIFDKDDJ", listOf(5,7,8) ,"Ashutosh Pandey"))
-}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -98,10 +97,9 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
 
-
     val detailScreenViewModel: DetailScreenViewModel = hiltViewModel()
 
-
+    val assignedListB = detailScreenViewModel.assignedList.observeAsState()
 
     val responsePermission by detailScreenViewModel.getPermission.observeAsState()
 
@@ -118,6 +116,8 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
             toastMessage.value = " ${response.error}"
         }
     }
+
+
 
     if (showToast.value) {
         Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
@@ -164,7 +164,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
 
         DateLazyList(detailScreenViewModel)
 
-        AllowedLectures()
+        AllowedLectures(assignedListB)
 
     }
 
@@ -303,7 +303,15 @@ fun Day(day: CalendarDay) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by remember { mutableStateOf(0) }
+
+
+    LaunchedEffect(Unit) {
+        val initialSelectedItem = detailScreenViewModel.generateNextSevenDays().getOrNull(selectedIndex)
+        delay(500)
+        initialSelectedItem?.let { detailScreenViewModel.updateAssignedList(it) }
+
+    }
 
     Column(
         modifier = Modifier
@@ -317,6 +325,7 @@ fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
                     isSelected = selectedIndex == index,
                     onItemClicked = {
                         selectedIndex = index
+                        detailScreenViewModel.updateAssignedList(item)
                     }
                 )
             }
@@ -369,64 +378,69 @@ fun LazyListCardRowItem(
 
 
 @Composable
-fun AllowedLectures() {
+fun AllowedLectures(assignedListState: State<List<AssignedLectureModel>?>) {
 
 
+    val assignedList = assignedListState.value
     val assignedListFinal = mutableListOf<AssignedLecture>()
 
 // Loop through assignedList to duplicate entries based on the number of lectures
-    assignedList.forEach { assignedModel ->
-        assignedModel.lecture.forEach { lecture ->
-            val newAssignedModel = AssignedLecture(
-                permission_id = assignedModel.permission_id,
-                lecture = lecture,
-                assignedBy = assignedModel.assignedBy
-            )
-            assignedListFinal.add(newAssignedModel)
-        }
-    }
 
-    Column(modifier = Modifier.height(600.dp)) {
-
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp) ,
-            Arrangement.SpaceBetween ,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Text(
-                text = "Allowed Lectures: " ,
-                color = Color.White ,
-                fontSize = 25.sp ,
-                fontFamily = poppins
-            )
-
-
-            Icon(
-                modifier = Modifier.size(25.dp) ,
-                painter = painterResource(id = R.drawable.delete) ,
-                contentDescription = "delete Icon" ,
-                tint = Color.White
-            )
-
+    if (assignedList != null) {
+        assignedList!!.forEach { assignedModel ->
+            assignedModel.lecture.forEach { lecture ->
+                val newAssignedModel = AssignedLecture(
+                    permission_id = assignedModel.permission_id ,
+                    lecture = lecture ,
+                    assignedBy = assignedModel.assignedBy
+                )
+                assignedListFinal.add(newAssignedModel)
+            }
         }
 
+        Column(modifier = Modifier.height(600.dp)) {
 
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(10.dp)
-        ) {
-            items(assignedListFinal) { model ->
-                ListItem2(model = model)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp) ,
+                Arrangement.SpaceBetween ,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = "Allowed Lectures: " ,
+                    color = Color.White ,
+                    fontSize = 25.sp ,
+                    fontFamily = poppins
+                )
+
+
+                Icon(
+                    modifier = Modifier.size(25.dp) ,
+                    painter = painterResource(id = R.drawable.delete) ,
+                    contentDescription = "delete Icon" ,
+                    tint = Color.White
+                )
+
+            }
+
+
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(10.dp)
+            ) {
+                items(assignedListFinal) { model ->
+                    ListItem2(model = model)
+                }
             }
         }
     }
+
 }
 
 
@@ -498,7 +512,7 @@ fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String? , navControlle
             .fillMaxWidth(0.7f)
             .height(50.dp)
             .clickable {
-                navController.navigate("studentProfileInfo"+"/${rollNum}")
+                navController.navigate("studentProfileInfo" + "/${rollNum}")
             }){
 
         Box(modifier = Modifier.size(50.dp)) {
