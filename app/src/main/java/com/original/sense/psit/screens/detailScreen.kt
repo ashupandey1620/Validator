@@ -1,7 +1,6 @@
 package com.original.sense.psit.screens
 
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -66,12 +65,12 @@ import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.original.sense.psit.R
+import com.original.sense.psit.ViewModels.DateItem
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.ViewModels.DetailScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PostModel.PermissionPost
-import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.ui.theme.poppins
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -165,7 +164,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
 
         DateAndCalendar()
 
-        DateLazyList()
+        DateLazyList(detailScreenViewModel)
 
         AllowedLectures()
 
@@ -270,8 +269,6 @@ fun DateAndCalendar() {
         }
     }
 
-
-
     }
 
 
@@ -285,6 +282,7 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                color = Color.White
             )
         }
     }
@@ -305,20 +303,20 @@ fun Day(day: CalendarDay) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DateLazyList() {
+fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
     
-    val days = arrayOf("Mon","Tue","Wed","Thu","Fri","Sat","Sun")
-    val date = arrayOf("1","2","3","4","5","6","7")
+
 
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()) {
 
         LazyRow(){
-            items(days){ item ->
+            items(detailScreenViewModel.generateNextSevenDays()){ item ->
 
-                LazyListCardRowItem( day = item)
+                LazyListCardRowItem(item)
             }
 
         }
@@ -329,12 +327,12 @@ fun DateLazyList() {
 
 
 @Composable
-fun LazyListCardRowItem(day: String) {
+fun LazyListCardRowItem(dateItem: DateItem) {
 
     Card(modifier = Modifier
         .padding(10.dp)
         .height(120.dp)
-        .aspectRatio(0.6f),
+        .aspectRatio(0.5f),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF383841)),
         elevation = CardDefaults.cardElevation(10.dp),
         shape = RoundedCornerShape(35.dp)
@@ -348,7 +346,7 @@ fun LazyListCardRowItem(day: String) {
             ){
 
             Text(
-                text = "18" ,
+                text = dateItem.date ,
                 color = Color.White ,
                 fontSize = 22.sp ,
                 fontFamily = poppins ,
@@ -357,7 +355,7 @@ fun LazyListCardRowItem(day: String) {
 
 
 
-            Text(text = day,
+            Text(text = dateItem.day.substring(0,3),
                 color = Color.White,
                 fontSize = 15.sp,
                 fontFamily = poppins ,

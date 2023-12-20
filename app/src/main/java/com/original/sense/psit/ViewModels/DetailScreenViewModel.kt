@@ -1,6 +1,8 @@
 package com.original.sense.psit.ViewModels
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +15,11 @@ import com.original.sense.psit.model.ResponseModel.ResponseDataPermission
 import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+
+data class DateItem(val date: String, val day: String)
 
 @HiltViewModel
 class DetailScreenViewModel @Inject constructor(
@@ -51,6 +57,22 @@ class DetailScreenViewModel @Inject constructor(
             Log.d("Delegation","$delegationList")
 
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun generateNextSevenDays(): List<DateItem> {
+        val today = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd")
+
+        return generateSequence(today) { it.plusDays(1) }
+            .take(7)
+            .map {
+                DateItem(
+                    date = it.format(formatter),
+                    day = it.dayOfWeek.toString().lowercase().capitalize()
+                )
+            }
+            .toList()
     }
 
 }
