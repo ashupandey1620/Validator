@@ -110,19 +110,19 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
         studentPost?.let { detailScreenViewModel.getPermission(accessToken.toString(), it) }
     }
 
-    LaunchedEffect(responsePermission) {
-        responsePermission?.let { response ->
-            showToast.value = true
-            toastMessage.value = " ${response.error}"
-        }
-    }
-
-
-
-    if (showToast.value) {
-        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false // Reset toast state
-    }
+//    LaunchedEffect(responsePermission) {
+//        responsePermission?.let { response ->
+//            showToast.value = true
+//            toastMessage.value = " ${response.error}"
+//        }
+//    }
+//
+//
+//
+//    if (showToast.value) {
+//        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
+//        showToast.value = false // Reset toast state
+//    }
 
 
 

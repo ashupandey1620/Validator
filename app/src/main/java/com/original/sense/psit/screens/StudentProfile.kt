@@ -77,8 +77,8 @@ fun StudentProfile(navController: NavHostController , rollNum: Long?) {
     LaunchedEffect(responseStudentDetails) {
         responseStudentDetails?.let { response ->
             if (!response.error) {
-                showToast.value = true
-                toastMessage.value = " ${response.responseData.student_id}"
+//                showToast.value = true
+//                toastMessage.value = " ${response.responseData.student_id}"
                 name.value = response.responseData.name
                 uid.value = response.responseData.student_id.toString()
                 aktu.value = response.responseData.roll_no.toString()
@@ -89,10 +89,10 @@ fun StudentProfile(navController: NavHostController , rollNum: Long?) {
         }
     }
 
-    if (showToast.value) {
-        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false // Reset toast state
-    }
+//    if (showToast.value) {
+//        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+//        showToast.value = false // Reset toast state
+//    }
 
     Box (modifier = Modifier
         .fillMaxSize()

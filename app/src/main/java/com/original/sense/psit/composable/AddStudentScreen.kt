@@ -70,7 +70,6 @@ fun AddStudentScreen() {
                         contentDescription = ""
                     )
 
-
                 }
 
                 Row(

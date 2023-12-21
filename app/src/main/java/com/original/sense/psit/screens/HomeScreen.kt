@@ -118,18 +118,18 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
         psitViewModel.getUserProfileData(accessToken.toString())
     }
 
-    LaunchedEffect(responseProfileData) {
-        responseProfileData?.let { response ->
-            showToast.value = true
-            toastMessage.value = " ${response.responseData.name.toString()}"
-            Log.d("okhttp","$response")
-        }
-    }
-
-    if (showToast.value) {
-        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false // Reset toast state
-    }
+//    LaunchedEffect(responseProfileData) {
+//        responseProfileData?.let { response ->
+//            showToast.value = true
+//            toastMessage.value = " ${response.responseData.name.toString()}"
+//            Log.d("okhttp","$response")
+//        }
+//    }
+//
+//    if (showToast.value) {
+//        Toast.makeText(context, toastMessage.value, Toast.LENGTH_SHORT).show()
+//        showToast.value = false // Reset toast state
+//    }
 
 
 
@@ -301,15 +301,15 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
         try {
             nfca.connect()
 
-            Toast.makeText(context,"Connected",Toast.LENGTH_SHORT).show()
+           // Toast.makeText(context,"Connected",Toast.LENGTH_SHORT).show()
 
             // Read NFC-A tag data
             val tagData = nfca.tag.id
             if (tagData != null && tagData.size > 0) {
                 var tagId: String = byteArrayToHexString(tagData)
                 tagId = tagId.uppercase()
-                Toast.makeText(context, tagId ,Toast.LENGTH_SHORT).show()
-                Toast.makeText(context,"$tagData",Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(context, tagId ,Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(context,"$tagData",Toast.LENGTH_SHORT).show()
 
 
                 val interceptor = HttpLoggingInterceptor()
@@ -333,9 +333,9 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                     try {
                         val response = apiService.getChipPwd("Bearer $access",tagIdModel)
                         if (response.body()?.errors == true) {
-                            Log.d("KodanKing","${response.body()}")
+                          //  Log.d("KodanKing","${response.body()}")
                         } else {
-                            Log.d("KodanKing - No error","${response.body()}")
+                          //  Log.d("KodanKing - No error","${response.body()}")
                             val password = response.body()?.responseData?.password
 
                             val a = password?.substring(0 , 2)!!.toInt(16).toByte()
@@ -482,9 +482,8 @@ fun SearchView(
         } ,
         modifier
             .fillMaxWidth(0.6f)
-            .height(60.dp)
-            .clip(RoundedCornerShape(15.dp)) ,
-
+            .height(57.dp)
+            .clip(RoundedCornerShape(15.dp)),
         placeholder = {
             Row {
                 Text(text = placeHolder, color = Color(0xFF222228),fontSize = 15.sp)
@@ -514,8 +513,8 @@ fun SearchView(
             onDone = {
 
                 keyboardController?.hide()
-                Toast.makeText(context , "Toast Message from the text" , Toast.LENGTH_SHORT).show()
-                Toast.makeText(context , "$text" , Toast.LENGTH_LONG).show()
+            //    Toast.makeText(context , "Toast Message from the text" , Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(context , "$text" , Toast.LENGTH_LONG).show()
                 onSearchSubmit(text)
 
             }
