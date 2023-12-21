@@ -362,7 +362,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                                 description,
                                 null,
                                 generateIndexList(alloted) ,
-                                extractRollNumbers(studentListViewModel.studentList) ,
+                                extractRollNumbers(studentListViewModel.studentList2) ,
                                 title,
                                 getCurrentDate()
                             ) // Create LoginPost data class or object
@@ -441,7 +441,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                                 val suspensionPost = PostSuspension(
                                     reasonDesc ,
                                     "2023-12-14" ,
-                                    extractRollNumbers(studentListViewModel.studentList) ,
+                                    extractRollNumbers(studentListViewModel.studentList2) ,
                                     "2023-12-16"
                                     ) // Create LoginPost data class or object
 
@@ -718,7 +718,6 @@ fun ReasonEditText(): String {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelegationAndSuspension(name: String) {
     Row(modifier = Modifier

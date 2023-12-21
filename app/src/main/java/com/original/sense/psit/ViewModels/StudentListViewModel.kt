@@ -15,6 +15,7 @@ import javax.inject.Inject
 class StudentListViewModel @Inject constructor(private val psitViewModel: PsitViewModel) : ViewModel() {
     val studentList = mutableStateListOf<PersonModel>()
 
+    val studentList2 = mutableStateListOf<PersonModel>()
 
     fun addStudent(rollNo: Long) {
         val postStudent = GetStudentPost(rollNo)
@@ -22,6 +23,9 @@ class StudentListViewModel @Inject constructor(private val psitViewModel: PsitVi
     }
     fun updateStudentList(name:String, rollNo: Long) {
         val model = PersonModel(name,rollNo)
+        if (!(model.name=="Network Error"||model.name=="Incorrect Student Id"||model.name=="Internal Server Error")) {
+            studentList2.add(model)
+        }
         studentList.add(model)
     }
 
