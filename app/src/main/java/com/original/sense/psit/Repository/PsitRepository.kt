@@ -45,8 +45,20 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
         return try {
             val response = psitApi.login(loginPost)
-            response.body()
+            if (response.isSuccessful) {
+                val loginResponse = response.body()
+                Log.d("fatal", "Response code: ${response.code()}")
+                Log.d("fatal", "Response body: ${loginResponse.toString()}")
+
+                loginResponse
+            } else {
+
+                val error = response.errorBody()
+                Log.e("fatal", "Error: ${response.errorBody()?.string()}")
+                null
+            }
         } catch (e: Exception) {
+            Log.e("fatal", "Exception: ${e.message}")
             null
         }
     }
@@ -125,9 +137,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     suspend fun getPermission(access: String,permissionPost: PermissionPost): ResponsePermission? {
         return try {
             val response = psitApi.getPermission("Bearer $access",permissionPost)
-
-
-                response.body()
+            response.body()
 
         } catch (e: Exception) {
             // Handle exceptions here

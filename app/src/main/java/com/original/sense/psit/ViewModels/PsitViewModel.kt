@@ -36,11 +36,8 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
 
 
-    private val _registrationStatus = MutableLiveData<TempRegister?>()
-    val registrationStatus: LiveData<TempRegister?> = _registrationStatus
 
-    private val _loginStatus = MutableLiveData<LoginResponse?>()
-    val loginStatus: LiveData<LoginResponse?> = _loginStatus
+
 
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
@@ -133,36 +130,6 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
 
 
-
-
-
-
-    fun registerUser(tempRegisterPost: TempRegisterPost) {
-        viewModelScope.launch {
-            val result = repository.registerUser(tempRegisterPost)
-            _registrationStatus.postValue(result)
-        }
-    }
-
-    fun loginUser(loginPost: LoginPost) {
-        viewModelScope.launch {
-            val result = repository.loginUser(loginPost)
-            if (!result!!.error) {
-
-                val accessToken = result.responseData.token.access
-                val refreshToken = result.responseData.token.refresh
-
-                Log.d("Repository - access token", accessToken)
-                Log.d("Repository - refresh token", refreshToken)
-
-                // Save tokens to DataStore upon successful login
-                tokenStore.saveTokens(accessToken, refreshToken)
-            }
-
-            _loginStatus.postValue(result)
-
-        }
-    }
 
     fun changePassword(accessToken:String,changePasswordPost: ChangePasswordPost) {
         viewModelScope.launch {

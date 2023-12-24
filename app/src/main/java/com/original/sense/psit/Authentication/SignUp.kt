@@ -70,6 +70,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.SignUpScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.ui.theme.poppins
@@ -89,11 +90,10 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 
     var dialogVisible by remember { mutableStateOf(false) }
+    
+    val signUpViewModel : SignUpScreenViewModel = hiltViewModel()
 
-    var valid : Boolean
-    val psitViewModel : PsitViewModel = hiltViewModel()
-
-    val registerResponse by psitViewModel.registrationStatus.observeAsState()
+    val registerResponse by signUpViewModel.registrationStatus.observeAsState()
 
     registerResponse?.let { response ->
         Log.d("Registerola -Response","$response")
@@ -173,7 +173,7 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
                     phone.toLong(),
                     room) // Create LoginPost data class or object
 
-                psitViewModel.registerUser(signUpPost)
+                signUpViewModel.registerUser(signUpPost)
 
                 Toast.makeText(context,"Clicked",Toast.LENGTH_LONG).show()
 

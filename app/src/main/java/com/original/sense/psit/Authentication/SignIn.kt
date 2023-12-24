@@ -67,6 +67,7 @@ import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.ViewModels.SignInScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.ResponseModel.LoginResponse
@@ -243,25 +244,45 @@ fun SignInScreen(navController: NavHostController ,
 fun SignInSheet(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
 
-    val psitViewModel : PsitViewModel = hiltViewModel()
 
-    val loginStatus by psitViewModel.loginStatus.observeAsState()
+    val error = remember { mutableStateOf(true) }
+    val msg = remember { mutableStateOf("") }
+
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
+
+
+    val signInScreenViewModel : SignInScreenViewModel = hiltViewModel()
+
+    val loginStatus by signInScreenViewModel.loginStatus.observeAsState()
 
 
     loginStatus?.let { response ->
-        Log.d("SignupOla - Response","$response")
-        Log.d("SignupOla - ResponseData Msg", response.responseData.msg)
-        Log.d("SignupOla - Access Token", response.responseData.token.access)
-        Log.d("SignupOla - Refresh Token", response.responseData.token.refresh)
-        Log.d("SignupOla - Error","${response.error}")
-        Log.d("SignupOla - Status Code","${response.statusCode}")
-
-
-
-        if (!response.error){
-            navController.navigate("HomeGraph")
-            show=false
+        if(!response.error!!) {
+            showToast.value = true
+            toastMessage.value = " ${response.responseData?.msg}"
+            msg.value = response.responseData?.msg!!
         }
+        else{
+            showToast.value = true
+            toastMessage.value = " ${response.message}"
+        }
+
+
+
+
+    }
+
+
+    if (showToast.value) {
+        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false // Reset toast state
+    }
+
+
+    if (!error.value){
+        navController.navigate("HomeGraph")
+        show=true
     }
 
     Card(modifier = Modifier
@@ -309,7 +330,6 @@ fun SignInSheet(navController: NavHostController) {
                     fontFamily = poppins ,
                     fontSize = 12.sp ,
                     modifier = Modifier.clickable {
-
                         navController.navigate("forget_page")
                     })
             }
@@ -326,7 +346,7 @@ fun SignInSheet(navController: NavHostController) {
                     onClick = {
                        // Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
                         val loginPost = LoginPost(userNameSignIn, password)
-                        psitViewModel.loginUser(loginPost)
+                        signInScreenViewModel.loginUser(loginPost)
 
 
                     } ,
@@ -373,7 +393,7 @@ fun SignInSheet(navController: NavHostController) {
 
         }
     }
-    Log.d("okhttp","$loginStatus")
+
 }
 
 @Composable
