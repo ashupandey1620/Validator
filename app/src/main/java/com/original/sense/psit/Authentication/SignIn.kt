@@ -262,6 +262,7 @@ fun SignInSheet(navController: NavHostController) {
             showToast.value = true
             toastMessage.value = " ${response.responseData?.msg}"
             msg.value = response.responseData?.msg!!
+            error.value = response.error
         }
         else{
             showToast.value = true
@@ -282,7 +283,7 @@ fun SignInSheet(navController: NavHostController) {
 
     if (!error.value){
         navController.navigate("HomeGraph")
-        show=true
+        show=false
     }
 
     Card(modifier = Modifier
@@ -325,6 +326,7 @@ fun SignInSheet(navController: NavHostController) {
                     .padding(vertical = 10.dp) ,
                 horizontalAlignment = Alignment.End
             ) {
+
                 Text(text = "Forgot Password?" ,
                     color = Color(0xFFF6F6F6) ,
                     fontFamily = poppins ,
@@ -345,9 +347,18 @@ fun SignInSheet(navController: NavHostController) {
                 Button(
                     onClick = {
                        // Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
-                        val loginPost = LoginPost(userNameSignIn, password)
-                        signInScreenViewModel.loginUser(loginPost)
-
+                        if (userNameSignIn == "") {
+                            Toast.makeText(context,"UserName can't be null",Toast.LENGTH_SHORT).show()
+                        }
+                        else if(password == "")
+                        {
+                            Toast.makeText(context,"Password can't be null",Toast.LENGTH_SHORT).show()
+                        }
+                        else
+                        {
+                            val loginPost = LoginPost(userNameSignIn , password)
+                            signInScreenViewModel.loginUser(loginPost)
+                        }
 
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -384,7 +395,6 @@ fun SignInSheet(navController: NavHostController) {
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-
                             navController.popBackStack()
                             navController.navigate("signup_page")
                         })

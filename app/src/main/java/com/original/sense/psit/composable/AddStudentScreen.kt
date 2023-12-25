@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -72,47 +73,47 @@ fun AddStudentScreen() {
 
                 }
 
-                Row(
-                    modifier = Modifier
-                        .padding(top = 20.dp , bottom = 40.dp)
-                        .fillMaxWidth()
-                        .height(50.dp) ,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
+//                Row(
+//                    modifier = Modifier
+//                        .padding(top = 20.dp , bottom = 40.dp)
+//                        .fillMaxWidth()
+//                        .height(50.dp) ,
+//                    horizontalArrangement = Arrangement.SpaceEvenly
+//                ) {
+//
+//                    Button(
+//                        modifier = Modifier
+//                            .height(50.dp)
+//                            .width(125.dp) ,
+//                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
+//                        onClick = {
+//
+//                        } ,
+//                        shape = RoundedCornerShape(10.dp) ,
+//                        colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+//                    ) {
+//                        Text(text = "No" , color = Color.Black , fontSize = 25.sp)
+//
+//                    }
+//
+//                    Button(
+//                        modifier = Modifier
+//                            .height(50.dp)
+//                            .width(125.dp) ,
+//                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
+//                        onClick = {
+//
+//
+//                        } ,
+//                        shape = RoundedCornerShape(10.dp) ,
+//                        colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+//                    ) {
+//                        Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
+//
+//                    }
+//
 
-                    Button(
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(125.dp) ,
-                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                        onClick = {
-
-                        } ,
-                        shape = RoundedCornerShape(10.dp) ,
-                        colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
-                    ) {
-                        Text(text = "No" , color = Color.Black , fontSize = 25.sp)
-
-                    }
-
-                    Button(
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(125.dp) ,
-                        elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                        onClick = {
-
-
-                        } ,
-                        shape = RoundedCornerShape(10.dp) ,
-                        colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
-                    ) {
-                        Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
-
-                    }
-
-
-                }
+                Spacer(modifier = Modifier.padding(20.dp))
 
             }
 

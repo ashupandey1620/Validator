@@ -47,14 +47,12 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             val response = psitApi.login(loginPost)
             if (response.isSuccessful) {
                 val loginResponse = response.body()
-                Log.d("fatal", "Response code: ${response.code()}")
-                Log.d("fatal", "Response body: ${loginResponse.toString()}")
+                //Log.d("fatal", "Response code: ${response.code()}")
+                //Log.d("fatal", "Response body: ${loginResponse.toString()}")
 
                 loginResponse
             } else {
 
-                val error = response.errorBody()
-                Log.e("fatal", "Error: ${response.errorBody()?.string()}")
                 null
             }
         } catch (e: Exception) {

@@ -1,7 +1,6 @@
 package com.original.sense.psit.model.ResponseModel
 
 data class LoginResponse(
-    val errors :Boolean?,
     val error: Boolean? ,
     val responseData: ResponseData2?,
     val statusCode: Int?,
