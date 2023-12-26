@@ -150,14 +150,8 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
         return try {
             val response = psitApi.updateUserProfile("Bearer $access",postEditProfile)
 
-
-            if (response.isSuccessful) {
                 response.body()
-            } else {
 
-                // Handle unsuccessful response (maybe return null or throw an exception)
-                null
-            }
         } catch (e: Exception) {
             // Handle exceptions here
             Log.d("DINANATH - UpdateUserProfile",e.toString())

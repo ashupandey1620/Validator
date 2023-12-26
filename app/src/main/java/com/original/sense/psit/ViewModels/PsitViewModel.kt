@@ -42,16 +42,11 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 
-
     private val _logoutResponse = MutableLiveData<LogoutResponse?>()
     val logoutResponse : LiveData<LogoutResponse?> = _logoutResponse
 
-    private val _updateUserProfileData = MutableLiveData<ResponseEditProfile?>()
-    val updateUserProfileData : LiveData<ResponseEditProfile?> = _updateUserProfileData
-
     private val _getUserProfileData = MutableLiveData<UserProfileDetail?>()
     val getUserProfileData : LiveData<UserProfileDetail?> = _getUserProfileData
-
 
     private val _postTokenRefresh = MutableLiveData<ResponseTokenRefresh?>()
     val postTokenRefresh : LiveData<ResponseTokenRefresh?> = _postTokenRefresh
@@ -108,12 +103,7 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
         }
     }
 
-    fun updateUserProfile(access: String,postEditProfile: PostEditProfile) {
-        viewModelScope.launch {
-            val result = repository.updateUserProfile(access,postEditProfile)
-            _updateUserProfileData.postValue(result)
-        }
-    }
+
 
     fun getUserProfileData(access: String) {
         viewModelScope.launch {
