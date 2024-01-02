@@ -161,10 +161,10 @@ fun ProfileCard(navController: NavController) {
                             navController.navigate("editProfile")
                         } )
 
-                    SupportAccountChangeTheme(mainText = "Change Theme",
-                        onClick = {
-
-                        } )
+//                    SupportAccountChangeTheme(mainText = "Change Theme",
+//                        onClick = {
+//
+//                        } )
 
                     SupportAccountItem(mainText = "Change Password",
                         onClick = {

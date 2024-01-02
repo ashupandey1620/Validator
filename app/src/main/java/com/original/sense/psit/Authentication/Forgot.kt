@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
@@ -55,6 +56,13 @@ import kotlinx.coroutines.delay
 var emailForgot = ""
 @Composable
 fun ForgotPasswordScreen(navController: NavHostController , context: MainActivity) {
+
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
     var show by remember {
         mutableStateOf(false)

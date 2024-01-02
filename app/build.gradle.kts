@@ -74,6 +74,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.20.0")
+
 
     implementation ("com.holix.android:bottomsheetdialog-compose:1.4.0")
 

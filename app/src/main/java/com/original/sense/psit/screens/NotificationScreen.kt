@@ -23,12 +23,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.original.sense.psit.R
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 
 @Composable
 fun NotificationScreen(navController: NavHostController) {
+
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
     val text = "Delegation removed for Lectures " +
             "5th & 6th  for 7th December 2023 from Rishabh Didwania."

@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.R
@@ -89,6 +90,12 @@ var endDate     =   ""
 @Composable
 fun AddScreen(navController: NavController , studentListViewModel: StudentListViewModel) {
 
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
      checkVSuspension = false
      alloted     =   BooleanArray(8)

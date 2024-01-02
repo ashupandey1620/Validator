@@ -62,6 +62,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
@@ -81,6 +82,13 @@ var password = ""
 fun SignInScreen(navController: NavHostController ,
                  context: MainActivity,
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
 
     val image1Visibility = remember{ mutableStateOf(false) }

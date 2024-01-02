@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.SignUpScreenViewModel
@@ -87,7 +88,12 @@ var room = ""
 @Composable
 fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
-
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
     var dialogVisible by remember { mutableStateOf(false) }
     

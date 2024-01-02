@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.original.sense.psit.Authentication.SignInPagePassword
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
@@ -48,6 +49,12 @@ var access = ""
 @Composable
 fun ChangePassword(navController: NavController) {
 
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
     val context = LocalContext.current.applicationContext
 
     val psitViewModel : PsitViewModel = hiltViewModel()

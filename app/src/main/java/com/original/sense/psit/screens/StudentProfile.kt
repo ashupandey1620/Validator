@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.StudentDetailsViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
@@ -44,6 +45,13 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun StudentProfile(navController: NavHostController , rollNum: Long?) {
+
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF222228)
+    systemUiController.setStatusBarColor(
+        color = statusBarColor,
+        darkIcons = false
+    )
 
     val context: Context = LocalContext.current.applicationContext
 
