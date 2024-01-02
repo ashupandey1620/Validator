@@ -460,9 +460,7 @@ fun CircularTapButton() {
             .clip(CircleShape)
             .fillMaxSize()
             .clickable {
-                Toast
-                    .makeText(context , "Image Clicked" , Toast.LENGTH_SHORT)
-                    .show()
+
 
             },
             painter = painterResource(id = R.drawable.tap) ,

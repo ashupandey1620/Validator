@@ -285,7 +285,7 @@ fun SignInSheet(navController: NavHostController) {
 
     if (showToast.value) {
         Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false // Reset toast state
+        showToast.value = false
     }
 
 
@@ -354,7 +354,6 @@ fun SignInSheet(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                       // Toast.makeText(context,"$userNameSignIn $password",Toast.LENGTH_LONG).show()
                         if (userNameSignIn == "") {
                             Toast.makeText(context,"UserName can't be null",Toast.LENGTH_SHORT).show()
                         }

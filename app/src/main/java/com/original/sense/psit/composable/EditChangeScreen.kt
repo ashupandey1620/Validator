@@ -145,7 +145,6 @@ fun EditChangeScreen(roomNumber: String , phoneNumber: String?) {
 
                             editProfileViewModel.updateUserProfile(access ,updatePost)
 
-                            Toast.makeText(context,"Clicked", Toast.LENGTH_LONG).show()
 
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,

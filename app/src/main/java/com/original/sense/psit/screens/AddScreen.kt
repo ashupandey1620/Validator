@@ -152,7 +152,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
     if (showToast.value) {
         Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false // Reset toast state
+        showToast.value = false
     }
 
     var show by remember {
@@ -372,7 +372,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                                 extractRollNumbers(studentListViewModel.studentList2) ,
                                 title,
                                 getCurrentDate()
-                            ) // Create LoginPost data class or object
+                            )
 
                             addScreenViewModel.postDelegation(access,delegationPost)
 

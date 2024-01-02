@@ -308,9 +308,6 @@ fun ForgotSheet(navController: NavHostController) {
                 Button(
                     onClick = {
 
-                              Toast.makeText(context, emailResend ,Toast.LENGTH_LONG).show()
-
-
                     } ,
                     colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
                     modifier = Modifier
@@ -347,7 +344,6 @@ fun ForgotSheet(navController: NavHostController) {
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-
                             navController.popBackStack()
                             navController.navigate("signIn_page")
                         })
