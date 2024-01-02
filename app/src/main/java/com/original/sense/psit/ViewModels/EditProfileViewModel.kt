@@ -9,6 +9,7 @@ import com.original.sense.psit.Tokens.TokenStore
 import com.original.sense.psit.model.PostModel.PostEditProfile
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,9 +26,13 @@ class EditProfileViewModel  @Inject constructor(
 
     fun updateUserProfile(access: String,postEditProfile: PostEditProfile) {
         viewModelScope.launch {
-            val access = tokenStore.accessTokenFlow.toString()
             val result = repository.updateUserProfile(access,postEditProfile)
             _updateUserProfile.postValue(result)
+
+            if (result != null && !result.error) {
+                delay(2000)
+                _updateUserProfile.value = null // Set to null after handling the response
+            }
         }
     }
 

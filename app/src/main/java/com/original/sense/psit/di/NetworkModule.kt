@@ -28,7 +28,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
     @Singleton
     @Provides
     fun providesOkHttpClient(): OkHttpClient {
@@ -39,7 +38,6 @@ class NetworkModule {
             .addInterceptor(interceptor)
             .build()
     }
-
     @Singleton
     @Provides
     fun providesRetrofit(): Retrofit {
@@ -48,13 +46,11 @@ class NetworkModule {
             .client(providesOkHttpClient())
             .build()
     }
-
     @Singleton
     @Provides
     fun providesPsitAPI(retrofit: Retrofit) : PsitApi{
         return retrofit.create(PsitApi::class.java)
     }
-
     @Module
     @InstallIn(SingletonComponent::class)
     object DataStoreModule {

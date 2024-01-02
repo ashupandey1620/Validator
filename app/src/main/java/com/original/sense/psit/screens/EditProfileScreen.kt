@@ -37,18 +37,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.original.sense.psit.Authentication.phone
-import com.original.sense.psit.Authentication.room
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+
+
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
+import com.original.sense.psit.ViewModels.truefalseViewModel
+import com.original.sense.psit.composable.EditChangeScreen
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
 import java.util.Locale
 
+
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
 
+//    var show by remember { mutableStateOf(false) }
 
+    val tfViewModel: truefalseViewModel = hiltViewModel()
 
     val context = LocalContext.current.applicationContext
     val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
@@ -57,6 +64,24 @@ fun EditProfileScreen(navController: NavHostController) {
     val email by tokenStoreViewModel.readEmail.collectAsState()
     val phoneNumber by tokenStoreViewModel.readPhoneNo.collectAsState()
     val room by tokenStoreViewModel.readRoomNo.collectAsState()
+
+
+    var show = tfViewModel.show.value
+
+    if (show) {
+        BottomSheetDialog(
+            onDismissRequest = {
+                tfViewModel.updateShow(false)
+            },
+            properties = BottomSheetDialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true,
+                dismissWithAnimation = true
+            )
+        ){
+            room?.let { EditChangeScreen(it ,phoneNumber) }
+        }
+    }
 
 
     Column(modifier = Modifier
@@ -176,12 +201,12 @@ fun RoomColumn(room: String?) {
 
 @Composable
 fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit) {
+
+    val tfViewModel: truefalseViewModel = hiltViewModel()
     Card(
         colors = CardDefaults.cardColors(Color(0xFF46464b)),
         modifier = Modifier
             .fillMaxWidth()
-
-
     ) {
         Row(
             modifier = Modifier
@@ -208,8 +233,10 @@ fun EditProfileItemEditScreen(mainText: String , content: @Composable () -> Unit
             }
 
             IconButton(onClick = {
-
-            }, modifier = Modifier.size(20.dp).padding(3.dp)) {
+                                tfViewModel.updateShow(true)
+            }, modifier = Modifier
+                .size(20.dp)
+                .padding(3.dp)) {
                 Icon(
                     Icons.Outlined.Create, contentDescription = "Username",
                     tint = Color(0xFFA7A7A7))
@@ -233,13 +260,10 @@ fun PhoneColumn(phoneNumber: String?) {
             fontSize = 20.sp ,
             fontFamily = poppins ,
         )
-//        Spacer(modifier = Modifier.padding(5.dp))
+
 
         phoneNumber?.let {
-            EditProfileItemEditScreen(mainText = it)
-            {
-
-            }
+            EditProfileItemEditScreen(mainText = it){}
         }
     }
 
@@ -264,10 +288,7 @@ fun NameColumn(name:String) {
 //        Spacer(modifier = Modifier.padding(5.dp))
 
 
-        EditProfileItemMainScreen(mainText = name)
-        {
-
-        }
+        EditProfileItemMainScreen(mainText = name){}
     }
 
 }
@@ -328,10 +349,7 @@ fun EmailColumn(email: String?) {
         )
 
         email?.let {
-            EditProfileItemMainScreen(mainText = it)
-            {
-
-            }
+            EditProfileItemMainScreen(mainText = it){}
         }
     }
 

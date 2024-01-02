@@ -35,10 +35,6 @@ import javax.inject.Inject
 class PsitViewModel @Inject constructor(private val repository: PsitRepository, private val tokenStore: TokenStore) : ViewModel() {
 
 
-
-
-
-
     private val _changePassword = MutableLiveData<ChangePasswordResponse?>()
     val changePassword: LiveData<ChangePasswordResponse?> = _changePassword
 

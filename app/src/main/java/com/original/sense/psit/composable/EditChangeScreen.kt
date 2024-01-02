@@ -1,13 +1,11 @@
 package com.original.sense.psit.composable
 
+import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -29,10 +26,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -47,27 +46,62 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.original.sense.psit.Authentication.SignInPagePassword
-import com.original.sense.psit.ViewModels.PsitViewModel
+import com.original.sense.psit.Authentication.phone
+import com.original.sense.psit.ViewModels.EditProfileViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
-import com.original.sense.psit.composable.GradientBackground
-import com.original.sense.psit.model.PostModel.ChangePasswordPost
+import com.original.sense.psit.ViewModels.truefalseViewModel
+import com.original.sense.psit.model.PostModel.PostEditProfile
+import com.original.sense.psit.screens.access
 import com.original.sense.psit.ui.theme.poppins
-@Preview
+import kotlinx.coroutines.delay
+
+
 @Composable
-fun EditChangeScreen() {
+fun EditChangeScreen(roomNumber: String , phoneNumber: String?) {
 
-    var changeValue = ""
-    var str = ""
+    val context: Context = LocalContext.current.applicationContext
+
+    val tokenStoreViewModel: TokenStoreViewModel = hiltViewModel()
+
+    val tfViewModel: truefalseViewModel = hiltViewModel()
+
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
+
+    val editProfileViewModel : EditProfileViewModel = hiltViewModel()
+
+    val updateResponse by editProfileViewModel.updateUserProfile.observeAsState()
+
+    LaunchedEffect(updateResponse) {
+        updateResponse?.let { response ->
+            Log.d("LaunchedEffect", "updateResponse: $updateResponse")
+            if (!response.error)
+            {
+                showToast.value = true
+                toastMessage.value = "${response.responseData.msg}"
+                delay(800)
+                tfViewModel.updateShow(false)
+            }
+            else{
+                toastMessage.value = "${response.error}"
+
+            }
+
+        }
+    }
+
+    if (showToast.value) {
+        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false
+    }
 
 
-        Card(
+    Card(
             modifier = Modifier
                 .fillMaxWidth() ,
             shape = (RoundedCornerShape(30.dp)) ,
             colors = CardDefaults.cardColors(
-                containerColor = Color.Black.copy(alpha = 0.4f)
+                containerColor = Color.Black
             )
         ) {
 
@@ -81,7 +115,7 @@ fun EditChangeScreen() {
             ) {
 
                 Text(
-                    text = "Change $str" ,
+                    text = "Change Details" ,
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
@@ -92,12 +126,11 @@ fun EditChangeScreen() {
                     fontWeight = FontWeight.Bold
                 )
 
-                changeValue = changeValue("Enter New $str")
-
+                var phoneNumber = changeValue("Enter Phone Number", phoneNumber.toString())
+                var roomNumber = changeValue("Enter Room Number",roomNumber)
 
 
                 Spacer(modifier = Modifier.padding(5.dp))
-
 
 
                 Row(
@@ -108,7 +141,11 @@ fun EditChangeScreen() {
                     Button(
                         onClick = {
 
+                            val updatePost = PostEditProfile(phoneNumber.toLong(),roomNumber)
 
+                            editProfileViewModel.updateUserProfile(access ,updatePost)
+
+                            Toast.makeText(context,"Clicked", Toast.LENGTH_LONG).show()
 
                         } ,
                         colors = ButtonDefaults.buttonColors(Color(0xFF3068de)) ,
@@ -133,12 +170,13 @@ fun EditChangeScreen() {
 
 
 @Composable
-fun changeValue(str: String): String {
+fun changeValue(str: String,txt:String): String {
 
 
 
     val keyboardController = LocalSoftwareKeyboardController.current
-    var text by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf(txt) }
+
 
     val containerColor = Color(0xFF28292e)
     OutlinedTextField(
@@ -161,6 +199,7 @@ fun changeValue(str: String): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
