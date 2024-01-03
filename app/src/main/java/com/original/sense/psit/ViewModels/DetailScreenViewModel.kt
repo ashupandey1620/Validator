@@ -17,6 +17,7 @@ import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -38,8 +39,6 @@ class DetailScreenViewModel @Inject constructor(
     val getPermission : LiveData<ResponsePermission?> = _getPermission
 
 
-
-
     private val suspensionList = mutableListOf<ResponseDataPermission>()
     private val delegationList = mutableListOf<ResponseDataPermission>()
 
@@ -48,7 +47,7 @@ class DetailScreenViewModel @Inject constructor(
     fun getPermission(access:String,permissionPost: PermissionPost) {
         viewModelScope.launch {
             val result = repository.getPermission(access,permissionPost)
-            _getPermission.postValue(result)
+
 
             result?.responseData?.let { responseData ->
                 suspensionList.clear()
@@ -64,6 +63,8 @@ class DetailScreenViewModel @Inject constructor(
 
             Log.d("Suspension","$suspensionList")
             Log.d("Delegation","$delegationList")
+
+            _getPermission.postValue(result)
 
         }
     }
@@ -87,11 +88,15 @@ class DetailScreenViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateAssignedList(dateItem: DateItem)
     {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val selectedDate = LocalDate.parse("2023-12-${dateItem.date}", formatter)
+        val yearMonth = YearMonth.now()
+        val selectedDate = yearMonth.atDay(dateItem.date.toInt())
 
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val formattedDate = selectedDate.format(formatter)
 
         val updatedAssignedList = mutableListOf<AssignedLectureModel>()
+
+
 
         delegationList.forEach { delegationItem ->
             if (delegationItem.to_date == selectedDate.toString()) {

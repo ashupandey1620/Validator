@@ -72,6 +72,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.original.sense.psit.ViewModels.SignUpScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.di.NetworkResult
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.ui.theme.poppins
 
@@ -100,46 +101,27 @@ fun SignUpPage(navController: NavHostController) {
     
     val signUpViewModel : SignUpScreenViewModel = hiltViewModel()
 
-    val registerResponse by signUpViewModel.registrationStatus.observeAsState()
+    val registerResponse by signUpViewModel.registerResponseLiveData.observeAsState()
 
-    LaunchedEffect(registerResponse) {
-        registerResponse?.let { response ->
-            if (response.error == false)
-            {
+    registerResponse?.let { response ->
+        when(response){
+            is NetworkResult.Success -> {
+                toastMessage.value = response.data?.responseData?.msg.toString()
                 showToast.value = true
-                toastMessage.value = "${response.responseData}"
             }
-            if(response.errors == true)
-            {
-                if(response.message?.email!=null) {
-                    showToast.value = true
-                    toastMessage.value = "${response.message.email}"
-                }
-                else if(response.message?.username!=null){
-                    showToast.value = true
-                    toastMessage.value = "${response.message.username}"
-                }
-                else if(response.message?.phoneNo!=null){
-                    showToast.value = true
-                    toastMessage.value = "${response.message.phoneNo}"
-                }
-                else if (response.message?.nonFieldErrors!=null){
-                    showToast.value = true
-                    toastMessage.value = "${response.message.nonFieldErrors}"
-                }
-                else if (response.message?.nonFieldErrors!=null){
-                    showToast.value = true
-                    toastMessage.value = "${response.message.nonFieldErrors}"
-                }
-
+            is NetworkResult.Error -> {
+                toastMessage.value = response.message.toString()
+                showToast.value = true
             }
+            is NetworkResult.Loading -> {}
         }
-
     }
 
-    if (showToast.value) {
-        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false
+    LaunchedEffect(showToast.value) {
+        if (showToast.value) {
+            Toast.makeText(context , toastMessage.value , Toast.LENGTH_SHORT).show()
+            showToast.value = false
+        }
     }
 
 
@@ -267,7 +249,7 @@ fun checkValidity(
     }
     else if (name.isEmpty())
     {
-        Toast.makeText(context,"Name Can't be null",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,"Name Can't be Empty",Toast.LENGTH_LONG).show()
         return false
     }
     else if(email.length>200){
@@ -279,22 +261,22 @@ fun checkValidity(
         Toast.makeText(context,"Email Can't be null",Toast.LENGTH_LONG).show()
         return false
     }
-    else if(phone.length>10){
-        Toast.makeText(context,"Phone Number length greater than 10",Toast.LENGTH_LONG).show()
+    else if(phone.length!=10){
+        Toast.makeText(context,"Phone Number length should be 10 digits",Toast.LENGTH_LONG).show()
         return false
     }
     else if (phone.isEmpty())
     {
-        Toast.makeText(context,"Phone Number Can't be null",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,"Phone Number Can't be Empty",Toast.LENGTH_LONG).show()
         return false
     }
     else if (room.length>10){
-        Toast.makeText(context,"Room Number length greater than 10",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,"Room Number length can't be greater than 10",Toast.LENGTH_LONG).show()
         return false
     }
     else if (room.isEmpty())
     {
-        Toast.makeText(context,"Room Number Can't be null",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,"Room Number Can't be Empty",Toast.LENGTH_LONG).show()
         return false
     }
 
@@ -412,6 +394,7 @@ fun SimpleOutlinedTextFieldName(): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
@@ -465,15 +448,11 @@ fun SimpleOutlinedTextFieldUsername(): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
-            focusedBorderColor = if(text.isEmpty()) Color.White
-            else if(user.contains(text))
-                Color.Red
-            else
-                Color.Green ,
-            //Color(0xFF64bf75),
+            focusedBorderColor =  Color.White,
             unfocusedBorderColor = Color(0xFF383838) ,
         ) ,
         singleLine = true,
@@ -523,6 +502,7 @@ fun SimpleOutlinedTextFieldEmail(): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
@@ -578,6 +558,7 @@ fun SimpleOutlinedTextFieldPhone(): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
@@ -625,6 +606,7 @@ fun SimpleOutlinedTextFieldRoom(): String {
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,

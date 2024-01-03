@@ -36,6 +36,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -64,8 +65,11 @@ import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.SignInScreenViewModel
+import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
+import com.original.sense.psit.di.NetworkResult
 import com.original.sense.psit.model.PostModel.LoginPost
+import com.original.sense.psit.screens.access
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -254,20 +258,23 @@ fun SignInSheet(navController: NavHostController) {
 
     val signInScreenViewModel : SignInScreenViewModel = hiltViewModel()
 
-    val loginStatus by signInScreenViewModel.loginStatus.observeAsState()
+    val loginStatus by signInScreenViewModel.userResponseLiveData.observeAsState()
 
 
     loginStatus?.let { response ->
-
-        if(!response.error!!) {
-            showToast.value = true
-            toastMessage.value = " ${response.responseData?.msg}"
-            msg.value = response.responseData?.msg!!
-            error.value = response.error
-        }
-        else{
-            showToast.value = true
-            toastMessage.value = " ${response.message}"
+        when(response){
+            is NetworkResult.Success -> {
+                error.value = false
+                toastMessage.value = response.data?.responseData?.msg.toString()
+                showToast.value = true
+                navController.popBackStack()
+                navController.navigate("home")
+            }
+            is NetworkResult.Error -> {
+                toastMessage.value = response.message.toString()
+                showToast.value = true
+            }
+            is NetworkResult.Loading -> {}
         }
     }
 
@@ -308,9 +315,11 @@ fun SignInSheet(navController: NavHostController) {
 //        }
 //    }
 
-    if (showToast.value) {
-        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
-        showToast.value = false
+    LaunchedEffect(showToast.value) {
+        if (showToast.value) {
+            Toast.makeText(context , toastMessage.value , Toast.LENGTH_SHORT).show()
+            showToast.value = false
+        }
     }
 
 
@@ -467,14 +476,10 @@ fun SimpleOutlinedTextFieldUsername2(): String {
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White ,
             focusedContainerColor = containerColor ,
+            unfocusedTextColor = Color.White,
             unfocusedContainerColor = containerColor ,
             disabledContainerColor = containerColor ,
-            focusedBorderColor = if(text.isEmpty()) Color.White
-            else if(user.contains(text))
-                Color.Red
-            else
-                Color.Green ,
-            //Color(0xFF64bf75),
+            focusedBorderColor = Color.White,
             unfocusedBorderColor = Color(0xFF383838) ,
         ) ,
         singleLine = true,

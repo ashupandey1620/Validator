@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -44,13 +45,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.original.sense.psit.R
-import com.original.sense.psit.ViewModels.ProfileScreenViewModel
 import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.TokenStoreViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.ui.theme.poppins
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -335,12 +335,17 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
         }
     }
 
-    Card(onClick = {
-        refreshToken?.let { psitViewModel.logOut(it) }
+    LaunchedEffect(getLogout){
+        delay(1000)
         navController.popBackStack()
         navController.navigate("signIn_page")
-                   },
+    }
 
+
+    Card(onClick = {
+
+        refreshToken?.let { psitViewModel.logOut(it) }
+       },
 
         colors = CardDefaults.cardColors(Color(0xFF383841)),
         modifier = Modifier

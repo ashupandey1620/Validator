@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Repository.PsitRepository
 import com.original.sense.psit.Tokens.TokenStore
+import com.original.sense.psit.di.NetworkResult
+import com.original.sense.psit.model.PostModel.LoginPost
 import com.original.sense.psit.model.PostModel.TempRegisterPost
+import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,14 +21,13 @@ class SignUpScreenViewModel @Inject constructor(
     private val tokenStore: TokenStore
 ): ViewModel(){
 
-    private val _registrationStatus = MutableLiveData<TempRegister?>()
-    val registrationStatus: LiveData<TempRegister?> = _registrationStatus
+    val registerResponseLiveData : LiveData<NetworkResult<TempRegister>>
+        get() = repository.registerResponseLiveData
 
 
-    fun registerUser(tempRegisterPost: TempRegisterPost) {
+    fun registerUser(request:TempRegisterPost) {
         viewModelScope.launch {
-            val result = repository.registerUser(tempRegisterPost)
-            _registrationStatus.postValue(result)
+            repository.registerUser(request)
         }
     }
 }

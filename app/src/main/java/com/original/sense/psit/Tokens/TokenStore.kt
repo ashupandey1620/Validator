@@ -20,7 +20,6 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
         val NAME = stringPreferencesKey("name")
         val PHONE_NO = stringPreferencesKey("phone_no")
         val ROOM_NO = stringPreferencesKey("room_no")
-
     }
 
     val accessTokenFlow: Flow<String?> = dataStore.data.map { preferences ->
@@ -54,9 +53,24 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
 
 
     suspend fun saveTokens(accessToken: String, refreshToken: String) {
+
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN_KEY] = accessToken
             preferences[REFRESH_TOKEN_KEY] = refreshToken
+        }
+    }
+
+
+    suspend fun clearTokens() {
+
+        dataStore.edit { preferences ->
+            preferences[ACCESS_TOKEN_KEY] = ""
+            preferences[REFRESH_TOKEN_KEY] = ""
+            preferences[USER_NAME] = ""
+            preferences[E_MAIL] = ""
+            preferences[NAME] = ""
+            preferences[PHONE_NO] = ""
+            preferences[ROOM_NO] = ""
         }
     }
 
@@ -69,4 +83,6 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
             preferences[ROOM_NO]     =    roomNo
         }
     }
+
+
 }

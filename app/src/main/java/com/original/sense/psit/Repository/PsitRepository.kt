@@ -1,7 +1,10 @@
 package com.original.sense.psit.Repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.original.sense.psit.API.PsitApi
+import com.original.sense.psit.di.NetworkResult
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
 import com.original.sense.psit.model.PostModel.LoginPost
@@ -25,30 +28,75 @@ import com.original.sense.psit.model.ResponseModel.ResponseTokenRefresh
 import com.original.sense.psit.model.ResponseModel.ResposneFullDetails
 import com.original.sense.psit.model.ResponseModel.TempRegister
 import com.original.sense.psit.model.ResponseModel.UserProfileDetail
+import org.json.JSONObject
 import javax.inject.Inject
 
 class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
-//    private val _loginResponseLiveData = MutableLiveData<NetworkResult<UserResponse>>()
-//    val userResponseLiveData : LiveData<NetworkResult<UserResponse>>
-//        get() = _loginResponseLiveData
-//
-//
+    private val _loginResponseLiveData = MutableLiveData<NetworkResult<LoginResponse>>()
+    val userResponseLiveData : LiveData<NetworkResult<LoginResponse>>
+        get() = _loginResponseLiveData
 
-
-
-
-
-    suspend fun registerUser(tempRegisterPost: TempRegisterPost): TempRegister? {
+    suspend fun loginUser(loginPost: LoginPost): LoginResponse?  {
         return try {
-            val response = psitApi.tempRegister(tempRegisterPost)
-            if (!response.isSuccessful) {
-                response.errorBody()
+            val response = psitApi.login(loginPost)
+            if (response.isSuccessful && response.body()!=null) {
+                _loginResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+            } else if (response.errorBody()!=null) {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _loginResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
             }
             response.body()
         } catch (e: Exception) {
-            Log.d("KodanKing-error",e.toString())
+             _loginResponseLiveData.postValue(NetworkResult.Error("Wrong Credentials"))
             null
+        }
+    }
+
+    private val _registerResponseLiveData = MutableLiveData<NetworkResult<TempRegister>>()
+    val registerResponseLiveData : LiveData<NetworkResult<TempRegister>>
+        get() = _registerResponseLiveData
+
+    suspend fun registerUser(tempRegisterPost: TempRegisterPost) {
+       try {
+           val response = psitApi.tempRegister(tempRegisterPost)
+           if (response.isSuccessful && response.body()!=null) {
+               _registerResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+           } else if (response.errorBody()!=null) {
+               val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+
+               val emailErrors = errorObj.getJSONObject("message").getJSONArray("email")
+               val usernameErrors = errorObj.getJSONObject("message").getJSONArray("username")
+               val phoneErrors = errorObj.getJSONObject("message").getJSONArray("phoneNo")
+               val nfeErrors = errorObj.getJSONObject("message").getJSONArray("non_field_errors")
+
+               Log.d("Register-errors",emailErrors.length().toString())
+               Log.d("Register-username",emailErrors.length().toString())
+               Log.d("Register-phone",emailErrors.length().toString())
+               Log.d("Register-nfe",emailErrors.length().toString())
+
+               if (emailErrors.length()!=0&&emailErrors[0]!=null) {
+                   Log.d("Register-errors",emailErrors[0].toString())
+                   _registerResponseLiveData.postValue(NetworkResult.Error(emailErrors[0].toString()))
+               }
+               else if (usernameErrors.length()!=0 && usernameErrors[0]!=null) {
+                   Log.d("Register-errors",usernameErrors[0].toString())
+                   _registerResponseLiveData.postValue(NetworkResult.Error(usernameErrors[0].toString()))
+               }
+               else if (phoneErrors.length()!=0 && phoneErrors[0]!=null) {
+                   Log.d("Register-errors",phoneErrors[0].toString())
+                   _registerResponseLiveData.postValue(NetworkResult.Error(phoneErrors[0].toString()))
+               }
+               else if (nfeErrors.length()!=0 && nfeErrors[0]!=null) {
+                   Log.d("Register-errors",nfeErrors[0].toString())
+                   _registerResponseLiveData.postValue(NetworkResult.Error(nfeErrors[0].toString()))
+               }
+               else {
+                   _registerResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong2"))
+               }
+           }
+        } catch (e: Exception) {
+           _registerResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -73,26 +121,25 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
 
 
-
-    suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
-        return try {
-            val response = psitApi.login(loginPost)
-            if (response.isSuccessful) {
-                val loginResponse = response.body()
-                /*
-                Log.d("fatal", "Response code: ${response.code()}")
-                Log.d("fatal", "Response body: ${loginResponse.toString()}")
-                */
-
-                loginResponse
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("fatal", "Exception: ${e.message}")
-            null
-        }
-    }
+//    suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
+//        return try {
+//            val response = psitApi.login(loginPost)
+//            if (response.isSuccessful) {
+//                val loginResponse = response.body()
+//                /*
+//                Log.d("fatal", "Response code: ${response.code()}")
+//                Log.d("fatal", "Response body: ${loginResponse.toString()}")
+//                */
+//
+//                loginResponse
+//            } else {
+//                null
+//            }
+//        } catch (e: Exception) {
+//            Log.e("fatal", "Exception: ${e.message}")
+//            null
+//        }
+//    }
 
 
 

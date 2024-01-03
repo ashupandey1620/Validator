@@ -36,10 +36,10 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface PsitApi {
-    @Headers("Content-Type: application/json")
-    @POST("/login")
-    suspend fun login(@Body request: LoginRequest?): Response<LoginResponse2>
-
+//    @Headers("Content-Type: application/json")
+//    @POST("/login")
+//    suspend fun login(@Body request: LoginRequest?): Response<LoginResponse2>
+//
 
     @Headers("Content-Type: application/json")
     @POST("/api/user/logout/")

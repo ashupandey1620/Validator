@@ -129,14 +129,14 @@ class PsitViewModel @Inject constructor(private val repository: PsitRepository, 
 
     fun logOut(refreshToken:String) {
         viewModelScope.launch {
+            clearTokens()
             val result = repository.logOut(refreshToken)
-
             _logoutResponse.postValue(result)
         }
     }
 
     suspend fun clearTokens() {
-        tokenStore.saveTokens("", "") // Set tokens to empty strings or null as needed
+        tokenStore.clearTokens()
     }
 
 }

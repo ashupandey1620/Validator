@@ -62,9 +62,7 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
-    accessToken?.let { str ->
-        access = accessToken.toString()
-    }
+
 
 
     LaunchedEffect(key1 = true) {
@@ -73,13 +71,9 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
         )
         delay(1000)
 
-        if(access!="") {
+        if(accessToken!="") {
             navController.popBackStack()
             navController.navigate("HomeGraph")
-        }
-        else if (onBoardingIsFinished(context = context)) {
-            navController.popBackStack()
-            navController.navigate("signup_page")
         }
         else
          {

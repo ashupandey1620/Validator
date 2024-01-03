@@ -114,7 +114,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
 
     LaunchedEffect(Unit){
 
-        val studentPost = rollNum?.let { listOf(it.toLong()) }?.let { PermissionPost(it) }
+        val studentPost = rollNum?.let { listOf(it) }?.let { PermissionPost(it) }
 
         studentPost?.let { detailScreenViewModel.getPermission(accessToken.toString(), it) }
     }
@@ -426,12 +426,13 @@ fun AllowedLectures(assignedListState: State<List<AssignedLectureModel>?>) {
                 )
 
 
-                Icon(
-                    modifier = Modifier.size(25.dp) ,
-                    painter = painterResource(id = R.drawable.delete) ,
-                    contentDescription = "delete Icon" ,
-                    tint = Color.White
-                )
+
+//                Icon(
+//                    modifier = Modifier.size(25.dp) ,
+//                    painter = painterResource(id = R.drawable.delete) ,
+//                    contentDescription = "delete Icon" ,
+//                    tint = Color.White
+//                )
 
             }
 
@@ -474,10 +475,11 @@ fun ListItem2(model: AssignedLecture) {
                 ,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState },
-                    colors = CheckboxDefaults.colors(checkmarkColor = Color.White,
-                        checkedColor = Color.Red,
-                        uncheckedColor = Color.White) )
+//                Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState },
+//                    colors = CheckboxDefaults.colors(checkmarkColor = Color.White,
+//                        checkedColor = Color.Red,
+//                        uncheckedColor = Color.White) )
+                Spacer(modifier = Modifier.size(25.dp))
 
                 Column (modifier = Modifier.padding(vertical = 10.dp)){
 
@@ -576,21 +578,21 @@ fun FrontLobe(modifier: Modifier , rollNum: Long? , name: String? , navControlle
 }
 
 
-@Composable
-fun ImageFromUrl(url: String) {
-    // Create an ImagePainter using the URL
-    val painter = rememberImagePainter(
-        data = url,
-        builder = {
-            transformations(CircleCropTransformation()) 
-        }
-    )
-
-    // Load the image with Image composable
-    Image(
-        painter = painter,
-        contentDescription = null,
-        contentScale = ContentScale.FillBounds,
-        colorFilter = ColorFilter.tint(Color.White)
-    )
-}
+//@Composable
+//fun ImageFromUrl(url: String) {
+//    // Create an ImagePainter using the URL
+//    val painter = rememberImagePainter(
+//        data = url,
+//        builder = {
+//            transformations(CircleCropTransformation())
+//        }
+//    )
+//
+//    // Load the image with Image composable
+//    Image(
+//        painter = painter,
+//        contentDescription = null,
+//        contentScale = ContentScale.FillBounds,
+//        colorFilter = ColorFilter.tint(Color.White)
+//    )
+//}
