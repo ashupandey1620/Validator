@@ -66,7 +66,7 @@ import kotlinx.coroutines.delay
 
 var emailResend = ""
 @Composable
-fun ResendPasswordScreen(navController: NavHostController , context: MainActivity) {
+fun ResendPasswordScreen(navController: NavHostController) {
 
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color(0xFF222228)

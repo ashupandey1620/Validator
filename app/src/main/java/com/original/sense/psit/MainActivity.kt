@@ -58,8 +58,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -77,25 +75,6 @@ class MainActivity : ComponentActivity() {
             ExistingPeriodicWorkPolicy.KEEP,
             periodicRequest
         )
-
-
-
-
-
-
-
-
-
-//        val workRequest = OneTimeWorkRequestBuilder<CustomWorker>()
-//            .setInitialDelay(Duration.ofSeconds(1))
-//            .setBackoffCriteria(
-//                backoffPolicy = BackoffPolicy.LINEAR,
-//                duration = Duration.ofMinutes(15)
-//            )
-//            .build()
-//
-//        WorkManager.getInstance(applicationContext).enqueue(workRequest)
-
 
         psitViewModel = ViewModelProvider(this).get(PsitViewModel::class.java) // Obtain PsitViewModel instance
 
@@ -121,27 +100,28 @@ class MainActivity : ComponentActivity() {
                             OnboardingScreen(navController = navController, context = this@MainActivity)
                         }
 
-                        navigation(
-                            route = "Auth_Graph",
-                            startDestination = "signup_page"
-                        ){
-
-                            composable("signIn_page"){
-                                SignInScreen(navController = navController, context = this@MainActivity)
-                            }
-
-                            composable("signup_page"){
-                                SignUpPage(navController = navController, context = this@MainActivity)
-                            }
-
-                            composable("forget_page") {
-                                ForgotPasswordScreen(navController = navController, context = this@MainActivity)
-                            }
-
-                            composable("resend_password_page") {
-                                ResendPasswordScreen(navController = navController, context = this@MainActivity)
-                            }
-                        }
+//
+//                        navigation(
+//                            route = "Auth_Graph",
+//                            startDestination = "signup_page"
+//                        ){
+//
+//                            composable("signIn_page"){
+//                                SignInScreen(navController = navController, context = this@MainActivity)
+//                            }
+//
+//                            composable("signup_page"){
+//                                SignUpPage(navController = navController, context = this@MainActivity)
+//                            }
+//
+//                            composable("forget_page") {
+//                                ForgotPasswordScreen(navController = navController, context = this@MainActivity)
+//                            }
+//
+//                            composable("resend_password_page") {
+//                                ResendPasswordScreen(navController = navController, context = this@MainActivity)
+//                            }
+//                        }
 
                         composable("HomeGraph") {
                             HomePage(this@MainActivity,studentListViewModel)

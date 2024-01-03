@@ -249,9 +249,6 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
             }
         }
 
-
-      //  Spacer(modifier = Modifier.padding(.dp))
-
         val width = animateDpAsState(targetValue = if(clickCount==0) 60.dp
         else if (clickCount==1) 150.dp
         else if (clickCount==2) 300.dp
@@ -276,7 +273,7 @@ fun OnboardingScreen(navController: NavHostController , context: MainActivity) {
                 if (clickCount2 == 4) {
                     onBoardingIsFinished(context = context)
                     navController.popBackStack()
-                    navController.navigate("Auth_Graph")
+                    navController.navigate("HomeGraph")
                 }
             } ,
         ) {

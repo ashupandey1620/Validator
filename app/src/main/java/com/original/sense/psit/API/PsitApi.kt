@@ -1,5 +1,7 @@
 package com.original.sense.psit.API
 
+import com.original.sense.psit.SerializerProblem.LoginRequest
+import com.original.sense.psit.SerializerProblem.LoginResponse2
 import com.original.sense.psit.model.PostModel.ChangePasswordPost
 import com.original.sense.psit.model.PostModel.GetPwdPost
 import com.original.sense.psit.model.PostModel.GetStudentPost
@@ -11,7 +13,6 @@ import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.model.PostModel.PostTokenAccess
 import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
-import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.PostModel.sendResetPassword
 import com.original.sense.psit.model.RefreshTokenRequest
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
@@ -20,7 +21,6 @@ import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
-import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
@@ -36,17 +36,10 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface PsitApi {
+    @Headers("Content-Type: application/json")
+    @POST("/login")
+    suspend fun login(@Body request: LoginRequest?): Response<LoginResponse2>
 
-//    @Headers("Content-Type: application/json")
-//    @FormUrlEncoded
-//    @POST("/api/user/register/")
-//    suspend fun tempRegister(
-//        @Field("email") email: String ,
-//        @Field("name") name: String ,
-//        @Field("username") username: String ,
-//        @Field("phoneno") phoneno: Long ,
-//        @Field("roomno") roomno: String
-//    ):Response<TempRegister>
 
     @Headers("Content-Type: application/json")
     @POST("/api/user/logout/")

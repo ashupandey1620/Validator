@@ -35,6 +35,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.original.sense.psit.Authentication.ForgotPasswordScreen
+import com.original.sense.psit.Authentication.ResendPasswordScreen
+import com.original.sense.psit.Authentication.SignInScreen
+import com.original.sense.psit.Authentication.SignUpPage
 import com.original.sense.psit.ViewModels.StudentListViewModel
 import com.original.sense.psit.screens.AddScreen
 import com.original.sense.psit.screens.ChangePassword
@@ -171,7 +175,7 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
     NavHost(
         navController = navController,
         route = "HomeGraph",
-        startDestination = "home"
+        startDestination = "signIn_page"
     ) {
 
             composable(route = "home") {
@@ -184,45 +188,71 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
                 ProfileScreen(navController)
             }
 
-        composable(route = "notification") {
-            NotificationScreen(navController)
+            composable(route = "notification") {
+                NotificationScreen(navController)
+            }
+
+            composable(route = "editProfile") {
+                EditProfileScreen(navController)
+            }
+
+            composable(route = "studentProfileInfo/{rollNum}",
+                arguments = listOf(
+                    navArgument(name = "rollNum"){
+                        type = NavType.LongType
+                    },
+                ))
+                 { rollNum ->
+                StudentProfile(
+                    navController ,
+                    rollNum.arguments?.getLong("rollNum")
+                )
+            }
+
+            composable(route = "detailedScreen/{rollNum}/{name}",
+                arguments = listOf(
+                    navArgument(name = "rollNum"){
+                        type = NavType.LongType
+                    },
+                    navArgument(name = "name"){
+                        type = NavType.StringType
+                    }
+                )
+            ) {rollNum ->
+                detailScreen(navController,
+                    rollNum.arguments?.getLong("rollNum"),
+                    rollNum.arguments?.getString("name"))
+            }
+
+            composable(route = "changePassword") {
+                ChangePassword(navController)
+            }
+
+        /**
+         *
+         *
+         *
+         * Auth Graph Composables
+         *
+         *
+         *
+         */
+
+
+        composable("signIn_page"){
+            SignInScreen(navController = navController)
         }
 
-        composable(route = "editProfile") {
-            EditProfileScreen(navController)
+        composable("signup_page"){
+            SignUpPage(navController = navController)
         }
 
-        composable(route = "studentProfileInfo/{rollNum}",
-            arguments = listOf(
-                navArgument(name = "rollNum"){
-                    type = NavType.LongType
-                },
-            ))
-             { rollNum ->
-            StudentProfile(
-                navController ,
-                rollNum.arguments?.getLong("rollNum")
-            )
+        composable("forget_page") {
+            ForgotPasswordScreen(navController = navController)
         }
 
-        composable(route = "detailedScreen/{rollNum}/{name}",
-            arguments = listOf(
-                navArgument(name = "rollNum"){
-                    type = NavType.LongType
-                },
-                navArgument(name = "name"){
-                    type = NavType.StringType
-                }
-            )
-        ) {rollNum ->
-            detailScreen(navController,
-                rollNum.arguments?.getLong("rollNum"),
-                rollNum.arguments?.getString("name"))
+        composable("resend_password_page") {
+            ResendPasswordScreen(navController = navController)
         }
-
-        composable(route = "changePassword") {
-            ChangePassword(navController)
-        }
-
     }
 }

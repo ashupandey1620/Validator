@@ -12,14 +12,12 @@ import com.original.sense.psit.model.PostModel.PostSuspension
 import com.original.sense.psit.model.PostModel.PostTokenAccess
 import com.original.sense.psit.model.PostModel.PostTokenRefresh
 import com.original.sense.psit.model.PostModel.TempRegisterPost
-import com.original.sense.psit.model.PostModel.getDelegationPost
 import com.original.sense.psit.model.RefreshTokenRequest
 import com.original.sense.psit.model.ResponseModel.ChangePasswordResponse
 import com.original.sense.psit.model.ResponseModel.GetStudentResponse
 import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.model.ResponseModel.LogoutResponse
 import com.original.sense.psit.model.ResponseModel.ResponseEditProfile
-import com.original.sense.psit.model.ResponseModel.ResponseGetDelegation
 import com.original.sense.psit.model.ResponseModel.ResponsePermission
 import com.original.sense.psit.model.ResponseModel.ResponsePostDelegation
 import com.original.sense.psit.model.ResponseModel.ResponseTokenAccess
@@ -31,9 +29,22 @@ import javax.inject.Inject
 
 class PsitRepository @Inject constructor(private val psitApi : PsitApi){
 
+//    private val _loginResponseLiveData = MutableLiveData<NetworkResult<UserResponse>>()
+//    val userResponseLiveData : LiveData<NetworkResult<UserResponse>>
+//        get() = _loginResponseLiveData
+//
+//
+
+
+
+
+
     suspend fun registerUser(tempRegisterPost: TempRegisterPost): TempRegister? {
         return try {
             val response = psitApi.tempRegister(tempRegisterPost)
+            if (!response.isSuccessful) {
+                response.errorBody()
+            }
             response.body()
         } catch (e: Exception) {
             Log.d("KodanKing-error",e.toString())
@@ -42,17 +53,39 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
     }
 
 
+//    suspend fun loginUser(request: LoginRequest): Resource<LoginResponse2> {
+//        return try {
+//            val response = psitApi.login(request)
+//            if (response.errorBody != null) {
+//                Resource.Error(response.errorBody)
+//            } else {
+//                response.data?.let {
+//                    Resource.Success(it)
+//                } ?: Resource.Error(null)
+//            }
+//        } catch (e: Exception) {
+//            Log.e("fatal", "Exception: ${e.message}")
+//            Resource.Error(null)
+//        }
+//    }
+
+
+
+
+
+
     suspend fun loginUser(loginPost: LoginPost): LoginResponse? {
         return try {
             val response = psitApi.login(loginPost)
             if (response.isSuccessful) {
                 val loginResponse = response.body()
-                //Log.d("fatal", "Response code: ${response.code()}")
-                //Log.d("fatal", "Response body: ${loginResponse.toString()}")
+                /*
+                Log.d("fatal", "Response code: ${response.code()}")
+                Log.d("fatal", "Response body: ${loginResponse.toString()}")
+                */
 
                 loginResponse
             } else {
-
                 null
             }
         } catch (e: Exception) {
@@ -60,6 +93,9 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
             null
         }
     }
+
+
+
 
     suspend fun changePassword(accessToken:String,changePasswordPost: ChangePasswordPost): ChangePasswordResponse? {
         return try {
@@ -150,7 +186,7 @@ class PsitRepository @Inject constructor(private val psitApi : PsitApi){
         return try {
             val response = psitApi.updateUserProfile("Bearer $access",postEditProfile)
 
-                response.body()
+            response.body()
 
         } catch (e: Exception) {
             // Handle exceptions here

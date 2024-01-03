@@ -1,6 +1,6 @@
 package com.original.sense.psit.Authentication
 
-import android.util.Log
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,6 +44,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -69,13 +70,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.original.sense.psit.MainActivity
-import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.SignUpScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.PostModel.TempRegisterPost
 import com.original.sense.psit.ui.theme.poppins
-import com.shashank.sony.fancytoastlib.FancyToast
 
 
 var name  = ""
@@ -83,10 +81,11 @@ var userName = ""
 var email = ""
 var phone = ""
 var room = ""
-
-
+var checkedPolicy = false
 @Composable
-fun SignUpPage(navController: NavHostController , context: MainActivity) {
+fun SignUpPage(navController: NavHostController) {
+
+    val context = LocalContext.current.applicationContext
 
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color(0xFF222228)
@@ -94,6 +93,8 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
         color = statusBarColor,
         darkIcons = false
     )
+    val showToast = remember { mutableStateOf(false) }
+    val toastMessage = remember { mutableStateOf("") }
 
     var dialogVisible by remember { mutableStateOf(false) }
     
@@ -101,33 +102,52 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
     val registerResponse by signUpViewModel.registrationStatus.observeAsState()
 
-    registerResponse?.let { response ->
-        Log.d("Registerola -Response","$response")
-        Log.d("Registerola -error","${response.error}")
-        Log.d("Registerola -responseData","${response.responseData}")
-        Log.d("Registerola -","${response.message?.email}")
-        Log.d("Registerola -statusCode","${response.statusCode}")
+    LaunchedEffect(registerResponse) {
+        registerResponse?.let { response ->
+            if (response.error == false)
+            {
+                showToast.value = true
+                toastMessage.value = "${response.responseData}"
+            }
+            if(response.errors == true)
+            {
+                if(response.message?.email!=null) {
+                    showToast.value = true
+                    toastMessage.value = "${response.message.email}"
+                }
+                else if(response.message?.username!=null){
+                    showToast.value = true
+                    toastMessage.value = "${response.message.username}"
+                }
+                else if(response.message?.phoneNo!=null){
+                    showToast.value = true
+                    toastMessage.value = "${response.message.phoneNo}"
+                }
+                else if (response.message?.nonFieldErrors!=null){
+                    showToast.value = true
+                    toastMessage.value = "${response.message.nonFieldErrors}"
+                }
+                else if (response.message?.nonFieldErrors!=null){
+                    showToast.value = true
+                    toastMessage.value = "${response.message.nonFieldErrors}"
+                }
+
+            }
+        }
 
     }
 
-
-
-    if(registerResponse?.error == true)
-    {
-        Toast.makeText(context,"Error occurred",Toast.LENGTH_LONG).show()
+    if (showToast.value) {
+        Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
+        showToast.value = false
     }
-    else
-    {
-        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
-    }
-
 
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = GradientBackground())
-            .padding(18.dp)
+            .padding(horizontal = 18.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -172,16 +192,26 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
             Button(onClick = {
 
-                val signUpPost = TempRegisterPost(
-                    email,
-                    name,
-                    userName,
-                    phone.toLong(),
-                    room) // Create LoginPost data class or object
+                if(checkValidity(name, email, phone, room, context)) {
+                    if (!checkedPolicy) {
+                        Toast.makeText(
+                            context,
+                            "You must Agree with the Privacy Policy" ,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
 
-                signUpViewModel.registerUser(signUpPost)
+                        val signUpPost = TempRegisterPost(
+                            email ,
+                            name ,
+                            userName ,
+                            phone.toLong() ,
+                            room
+                        )
+                        signUpViewModel.registerUser(signUpPost)
+                    }
+                }
 
-                Toast.makeText(context,"Clicked",Toast.LENGTH_LONG).show()
 
             },
                 colors = ButtonDefaults.buttonColors(Color(0xFF3068de)),
@@ -225,11 +255,10 @@ fun SignUpPage(navController: NavHostController , context: MainActivity) {
 
 fun checkValidity(
     name: String ,
-    userName: String ,
     email: String ,
     phone: String ,
     room: String ,
-    context: MainActivity
+    context: Context
 ): Boolean {
     if (name.any { it.isDigit() })
     {
@@ -288,7 +317,9 @@ fun AlreadyAccount(navController: NavHostController) {
             fontFamily = poppins,
             )
 
-        TextButton(onClick = { navController.navigate("signIn_page") }, modifier = Modifier.padding(start = 3.dp)) {
+        TextButton(onClick = {
+            navController.popBackStack()
+            navController.navigate("signIn_page") }, modifier = Modifier.padding(start = 3.dp)) {
             Text(text = "Log In",
                 color = Color(0xFF757575),
                 fontSize = 13.sp,
@@ -625,7 +656,9 @@ fun SimpleOutlinedTextFieldRoom(): String {
 @Composable
 fun MyCheckedState() {
     var checkedState by remember { mutableStateOf(false) }
-    Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState })
+    Checkbox(checked = checkedState , onCheckedChange = { checkedState = !checkedState
+        checkedPolicy = true
+    })
 }
 
 @Composable

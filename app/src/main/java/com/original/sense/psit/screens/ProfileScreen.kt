@@ -1,6 +1,7 @@
 package com.original.sense.psit.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -310,6 +311,8 @@ fun SupportAccountItem(mainText: String, onClick: () -> Unit) {
 @Composable
 fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: NavController) {
 
+    val context = LocalContext.current.applicationContext
+
     val tokenStoreViewModel : TokenStoreViewModel = hiltViewModel()
 
     val refreshToken by tokenStoreViewModel.readRefresh.collectAsState()
@@ -324,7 +327,7 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
         Log.d("HAGEMARU","$getLogout")
         if (getLogout != null) {
             if (getLogout.error){
-
+                Toast.makeText(context,"Logout not done",Toast.LENGTH_LONG).show()
             }
             else{
 
@@ -334,11 +337,8 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
 
     Card(onClick = {
         refreshToken?.let { psitViewModel.logOut(it) }
-
-
-        navController.navigate("Auth_Graph")
-
-
+        navController.popBackStack()
+        navController.navigate("signIn_page")
                    },
 
 

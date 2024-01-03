@@ -1,6 +1,7 @@
 package com.original.sense.psit.model.ResponseModel
 
 data class TempRegister(
+    val errors: Boolean?,
     val error: Boolean?,
     val message: Message1?,
     val responseData: Any?,

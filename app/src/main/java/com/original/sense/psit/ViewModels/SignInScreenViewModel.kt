@@ -55,4 +55,16 @@ class SignInScreenViewModel @Inject constructor(
 
         }
     }
+
+//
+//    private val _loginStatus = MutableLiveData<Resource<LoginResponse2>>()
+//    val loginStatus: LiveData<Resource<LoginResponse2>> = _loginStatus
+//
+//    fun loginUser(request: LoginRequest) {
+//        viewModelScope.launch {
+//            _loginStatus.value = Resource.Loading
+//            val result = repository.loginUser(request)
+//            _loginStatus.value = result
+//        }
+//    }
 }

@@ -55,7 +55,7 @@ import kotlinx.coroutines.delay
 
 var emailForgot = ""
 @Composable
-fun ForgotPasswordScreen(navController: NavHostController , context: MainActivity) {
+fun ForgotPasswordScreen(navController: NavHostController) {
 
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color(0xFF222228)
@@ -90,7 +90,6 @@ fun ForgotPasswordScreen(navController: NavHostController , context: MainActivit
         delay(500)
         image4Visibility.value = true
 //        delay(500)
-
 
     }
 
@@ -252,7 +251,6 @@ fun ResendSheet(navController: NavHostController) {
         colors = CardDefaults.cardColors(
             containerColor = Color.Black.copy(alpha = 0.4f)
         )
-
     ) {
 
         Column(
@@ -279,7 +277,6 @@ fun ResendSheet(navController: NavHostController) {
 
             emailForgot = SimpleOutlinedTextFieldEmail2()
 
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -292,9 +289,8 @@ fun ResendSheet(navController: NavHostController) {
                     fontFamily = poppins ,
                     fontSize = 12.sp ,
                     modifier = Modifier.clickable {
-
+                        navController.popBackStack()
                         navController.navigate("resend_password_page")
-
                     })
             }
 

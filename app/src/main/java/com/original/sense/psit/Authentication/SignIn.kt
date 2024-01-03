@@ -1,6 +1,5 @@
 package com.original.sense.psit.Authentication
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -37,7 +36,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -59,19 +57,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.original.sense.psit.MainActivity
 import com.original.sense.psit.R
-import com.original.sense.psit.ViewModels.PsitViewModel
 import com.original.sense.psit.ViewModels.SignInScreenViewModel
 import com.original.sense.psit.composable.GradientBackground
 import com.original.sense.psit.model.PostModel.LoginPost
-import com.original.sense.psit.model.ResponseModel.LoginResponse
 import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
@@ -79,9 +73,7 @@ var show = false
 var userNameSignIn = ""
 var password = ""
 @Composable
-fun SignInScreen(navController: NavHostController ,
-                 context: MainActivity,
-) {
+fun SignInScreen(navController: NavHostController) {
 
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color(0xFF222228)
@@ -266,6 +258,7 @@ fun SignInSheet(navController: NavHostController) {
 
 
     loginStatus?.let { response ->
+
         if(!response.error!!) {
             showToast.value = true
             toastMessage.value = " ${response.responseData?.msg}"
@@ -276,12 +269,44 @@ fun SignInSheet(navController: NavHostController) {
             showToast.value = true
             toastMessage.value = " ${response.message}"
         }
-
-
-
-
     }
 
+
+
+
+//
+//    when (response) {
+//        is Resource.Loading -> {
+//            // Handle loading state
+//        }
+//        is Resource.Success -> {
+//            // Handle success state
+//            showToast.value = true
+//            toastMessage.value = " ${response.data?.success}"
+////                msg.value = response.data?.msg ?: ""
+////                error.value = response.error ?: false
+//        }
+//        is Resource.Error -> {
+//            // Handle error state
+//            showToast.value = true
+//            val errorBodyString = response.errorBody?.string()
+//
+//            val gson = Gson()
+//            val type = object : TypeToken<Map<String , Any>>() {}.type
+//            val errorDetails: Map<String, Any> = gson.fromJson(errorBodyString, type)
+//
+//// Now errorDetails contains the parsed error body as key-value pairs
+//// You can access specific values using their keys, for example:
+//            val errorMessage = errorDetails["error"] as? String
+//            val errorCode = errorDetails["code"] as? Int
+//
+//// Set the toast message or handle the parsed error details as needed
+//            toastMessage.value = "Error: $errorMessage, Code: $errorCode"
+////                toastMessage.value = " ${response.errorBody?.string()}"
+//            // Convert errorBody to string
+//            // Handle other error conditions
+//        }
+//    }
 
     if (showToast.value) {
         Toast.makeText(LocalContext.current, toastMessage.value, Toast.LENGTH_SHORT).show()
@@ -290,7 +315,8 @@ fun SignInSheet(navController: NavHostController) {
 
 
     if (!error.value){
-        navController.navigate("HomeGraph")
+        navController.popBackStack()
+        navController.navigate("home")
         show=false
     }
 
@@ -402,7 +428,7 @@ fun SignInSheet(navController: NavHostController) {
                         fontFamily = poppins ,
                         fontSize = 12.sp ,
                         modifier = Modifier.clickable {
-                            navController.popBackStack()
+//                            navController.popBackStack()
                             navController.navigate("signup_page")
                         })
                 }
