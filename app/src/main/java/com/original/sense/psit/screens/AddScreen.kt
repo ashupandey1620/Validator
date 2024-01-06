@@ -595,6 +595,7 @@ fun DateStartEnd() {
                     keyboardType = KeyboardType.Text
                 ) ,
                 colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.White,
                     focusedTextColor = Color.White ,
                     focusedContainerColor = containerColor ,
                     unfocusedContainerColor = containerColor ,
@@ -648,6 +649,7 @@ fun DateStartEnd() {
                     keyboardType = KeyboardType.Text
                 ) ,
                 colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.White,
                     focusedTextColor = Color.White ,
                     focusedContainerColor = containerColor ,
                     unfocusedContainerColor = containerColor ,
@@ -700,6 +702,7 @@ fun ReasonEditText(): String {
             keyboardType = KeyboardType.Text
         ) ,
         colors = OutlinedTextFieldDefaults.colors(
+            unfocusedTextColor = Color.White,
             focusedTextColor = Color.White ,
             focusedContainerColor = containerColor ,
             unfocusedContainerColor = containerColor ,
@@ -784,6 +787,7 @@ fun DescriptionDelegation() {
                 keyboardType = KeyboardType.Text
             ) ,
             colors = OutlinedTextFieldDefaults.colors(
+                unfocusedTextColor = Color.White,
                 focusedTextColor = Color.White ,
                 focusedContainerColor = containerColor ,
                 unfocusedContainerColor = containerColor ,
@@ -1177,6 +1181,7 @@ fun SubjectOfDelegation() {
                 keyboardType = KeyboardType.Text
             ) ,
             colors = OutlinedTextFieldDefaults.colors(
+                unfocusedTextColor = Color.White,
                 focusedTextColor = Color.White ,
                 focusedContainerColor = containerColor ,
                 unfocusedContainerColor = containerColor ,
