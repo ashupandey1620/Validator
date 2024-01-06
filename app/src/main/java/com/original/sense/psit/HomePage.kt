@@ -21,9 +21,11 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -51,6 +53,7 @@ import com.original.sense.psit.screens.NotificationScreen
 import com.original.sense.psit.screens.ProfileScreen
 import com.original.sense.psit.screens.StudentProfile
 import com.original.sense.psit.screens.detailScreen
+import kotlinx.coroutines.flow.first
 
 
 data class BottomNavigationItem(
@@ -61,6 +64,7 @@ data class BottomNavigationItem(
     val hasNews: Boolean ,
     val badgeCount: Int? = null
 )
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomePage(activity: Activity,studentListViewModel: StudentListViewModel, navController: NavHostController = rememberNavController()) {
     BottomNavigationBar(navController = navController,activity,studentListViewModel)
@@ -69,6 +73,7 @@ fun HomePage(activity: Activity,studentListViewModel: StudentListViewModel, navC
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -179,10 +184,13 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
 
     val accessToken by tokenStoreViewModel.readAccess.collectAsState()
 
+    val startPage = if (accessToken=="") "signIn_page" else "home"
+
+
     NavHost(
         navController = navController,
         route = "HomeGraph",
-        startDestination = if (accessToken=="") "signIn_page" else "home"
+        startDestination = startPage
     ) {
 
             composable(route = "home") {
@@ -235,6 +243,7 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
                 ChangePassword(navController)
             }
 
+
         /**
          *
          *
@@ -244,6 +253,7 @@ fun MainPageNavigation(navController: NavHostController,activity: Activity,stude
          *
          *
          */
+
 
 
         composable("signIn_page"){
