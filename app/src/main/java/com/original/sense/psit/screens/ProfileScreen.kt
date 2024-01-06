@@ -321,6 +321,16 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
 
     val getLogout by psitViewModel.getStudent.observeAsState()
 
+    var logoutEffectTriggered by remember { mutableStateOf(false) }
+
+
+    if (logoutEffectTriggered) {
+        LaunchedEffect(getLogout) {
+            delay(1000)
+            navController.popBackStack()
+            navController.navigate("signIn_page")
+        }
+    }
 
 
     getLogout.let { getLogout->
@@ -335,16 +345,9 @@ fun logoutAccountItem(mainText: String , onClick: () -> Unit , navController: Na
         }
     }
 
-    LaunchedEffect(getLogout){
-        delay(1000)
-        navController.popBackStack()
-        navController.navigate("signIn_page")
-    }
-
-
     Card(onClick = {
-
         refreshToken?.let { psitViewModel.logOut(it) }
+        logoutEffectTriggered = true
        },
 
         colors = CardDefaults.cardColors(Color(0xFF383841)),

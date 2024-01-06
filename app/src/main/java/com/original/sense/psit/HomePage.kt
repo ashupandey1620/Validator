@@ -78,6 +78,7 @@ fun HomePage(activity: Activity,studentListViewModel: StudentListViewModel, navC
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(navController: NavHostController,activity: Activity,studentListViewModel: StudentListViewModel) {
+
     val items = listOf(
         BottomNavigationItem(
             route = "home",
@@ -120,7 +121,9 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity,stud
     if (bottomDestination) {
         NavigationBar(containerColor = Color(0xFF1b1c1f)) {
             items.forEachIndexed { index , item ->
+
                 NavigationBarItem(
+
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
                         selectedTextColor = Color.White,
@@ -129,9 +132,10 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity,stud
                         unselectedTextColor = Color.White
                     ),
 
+                    selected = selectedItemIndex == index,
 
-                    selected = selectedItemIndex == index ,
-                    alwaysShowLabel = false ,
+                    alwaysShowLabel = false,
+
                     onClick = {
                         selectedItemIndex = index
                         navController.navigate(item.route) {
@@ -139,8 +143,10 @@ fun BottomNavigationBar(navController: NavHostController,activity: Activity,stud
                             launchSingleTop = true
                             restoreState = true
                         }
-                    } ,
-                    label = { Text(text = item.title) } ,
+                    },
+
+                    label = { Text(text = item.title) },
+
                     icon = {
                         BadgedBox(badge = {
                             if (item.badgeCount != null) {
