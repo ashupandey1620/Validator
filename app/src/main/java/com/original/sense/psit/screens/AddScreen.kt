@@ -440,17 +440,13 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                         onClick = {
                             checkVSuspension = checkValidity(startDate, endDate, reasonDesc,context)
 
-//                            if(checkVSuspension) {
-//                                show2 = !show2
-//                            }
-
                             if(checkVSuspension) {
                                 val suspensionPost = PostSuspension(
                                     reasonDesc ,
-                                    "2023-12-14" ,
+                                    startDate ,
                                     extractRollNumbers(studentListViewModel.studentList2) ,
-                                    "2023-12-16"
-                                    ) // Create LoginPost data class or object
+                                    endDate
+                                    )
 
                                 addScreenViewModel.postSuspension(access , suspensionPost)
                             }

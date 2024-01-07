@@ -1,7 +1,7 @@
 package com.original.sense.psit.screens
 
 import android.os.Build
-import android.widget.Toast
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -32,8 +32,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,8 +47,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,8 +55,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
@@ -111,6 +105,8 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
     val assignedListB = detailScreenViewModel.assignedList.observeAsState()
 
     val responsePermission by detailScreenViewModel.getPermission.observeAsState()
+
+
 
     LaunchedEffect(Unit){
 
@@ -314,12 +310,14 @@ fun Day(day: CalendarDay) {
 fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
     var selectedIndex by remember { mutableStateOf(0) }
 
+    val daysListState by detailScreenViewModel.daysListData.observeAsState(initial = emptyList())
+
+    Log.d("SuspensionDAYS",daysListState.toString())
 
     LaunchedEffect(Unit) {
         val initialSelectedItem = detailScreenViewModel.generateNextSevenDays().getOrNull(selectedIndex)
         delay(500)
         initialSelectedItem?.let { detailScreenViewModel.updateAssignedList(it) }
-
     }
 
     Column(
@@ -330,13 +328,14 @@ fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
         LazyRow {
             itemsIndexed(detailScreenViewModel.generateNextSevenDays()) { index, item ->
                 LazyListCardRowItem(
+                    index,
                     item,
                     isSelected = selectedIndex == index,
-                    onItemClicked = {
-                        selectedIndex = index
-                        detailScreenViewModel.updateAssignedList(item)
-                    }
-                )
+                    daysListState
+                ) {
+                    selectedIndex = index
+                    detailScreenViewModel.updateAssignedList(item)
+                }
             }
         }
     }
@@ -344,11 +343,20 @@ fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
 
 @Composable
 fun LazyListCardRowItem(
-    dateItem: DateItem,
-    isSelected: Boolean,
+    index: Int ,
+    dateItem: DateItem ,
+    isSelected: Boolean ,
+    daysListState: List<Boolean> ,
     onItemClicked: () -> Unit
 ) {
-    val color = if (isSelected) Color(0xFF3068de) else Color(0xFF383841)
+    //val color = if (isSelected) Color(0xFF3068de) else Color(0xFF383841)
+
+    val color = when {
+        isSelected -> Color(0xFF3068de)
+        daysListState.isNotEmpty() && index >= 0 && index < daysListState.size && daysListState[index] -> Color(0xFFDE3030)
+        else -> Color(0xFF383841)
+    }
+
 
     Card(
         modifier = Modifier
@@ -356,7 +364,7 @@ fun LazyListCardRowItem(
             .height(120.dp)
             .aspectRatio(0.5f)
             .clickable(onClick = onItemClicked),
-        colors = CardDefaults.cardColors(containerColor = color),
+        colors = CardDefaults.cardColors(containerColor =color),
         elevation = CardDefaults.cardElevation(10.dp),
         shape = RoundedCornerShape(35.dp)
     ) {
