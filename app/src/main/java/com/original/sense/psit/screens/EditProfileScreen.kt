@@ -70,6 +70,7 @@ fun EditProfileScreen(navController: NavHostController) {
 
     val name by tokenStoreViewModel.readName.collectAsState()
     val email by tokenStoreViewModel.readEmail.collectAsState()
+
     val phoneNumber by tokenStoreViewModel.readPhoneNo.collectAsState()
     val room by tokenStoreViewModel.readRoomNo.collectAsState()
 

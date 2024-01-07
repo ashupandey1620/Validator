@@ -31,7 +31,7 @@ class EditProfileViewModel  @Inject constructor(
 
             if (result != null && !result.error) {
                 delay(2000)
-                _updateUserProfile.value = null // Set to null after handling the response
+                _updateUserProfile.value = null
             }
         }
     }

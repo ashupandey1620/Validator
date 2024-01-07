@@ -84,5 +84,12 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
         }
     }
 
+    suspend fun updateProfile(phoneNo: String, roomNo: String) {
+        dataStore.edit { preferences ->
+            preferences[PHONE_NO]    =    phoneNo
+            preferences[ROOM_NO]     =    roomNo
+        }
+    }
+
 
 }

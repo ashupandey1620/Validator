@@ -78,15 +78,13 @@ fun EditChangeScreen(roomNumber: String , phoneNumber: String?) {
             if (!response.error)
             {
                 showToast.value = true
-                toastMessage.value = "${response.responseData.msg}"
+                toastMessage.value = response.responseData.msg
                 delay(800)
                 tfViewModel.updateShow(false)
             }
             else{
                 toastMessage.value = "${response.error}"
-
             }
-
         }
     }
 
