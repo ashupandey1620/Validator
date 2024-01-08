@@ -185,6 +185,8 @@ class DetailScreenViewModel @Inject constructor(
         val currentYearMonth = YearMonth.now()
         val suspendedDates = mutableListOf<LocalDate>()
 
+
+
         for (suspendedData in suspensionList) {
             val fromDate = suspendedData.from_date?.let { LocalDate.parse(it) }
             val toDate = LocalDate.parse(suspendedData.to_date)
