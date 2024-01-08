@@ -1,5 +1,6 @@
 package com.original.sense.psit.ViewModels
 
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.original.sense.psit.Tokens.TokenStore
@@ -71,6 +72,11 @@ class TokenStoreViewModel @Inject constructor(private val tokenStore: TokenStore
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = ""
     )
+
+
+    suspend fun updateProfile(phoneNo: String, roomNo: String) {
+        tokenStore.updateProfile(phoneNo,roomNo)
+    }
 
 
 

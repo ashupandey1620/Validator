@@ -77,6 +77,7 @@ fun EditChangeScreen(roomNumber: String , phoneNumber: String?) {
             Log.d("LaunchedEffect", "updateResponse: $updateResponse")
             if (!response.error)
             {
+                tokenStoreViewModel.updateProfile(phoneNumber.toString(),roomNumber)
                 showToast.value = true
                 toastMessage.value = response.responseData.msg
                 delay(800)

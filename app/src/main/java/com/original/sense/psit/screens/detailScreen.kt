@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -30,6 +31,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -47,6 +50,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -165,11 +169,11 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
             }
         }
 
-        DateAndCalendar()
+        DateAndCalendar(detailScreenViewModel)
 
         DateLazyList(detailScreenViewModel)
 
-        AllowedLectures(assignedListB)
+        AllowedLectures(assignedListB,detailScreenViewModel)
 
     }
 
@@ -178,7 +182,7 @@ fun detailScreen(navController: NavController , rollNum: Long? , name: String?) 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DateAndCalendar() {
+fun DateAndCalendar(detailScreenViewModel: DetailScreenViewModel) {
     val context = LocalContext.current.applicationContext
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
@@ -261,7 +265,7 @@ fun DateAndCalendar() {
                     contentPadding = PaddingValues(8.dp) ,
                     userScrollEnabled = false ,
                     state = state ,
-                    dayContent = { Day(it) } ,
+                    dayContent = { Day(it,detailScreenViewModel) } ,
                     monthHeader = {
                         DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
                     }
@@ -293,24 +297,54 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Day(day: CalendarDay) {
-    Box(
-        modifier = Modifier
-            .aspectRatio(1f),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = day.date.dayOfMonth.toString(),
-            color = if (day.position == DayPosition.MonthDate) Color.White else Color.Gray
-        )
+fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
+
+    val monthSuspendedDateList = detailScreenViewModel._daysListMonthlyLiveData.observeAsState()
+
+    val date = day.date.toString()
+
+    val intDate = date.substring(date.length-2,date.length).toInt()
+
+    if(monthSuspendedDateList.value!!.contains(intDate))
+    {
+        Box(
+            modifier = Modifier
+                .aspectRatio(1f)
+                .padding(8.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFDE3030)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = day.date.dayOfMonth.toString(),
+                color = if (day.position == DayPosition.MonthDate) Color.White else Color.Gray
+            )
+        }
     }
+    else{
+        Box(
+            modifier = Modifier
+                .aspectRatio(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = day.date.dayOfMonth.toString(),
+                color = if (day.position == DayPosition.MonthDate) Color.White else Color.Gray
+            )
+        }
+    }
+
+
+
+
 }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex  = detailScreenViewModel.selectedIndex
 
     val daysListState by detailScreenViewModel.daysListData.observeAsState(initial = emptyList())
+
 
     Log.d("SuspensionDAYS",daysListState.toString())
 
@@ -334,6 +368,7 @@ fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
                     daysListState
                 ) {
                     selectedIndex = index
+                    detailScreenViewModel.selectedIndex = index
                     detailScreenViewModel.updateAssignedList(item)
                 }
             }
@@ -349,7 +384,6 @@ fun LazyListCardRowItem(
     daysListState: List<Boolean> ,
     onItemClicked: () -> Unit
 ) {
-    //val color = if (isSelected) Color(0xFF3068de) else Color(0xFF383841)
 
     val color = when {
         isSelected -> Color(0xFF3068de)
@@ -395,45 +429,34 @@ fun LazyListCardRowItem(
 
 
 @Composable
-fun AllowedLectures(assignedListState: State<List<AssignedLectureModel>?>) {
+fun AllowedLectures(
+    assignedListState: State<List<AssignedLectureModel>?> ,
+    detailScreenViewModel: DetailScreenViewModel
+) {
+
+    var selectedIndex = detailScreenViewModel.selectedIndex
+
+    val daysListState by detailScreenViewModel.daysListData.observeAsState(initial = emptyList())
 
 
     val assignedList = assignedListState.value
     val assignedListFinal = mutableListOf<AssignedLecture>()
 
-// Loop through assignedList to duplicate entries based on the number of lectures
 
-    if (assignedList != null) {
-        assignedList!!.forEach { assignedModel ->
-            assignedModel.lecture.forEach { lecture ->
-                val newAssignedModel = AssignedLecture(
-                    permission_id = assignedModel.permission_id ,
-                    lecture = lecture ,
-                    assignedBy = assignedModel.assignedBy
-                )
-                assignedListFinal.add(newAssignedModel)
-            }
-        }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp) ,
+        Arrangement.SpaceBetween ,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
-        Column(modifier = Modifier.height(600.dp)) {
-
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp) ,
-                Arrangement.SpaceBetween ,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Text(
-                    text = "Allowed Lectures: " ,
-                    color = Color.White ,
-                    fontSize = 25.sp ,
-                    fontFamily = poppins
-                )
-
-
+        Text(
+            text = "Allowed Lectures: " ,
+            color = Color.White ,
+            fontSize = 25.sp ,
+            fontFamily = poppins
+        )
 
 //                Icon(
 //                    modifier = Modifier.size(25.dp) ,
@@ -442,22 +465,81 @@ fun AllowedLectures(assignedListState: State<List<AssignedLectureModel>?>) {
 //                    tint = Color.White
 //                )
 
-            }
+    }
 
+    if(!daysListState.isEmpty()) {
+        if (daysListState[selectedIndex]) {
 
-
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(10.dp)
+                    .fillMaxWidth() ,
+                Arrangement.SpaceBetween ,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(assignedListFinal) { model ->
-                    ListItem2(model = model)
+                Image(
+                    painter = painterResource(id = R.drawable.cancelsuspension) ,
+                    modifier = Modifier
+                        .padding(horizontal = 25.dp)
+                        .wrapContentWidth()
+                        .wrapContentHeight() ,
+                    contentDescription = null ,
+                    contentScale = ContentScale.FillBounds ,
+                    alignment = Alignment.Center
+                )
+
+                Button(
+                    onClick = {
+
+                    } ,
+                    colors = ButtonDefaults.buttonColors(Color(0xFFDE3030)) ,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp)
+                        .padding(top = 20.dp)
+                ) {
+                    Text(
+                        text = "Suspended" , color = Color.White ,
+                        fontSize = 20.sp ,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
+
+
             }
         }
     }
+
+// Loop through assignedList to duplicate entries based on the number of lectures
+
+        if (assignedList != null) {
+            assignedList!!.forEach { assignedModel ->
+                assignedModel.lecture.forEach { lecture ->
+                    val newAssignedModel = AssignedLecture(
+                        permission_id = assignedModel.permission_id ,
+                        lecture = lecture ,
+                        assignedBy = assignedModel.assignedBy
+                    )
+                    assignedListFinal.add(newAssignedModel)
+                }
+            }
+
+            Column(modifier = Modifier.height(600.dp)) {
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(10.dp)
+                ) {
+                    items(assignedListFinal) { model ->
+                        ListItem2(model = model)
+                    }
+                }
+            }
+        }
+
+
+
 
 }
 

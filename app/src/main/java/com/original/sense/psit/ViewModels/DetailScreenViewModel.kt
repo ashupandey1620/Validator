@@ -3,6 +3,10 @@ package com.original.sense.psit.ViewModels
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,6 +32,8 @@ class DetailScreenViewModel @Inject constructor(
     private val tokenStore: TokenStore
 ): ViewModel() {
 
+    var selectedIndex by mutableStateOf(0)
+
     private val _assignedList = MutableLiveData<List<AssignedLectureModel>>()
     val assignedList: LiveData<List<AssignedLectureModel>> = _assignedList
 
@@ -37,6 +43,8 @@ class DetailScreenViewModel @Inject constructor(
     private val daysListLiveData = MutableLiveData<List<Boolean>>()
     val daysListData : LiveData<List<Boolean>> = daysListLiveData
 
+    private val daysListMonthlyLiveData = MutableLiveData<List<Int>>()
+    val _daysListMonthlyLiveData : LiveData<List<Int>> = daysListMonthlyLiveData
 
     private val suspensionList = mutableListOf<ResponseDataPermission>()
     private val delegationList = mutableListOf<ResponseDataPermission>()
@@ -69,6 +77,7 @@ class DetailScreenViewModel @Inject constructor(
             Log.d("Delegation","$delegationList")
 
             suspensionDateList(suspensionList)
+            getDaysSuspendedPerMonth(suspensionList)
 
 //            suspensionListLive.postValue(suspensionList)
             _getPermission.postValue(result)
@@ -166,5 +175,47 @@ class DetailScreenViewModel @Inject constructor(
 
         daysListLiveData.postValue(daysList)
     }
+
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDaysSuspendedPerMonth(suspensionList: MutableList<ResponseDataPermission>) {
+        val currentYearMonth = YearMonth.now()
+        val suspendedDates = mutableListOf<LocalDate>()
+
+        for (suspendedData in suspensionList) {
+            val fromDate = suspendedData.from_date?.let { LocalDate.parse(it) }
+            val toDate = LocalDate.parse(suspendedData.to_date)
+
+            if (fromDate != null) {
+                var currentDate = fromDate
+                while (!currentDate!!.isAfter(toDate)) {
+                    if (YearMonth.from(currentDate) == currentYearMonth) {
+                        suspendedDates.add(currentDate)
+                    }
+                    currentDate = currentDate.plusDays(1)
+                }
+            } else if (YearMonth.from(toDate) == currentYearMonth) {
+                suspendedDates.add(toDate)
+            }
+        }
+
+        // Collect the suspended days of the month for the present month and year
+        val suspendedDaysForCurrentMonth = suspendedDates.map { it.dayOfMonth }.distinct().sorted()
+
+        // Log or use the list of suspended days for the current month and year
+        Log.d("Suspended Days for Current Month", suspendedDaysForCurrentMonth.toString())
+
+        daysListMonthlyLiveData.postValue(suspendedDaysForCurrentMonth)
+
+
+    }
+
+
+
+
+
 
 }
