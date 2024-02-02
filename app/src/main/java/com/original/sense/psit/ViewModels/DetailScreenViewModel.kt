@@ -204,10 +204,9 @@ class DetailScreenViewModel @Inject constructor(
             }
         }
 
-        // Collect the suspended days of the month for the present month and year
+        // Collecting the suspended days of the month for the present month and year
         val suspendedDaysForCurrentMonth = suspendedDates.map { it.dayOfMonth }.distinct().sorted()
 
-        // Log or use the list of suspended days for the current month and year
         Log.d("Suspended Days for Current Month", suspendedDaysForCurrentMonth.toString())
 
         daysListMonthlyLiveData.postValue(suspendedDaysForCurrentMonth)

@@ -35,30 +35,11 @@ class NetworkModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-
-//        val errorInterceptor = Interceptor { chain ->
-//            val request = chain.request()
-//            val response = chain.proceed(request)
-//
-//            if (!response.isSuccessful) {
-//                val errorBody = response.body
-//                // Handle error body parsing here
-//                // For example, log the error body
-//                errorBody?.let {
-//                    val errorBodyString = it.string()
-//                    Log.e("Error Body", errorBodyString)
-//                }
-//            }
-//
-//            response // Return the response as is
-//        }
-
         return OkHttpClient.Builder()
             .addInterceptor(interceptor) // Add the error interceptor
             .build()
     }
-    //http://18.61.72.79/
-    //https://api-prod.attendify.atishir.in
+
     @Singleton
     @Provides
     fun providesRetrofit(): Retrofit {
