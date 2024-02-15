@@ -117,7 +117,7 @@ class DetailScreenViewModel @Inject constructor(
                 val assignedLectureModel = AssignedLectureModel(
                     delegationItem.permission_id,
                     delegationItem.lectures ?: emptyList(), // Consider null case
-                    delegationItem.assigned_by ?: "" // Consider null case
+                    delegationItem.assigned_by.name ?: "" // Consider null case
                 )
                 updatedAssignedList.add(assignedLectureModel)
             }
@@ -184,6 +184,7 @@ class DetailScreenViewModel @Inject constructor(
     fun getDaysSuspendedPerMonth(suspensionList: MutableList<ResponseDataPermission>) {
         val currentYearMonth = YearMonth.now()
         val suspendedDates = mutableListOf<LocalDate>()
+
 
 
 

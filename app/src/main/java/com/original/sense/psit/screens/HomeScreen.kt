@@ -170,7 +170,7 @@ fun HomeScreen(navController: NavController,activity: Activity ,studentListViewM
                 dismissWithAnimation = false
             )
         ){
-            ReadyToTap(context,activity)
+            ReadyToTap()
         }
 
         DisposableEffect(Unit) {

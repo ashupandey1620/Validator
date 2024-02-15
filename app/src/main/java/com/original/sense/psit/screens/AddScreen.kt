@@ -2,9 +2,13 @@ package com.original.sense.psit.screens
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,6 +62,11 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.maxkeppeker.sheets.core.models.base.rememberSheetState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.original.sense.psit.R
 import com.original.sense.psit.ViewModels.AddScreenViewModel
 import com.original.sense.psit.ViewModels.PsitViewModel
@@ -75,6 +84,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -86,6 +97,7 @@ var reasonDesc  =   ""
 var startDate   =   ""
 var endDate     =   ""
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavController , studentListViewModel: StudentListViewModel) {
@@ -396,6 +408,16 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
                 //----------------------------------------------Suspension Page
 
+                val calendarState = rememberSheetState()
+                CalendarDialog(state = calendarState , config = CalendarConfig(monthSelection = false,
+                    yearSelection = true,
+                    style = CalendarStyle.MONTH,
+                    disabledDates = listOf(LocalDate.now().plusDays(7))
+                ),
+                    selection = CalendarSelection.Date{date ->
+                        Log.d("Date",date.toString())
+                    }
+                )
 
                 Spacer(modifier = Modifier.padding(8.dp))
 
@@ -547,12 +569,45 @@ fun isDateValid(dateString: String): Boolean {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
+@ExperimentalMaterial3Api
 @Composable
 fun DateStartEnd() {
 
     val keyboardController = LocalSoftwareKeyboardController.current
     var text1 by rememberSaveable { mutableStateOf("") }
     var text2 by rememberSaveable { mutableStateOf("") }
+
+    val calendarState1 = rememberSheetState()
+
+    CalendarDialog(state = calendarState1 , config = CalendarConfig(monthSelection = false,
+        yearSelection = true,
+        style = CalendarStyle.MONTH,
+        disabledDates = listOf(LocalDate.now().plusDays(7),)
+    ),
+        selection = CalendarSelection.Date{date ->
+            val formattedDate = date.format(DateTimeFormatter.ISO_DATE)
+            text1 = formattedDate
+            startDate = text1
+        }
+    )
+
+
+    val calendarState2 = rememberSheetState()
+
+    CalendarDialog(state = calendarState2 , config = CalendarConfig(monthSelection = false,
+        yearSelection = true,
+        style = CalendarStyle.MONTH,
+        disabledDates = listOf(LocalDate.now().plusDays(7),)
+    ),
+        selection = CalendarSelection.Date{date ->
+            val formattedDate = date.format(DateTimeFormatter.ISO_DATE)
+            text2 = formattedDate
+            endDate = text2
+        }
+    )
+
+
 
     val containerColor = Color(0xFF383838)
 
@@ -571,7 +626,10 @@ fun DateStartEnd() {
                     Icon(
                         painter = painterResource(id = R.drawable.desc) ,
                         contentDescription = "Start Date" ,
-                        tint = Color(0xFFA7A7A7)
+                        tint = Color(0xFFA7A7A7),
+                        modifier = Modifier.clickable {
+                            calendarState1.show()
+                        }
                     )
                 } ,
                 onValueChange = { text1 = it
@@ -625,7 +683,10 @@ fun DateStartEnd() {
                     Icon(
                         painter = painterResource(id = R.drawable.desc) ,
                         contentDescription = "End Date" ,
-                        tint = Color(0xFFA7A7A7)
+                        tint = Color(0xFFA7A7A7),
+                        modifier = Modifier.clickable {
+                            calendarState2.show()
+                        }
                     )
                 } ,
                 onValueChange = { text2 = it
@@ -1213,6 +1274,8 @@ fun CreateButton() {
 
     }
 }
+
+
 
 
 

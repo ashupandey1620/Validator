@@ -8,7 +8,7 @@ data class ResponsePermission(
 
 data class ResponseDataPermission(
     val assigned_at: String,
-    val assigned_by: String,
+    val assigned_by: AssignedBy,
     val description: String,
     val from_date: String,
     val lectures: List<Int>,
@@ -17,4 +17,9 @@ data class ResponseDataPermission(
     val subject: String,
     val to_date: String,
     val type: String
+)
+
+
+data class AssignedBy(
+    val name : String,
 )

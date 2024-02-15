@@ -237,8 +237,8 @@ fun DateAndCalendar(detailScreenViewModel: DetailScreenViewModel) {
         ) {
 
             val currentMonth = remember { YearMonth.now() }
-            val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
-            val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
+            val startMonth = remember { currentMonth.minusMonths(1) } // Adjust as needed
+            val endMonth = remember { currentMonth.plusMonths(1) } // Adjust as needed
             // val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
 
             val daysOfWeek = remember { daysOfWeek() }
@@ -299,11 +299,16 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 @Composable
 fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
 
+    Log.d("Crash Date Suspended Start","Passed")
     val monthSuspendedDateList = detailScreenViewModel._daysListMonthlyLiveData.observeAsState()
 
     val date = day.date.toString()
 
     val intDate = date.substring(date.length-2,date.length).toInt()
+
+    Log.d("Crash Date Suspended",monthSuspendedDateList.toString())
+
+    Log.d("Crash Date Suspended Day",date)
 
     if(monthSuspendedDateList.value!!.contains(intDate))
     {

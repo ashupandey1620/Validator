@@ -76,8 +76,13 @@ dependencies {
 
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.20.0")
 
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:core:<version>")
+
+
 
     implementation ("com.holix.android:bottomsheetdialog-compose:1.4.0")
+
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
 
 
     //Retrofit support

@@ -145,20 +145,3 @@ interface PsitApi {
 
 
 }
-
-
-
-
-
-
-
-
-
-//    @POST("/api/user/register/")
-//    suspend fun tempRegister(
-//       email: String,
-//       name: String,
-//       username: String,
-//       phoneno: Long,
-//       roomno: String
-//    ):Response<TempRegister>

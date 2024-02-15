@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,17 +25,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.original.sense.psit.R
 import com.original.sense.psit.ui.theme.poppins
 
 
-
+@Preview
 @Composable
-fun ReadyToTap(context: Context , activity: Activity) {
+fun ReadyToTap() {
 
 
     Card (shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp)){
@@ -74,47 +77,49 @@ fun ReadyToTap(context: Context , activity: Activity) {
 
             }
 
-            Row(
-                modifier = Modifier
-                    .padding(top = 20.dp , bottom = 40.dp)
-                    .fillMaxWidth()
-                    .height(50.dp) ,
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
+            Spacer(modifier = Modifier.padding(20.dp))
 
-                Button(
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(125.dp) ,
-                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                    onClick = {
-
-                    } ,
-                    shape = RoundedCornerShape(10.dp) ,
-                    colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
-                ) {
-                    Text(text = "No" , color = Color.Black , fontSize = 25.sp)
-
-                }
-
-                Button(
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(125.dp) ,
-                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
-                    onClick = {
-
-
-                    } ,
-                    shape = RoundedCornerShape(10.dp) ,
-                    colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
-                ) {
-                    Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
-
-                }
-
-
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(top = 20.dp , bottom = 40.dp)
+//                    .fillMaxWidth()
+//                    .height(50.dp) ,
+//                horizontalArrangement = Arrangement.SpaceEvenly
+//            ) {
+//
+//                Button(
+//                    modifier = Modifier
+//                        .height(50.dp)
+//                        .width(125.dp) ,
+//                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
+//                    onClick = {
+//
+//                    } ,
+//                    shape = RoundedCornerShape(10.dp) ,
+//                    colors = ButtonDefaults.buttonColors(Color(0xFFffffff))
+//                ) {
+//                    Text(text = "No" , color = Color.Black , fontSize = 25.sp)
+//
+//                }
+//
+//                Button(
+//                    modifier = Modifier
+//                        .height(50.dp)
+//                        .width(125.dp) ,
+//                    elevation = ButtonDefaults.buttonElevation(4.dp) ,
+//                    onClick = {
+//
+//
+//                    } ,
+//                    shape = RoundedCornerShape(10.dp) ,
+//                    colors = ButtonDefaults.buttonColors(Color(0xFF00d084))
+//                ) {
+//                    Text(text = "Yes" , color = Color.White , fontSize = 25.sp)
+//
+//                }
+//
+//
+//            }
 
         }
     }
