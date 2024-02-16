@@ -139,7 +139,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
             if (!response.errors)
             {
                 showToast.value = true
-                toastMessage.value = "Delegation: ${response.responseData.msg}"
+                toastMessage.value = "Permission: ${response.responseData.msg}"
                 delay(2000)
                 navController.popBackStack()
                 navController.navigate("add")
@@ -154,7 +154,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
                 navController.popBackStack()
                 navController.navigate("add")
                 showToast.value = true
-                toastMessage.value = "Delegation: ${response.responseData.msg}"
+                toastMessage.value = "Permission: ${response.responseData.msg}"
 
             }
         }
@@ -223,7 +223,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
             .verticalScroll(rememberScrollState())) {
 
             val name : String = if (!unSelectedDelegation)
-                "Delegation"
+                "Permission"
             else
                 "Suspension"
             DelegationAndSuspension(name)
@@ -274,7 +274,7 @@ fun AddScreen(navController: NavController , studentListViewModel: StudentListVi
 
                                 Text(
                                     modifier = Modifier.padding(vertical = 4.dp),
-                                    text = "Delegation" ,
+                                    text = "Permission" ,
                                     fontSize = 20.sp , fontFamily = poppins
                                 )
                             }
@@ -1206,7 +1206,7 @@ fun SubjectOfDelegation() {
 
 
 
-        Text(text = "Subject Of Delegation:",
+        Text(text = "Subject Of Permission:",
             fontFamily = poppins,
             fontSize = 22.sp,
             fontWeight = FontWeight.Medium,

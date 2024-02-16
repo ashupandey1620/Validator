@@ -27,7 +27,6 @@ class Psit : Application(), Configuration.Provider {
             .setWorkerFactory(customWorkerFactory)
             .build()
 
-
 }
 
 

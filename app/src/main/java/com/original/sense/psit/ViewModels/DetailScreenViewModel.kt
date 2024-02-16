@@ -116,8 +116,14 @@ class DetailScreenViewModel @Inject constructor(
             if (delegationItem.to_date == selectedDate.toString()) {
                 val assignedLectureModel = AssignedLectureModel(
                     delegationItem.permission_id,
-                    delegationItem.lectures ?: emptyList(), // Consider null case
-                    delegationItem.assigned_by.name ?: "" // Consider null case
+                    delegationItem.lectures ?: emptyList(),
+                    delegationItem.assigned_by.name ?: "",
+                    delegationItem.assigned_at ?: "",
+                    delegationItem.description ?: "",
+                    delegationItem.students ?: emptyList(),
+                    delegationItem.subject ?: "",
+                    delegationItem.from_date ?: "",
+                    delegationItem.to_date
                 )
                 updatedAssignedList.add(assignedLectureModel)
             }

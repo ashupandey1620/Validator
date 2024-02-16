@@ -43,7 +43,7 @@ class NetworkModule {
     @Singleton
     @Provides
     fun providesRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("http://18.61.72.79/")
+        return Retrofit.Builder().baseUrl("")
             .addConverterFactory(GsonConverterFactory.create())
             .client(providesOkHttpClient())
             .build()

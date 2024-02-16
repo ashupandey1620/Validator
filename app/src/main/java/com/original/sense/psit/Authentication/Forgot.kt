@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,8 +55,9 @@ import com.original.sense.psit.ui.theme.poppins
 import kotlinx.coroutines.delay
 
 var emailForgot = ""
+
 @Composable
-fun ForgotPasswordScreen(navController: NavHostController) {
+fun ForgotPasswordScreen(navController:NavHostController) {
 
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color(0xFF222228)

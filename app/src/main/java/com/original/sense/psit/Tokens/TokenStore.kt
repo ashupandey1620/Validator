@@ -53,7 +53,6 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
 
 
     suspend fun saveTokens(accessToken: String, refreshToken: String) {
-
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN_KEY] = accessToken
             preferences[REFRESH_TOKEN_KEY] = refreshToken
@@ -62,7 +61,6 @@ class TokenStore @Inject constructor(private val dataStore: DataStore<Preference
 
 
     suspend fun clearTokens() {
-
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN_KEY] = ""
             preferences[REFRESH_TOKEN_KEY] = ""

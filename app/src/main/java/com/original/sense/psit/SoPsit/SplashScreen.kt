@@ -71,12 +71,16 @@ fun SplashScreen(navController: NavHostController , context: MainActivity) {
         )
         delay(1000)
 
-        if(accessToken!="") {
+        if (onBoardingIsFinished(context)){
+            navController.popBackStack()
+            navController.navigate("AuthGraph")
+        }
+        else if(accessToken?.isNotEmpty() == true) {
             navController.popBackStack()
             navController.navigate("HomeGraph")
         }
         else
-         {
+        {
             navController.popBackStack()
             navController.navigate("Onboarding")
         }

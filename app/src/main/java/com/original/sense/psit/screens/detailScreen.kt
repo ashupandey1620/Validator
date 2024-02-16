@@ -2,6 +2,7 @@ package com.original.sense.psit.screens
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -74,6 +75,7 @@ import com.original.sense.psit.model.AssignedLecture
 import com.original.sense.psit.model.AssignedLectureModel
 import com.original.sense.psit.model.PostModel.PermissionPost
 import com.original.sense.psit.ui.theme.poppins
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -264,6 +266,7 @@ fun DateAndCalendar(detailScreenViewModel: DetailScreenViewModel) {
                 HorizontalCalendar(
                     contentPadding = PaddingValues(8.dp) ,
                     userScrollEnabled = false ,
+                    calendarScrollPaged = false,
                     state = state ,
                     dayContent = { Day(it,detailScreenViewModel) } ,
                     monthHeader = {
@@ -304,6 +307,8 @@ fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
 
     val date = day.date.toString()
 
+    val context = LocalContext.current.applicationContext
+
     val intDate = date.substring(date.length-2,date.length).toInt()
 
     Log.d("Crash Date Suspended",monthSuspendedDateList.toString())
@@ -317,7 +322,11 @@ fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
                 .aspectRatio(1f)
                 .padding(8.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFDE3030)),
+                .background(Color(0xFFDE3030))
+                .clickable(
+                    enabled = day.position == DayPosition.MonthDate,
+                    onClick = { Toast.makeText(context,"$day",Toast.LENGTH_LONG).show() }
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -329,7 +338,13 @@ fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
     else{
         Box(
             modifier = Modifier
-                .aspectRatio(1f),
+                .aspectRatio(1f)
+                .padding(8.dp)
+                .clip(CircleShape)
+                .clickable(
+                    enabled = day.position == DayPosition.MonthDate,
+                    onClick = { Toast.makeText(context,"$day",Toast.LENGTH_LONG).show() }
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -343,6 +358,10 @@ fun Day(day: CalendarDay , detailScreenViewModel: DetailScreenViewModel) {
 
 
 }
+
+
+
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateLazyList(detailScreenViewModel: DetailScreenViewModel) {
@@ -513,16 +532,20 @@ fun AllowedLectures(
             }
         }
     }
-
-// Loop through assignedList to duplicate entries based on the number of lectures
-
-        if (assignedList != null) {
+    if (assignedList != null) {
+        // Loop through assignedList to duplicate entries based on the number of lectures
             assignedList!!.forEach { assignedModel ->
                 assignedModel.lecture.forEach { lecture ->
                     val newAssignedModel = AssignedLecture(
                         permission_id = assignedModel.permission_id ,
                         lecture = lecture ,
-                        assignedBy = assignedModel.assignedBy
+                        assignedBy = assignedModel.assignedBy,
+                        assignedAt = assignedModel.assignedAt,
+                        description = assignedModel.description,
+                        students = assignedModel.students,
+                        subject = assignedModel.subject,
+                        from = assignedModel.from,
+                        to = assignedModel.to
                     )
                     assignedListFinal.add(newAssignedModel)
                 }
@@ -557,6 +580,7 @@ fun ListItem2(model: AssignedLecture) {
             .wrapContentHeight()
             .fillMaxWidth()
     ) {
+        var show by remember { mutableStateOf(false) }
         var checkedState by remember { mutableStateOf(false) }
         val paddingModifier = Modifier.padding(10.dp)
         Card(elevation = CardDefaults.cardElevation(5.dp), modifier = paddingModifier,
@@ -576,10 +600,14 @@ fun ListItem2(model: AssignedLecture) {
 //                        uncheckedColor = Color.White) )
                 Spacer(modifier = Modifier.size(25.dp))
 
-                Column (modifier = Modifier.padding(vertical = 10.dp)){
+                Column (modifier = Modifier.padding(vertical = 10.dp)
+                    .clickable {
+                        show = !show
+                    }){
 
 
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
                         text = model.permission_id ,
                         fontSize = 12.sp ,
                         fontWeight = FontWeight.SemiBold ,
@@ -588,6 +616,7 @@ fun ListItem2(model: AssignedLecture) {
                     )
 
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
                         text = "Lecture - ${model.lecture}",
                         fontSize = 18.sp ,
                         fontWeight = FontWeight.SemiBold ,
@@ -596,13 +625,76 @@ fun ListItem2(model: AssignedLecture) {
                     )
 
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
                         text = "Assigned By Mr. ${model.assignedBy}",
                         fontSize = 14.sp ,
                         fontWeight = FontWeight.Light ,
                         color = Color(0xFF7CEDED) ,
                         fontFamily = poppins
                     )
-                }
+
+                    AnimatedVisibility(
+                        show ,
+                        enter = expandVertically() ,
+                        exit = shrinkVertically()
+                    ) {
+
+                        Column (modifier = Modifier.padding(vertical = 10.dp)
+                            ) {
+
+                            Text(
+                                text = "Subject" ,
+                                fontSize = 14.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color.White ,
+                                fontFamily = poppins
+                            )
+                            Text(
+                                text = model.subject ,
+                                fontSize = 12.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color(0xFF7CEDED) ,
+                                fontFamily = poppins,
+                                lineHeight = 13.sp
+                            )
+
+
+                            Text(
+                                text = "Students" ,
+                                fontSize = 14.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color.White ,
+                                fontFamily = poppins
+                            )
+                            Text(
+                                text = "${model.students}" ,
+                                fontSize = 12.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color(0xFF7CEDED) ,
+                                fontFamily = poppins,
+                                lineHeight = 13.sp
+                            )
+
+                            Text(
+                                text = "Assigned at" ,
+                                fontSize = 14.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color.White ,
+                                fontFamily = poppins
+                            )
+                            Text(
+                                text = model.assignedAt.substring(0,10) ,
+                                fontSize = 12.sp ,
+                                fontWeight = FontWeight.Light ,
+                                color = Color(0xFF7CEDED) ,
+                                fontFamily = poppins,
+                                lineHeight = 13.sp
+                            )
+                        }
+
+                    }
+
+                    }
             }
         }
     }
